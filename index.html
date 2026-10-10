@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中央研究院 關鍵議題研究中心 (RCCI)</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 頂部 Google Sheet 即時同步狀態列 (支援智財與技術成果分頁即時同步) -->
+  <aside class="sync-banner" aria-label="資料同步狀態">
+    <div class="sync-status-indicator">
+      <span class="status-dot syncing" id="sync-dot"></span>
+      <span id="sync-text">正在載入試算表資料...</span>
+    </div>
+    <div class="sync-actions">
+      <button class="btn-sync" id="btn-refresh" title="從 Google 試算表立即同步更新">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+        </svg>
+        <span>即時同步</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- 主導覽列 (Navbar - 依據提案 PDF 規範配置) -->
+  <header class="main-header">
+    <div class="nav-container">
+      <a href="#patents" class="logo-link">
+        <img src="assets/rcci-logo.svg" alt="中央研究院 關鍵議題研究中心 Research Center for Critical Issues | Academia Sinica" class="logo-img">
+      </a>
+      <nav aria-label="主選單">
+        <ul class="nav-menu">
+          <li class="nav-item" id="nav-news"><a href="#news">最新消息</a></li>
+          <li class="nav-item" id="nav-about"><a href="#about">關於中心</a></li>
+          <li class="nav-item" id="nav-projects"><a href="#projects">研究計畫</a></li>
+          <li class="nav-item active" id="nav-patents"><a href="#patents">智財與技術成果</a></li>
+          <li class="nav-item" id="nav-facilities"><a href="#facilities">設施服務</a></li>
+          <li class="nav-item" id="nav-careers"><a href="#careers">人才招募</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 主內容容器 -->
+  <main class="page-container">
+
+    <!-- ========================================================
+         1. 最新消息專區 (#news)
+         ======================================================== -->
+    <section id="section-news" class="page-section">
+      <div class="hero-header">
+        <h1 class="hero-title">最新消息與活動</h1>
+        <p class="hero-subtitle">關鍵議題研究中心最新學術進展、尖端設施公告、活動報導與研究突破</p>
+      </div>
+
+      <!-- 新聞分類標籤 -->
+      <div class="controls-bar" style="margin-bottom: 24px;">
+        <div class="filter-group" id="news-filter-group">
+          <!-- 由 JS 動態生成 -->
+        </div>
+      </div>
+
+      <!-- 新聞卡片網格 -->
+      <div class="news-grid" id="news-container">
+        <!-- 由 JS 動態生成 -->
+      </div>
+    </section>
+
+    <!-- ========================================================
+         2. 關於中心專區 (#about)
+         ======================================================== -->
+    <section id="section-about" class="page-section">
+      <div class="hero-header">
+        <h1 class="hero-title">關於關鍵議題研究中心</h1>
+        <p class="hero-subtitle">以世界級競爭力研發成果，提出國家社會關鍵問題解方</p>
+      </div>
+
+      <!-- 次分頁導航 -->
+      <div class="subtabs-bar">
+        <button class="subtab-btn active" data-subtab="about-intro">成立宗旨與使命</button>
+        <button class="subtab-btn" data-subtab="about-history">南部院區發展沿革</button>
+        <button class="subtab-btn" data-subtab="about-team">首長與組織架構</button>
+        <button class="subtab-btn" data-subtab="about-committee">學術諮詢委員會</button>
+      </div>
+
+      <!-- 子面板 1: 成立宗旨與使命 -->
+      <div id="about-intro" class="subpage-panel active">
+        <div class="content-box" style="margin-bottom: 24px;">
+          <h2 class="content-box-title">中心創立背景</h2>
+          <p class="abstract-text">
+            中央研究院為協助國家社會因應重大挑戰，以具世界級競爭力之研發成果提出關鍵問題解方，於 <strong>2024 年 1 月</strong> 正式成立「關鍵議題研究中心」（Research Center for Critical Issues, RCCI）。
+            身為中研院最新的實體研究單位，關鍵中心期許打造為中研院的大型「前瞻實驗室」，以全新思維與作法，著重於創新力、實踐力與社會影響力，協助國家跨領域突破。
+          </p>
+        </div>
+
+        <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 14px;">四大核心任務</h3>
+        <div class="mission-grid" id="about-tasks-grid">
+          <!-- 由 JS 動態渲染四大任務 -->
+        </div>
+
+        <div class="content-box" style="margin-top: 24px;">
+          <h2 class="content-box-title">關鍵議題選題原則與運作模式</h2>
+          <ul class="milestone-list" style="color: #334155; font-size: 14.5px; line-height: 1.8; margin-top: 10px;">
+            <li><strong>解決關鍵問題：</strong> 協助解決科學及社會重大挑戰，立足於深厚基礎研究。</li>
+            <li><strong>階段性里程碑：</strong> 已有初步解題方向，且在 3 至 5 年內可達成實證驗證與階段性里程碑。</li>
+            <li><strong>垂直整合團隊：</strong> 合聘院內外專家跨領域組成團隊，推動自上而下的垂直整合研發。</li>
+            <li><strong>新思維實踐：</strong> 結合人文社會科學學者參與，探究新科技對社會、法規與環境之深遠影響。</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 子面板 2: 南部院區發展沿革 -->
+      <div id="about-history" class="subpage-panel">
+        <div class="content-box">
+          <h2 class="content-box-title">南部院區發展歷程 (台南沙崙智慧綠能科學城)</h2>
+          <p class="abstract-text" style="margin-bottom: 20px;">
+            中央研究院南部院區座落於台南高鐵特定區，是中研院開創「關鍵前瞻研究」與「國家級科研實證場域」的重要基地。
+          </p>
+          <div class="timeline" id="about-timeline">
+            <!-- 由 JS 動態渲染歷史時間軸 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 子面板 3: 首長與組織架構 -->
+      <div id="about-team" class="subpage-panel">
+        <div id="about-leadership-container">
+          <!-- 由 JS 動態渲染首長簡歷與智財窗口資訊 -->
+        </div>
+      </div>
+
+      <!-- 子面板 4: 學術諮詢委員會 -->
+      <div id="about-committee" class="subpage-panel">
+        <div class="content-box">
+          <h2 class="content-box-title">學術諮詢委員會委員名單</h2>
+          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">
+            由中央研究院各研究所特聘研究員與學術領袖組成，指導本中心關鍵議題前瞻規劃與科研發展策略。
+          </p>
+          <div class="committee-grid" id="about-committee-grid">
+            <!-- 由 JS 動態渲染委員名單 -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         3. 研究計畫專區 (#projects)
+         ======================================================== -->
+    <section id="section-projects" class="page-section">
+      <div class="hero-header">
+        <h1 class="hero-title">專題中心與關鍵研究計畫</h1>
+        <p class="hero-subtitle">聚焦淨零科技、量子運算、海洋科技與數位人文前瞻領域（點選卡片可直達關聯智財成果）</p>
+      </div>
+
+      <!-- 計畫分類控制列 -->
+      <div class="controls-bar" style="margin-bottom: 24px;">
+        <div class="filter-group" id="project-filter-group">
+          <!-- 由 JS 動態生成 -->
+        </div>
+      </div>
+
+      <!-- 計畫卡片網格 -->
+      <div class="project-grid" id="projects-container">
+        <!-- 由 JS 動態生成 -->
+      </div>
+    </section>
+
+    <!-- ========================================================
+         4. 智財與技術成果專區 (#patents - 忠實實現 PDF Pages 2-8)
+         ======================================================== -->
+    <section id="section-patents" class="page-section active">
+      <!-- 列表檢視 (PDF Page 2 架構) -->
+      <div id="list-view">
+        <div class="hero-header">
+          <h1 class="hero-title">智財與技術成果</h1>
+          <p class="hero-subtitle">從技術領域或關鍵字快速找到可合作的研發成果（即時同步 Google 試算表）</p>
+        </div>
+
+        <!-- 控制列：搜尋與分類篩選 (PDF Page 2: 全部 6, 太陽能 5, 量子科技 1...) -->
+        <div class="controls-bar">
+          <div class="search-wrapper">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="search-input" class="search-input" placeholder="搜尋技術名稱、應用或專利家族…" autocomplete="off">
+            <button id="search-clear" class="search-clear" title="清除搜尋">✕</button>
+          </div>
+
+          <!-- 分類標籤鈕 (全部 6, 太陽能 5, 量子科技 1, 去碳燃氫 3...) -->
+          <div class="filter-group" id="filter-container">
+            <!-- 由 JS 動態生成 -->
+          </div>
+
+          <!-- 視圖切換 (卡片 / 各國申請案明細表) -->
+          <div class="view-switchers">
+            <button id="btn-view-grid" class="view-btn active" title="卡片成果瀏覽 (對應提案PDF視圖)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <span>卡片成果</span>
+            </button>
+            <button id="btn-view-table" class="view-btn" title="各國申請案件總表">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+              </svg>
+              <span>申請案明細</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3欄卡片網格 (PDF Page 2) -->
+        <div id="card-grid" class="card-grid">
+          <!-- 由 JS 動態渲染 -->
+        </div>
+
+        <!-- 各國申請案件全域總表視圖 -->
+        <div id="all-table-view" class="all-table-view">
+          <div class="content-box">
+            <div class="content-box-title">各國申請案件完整總表</div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
+              即時同步自 Google Sheet「各國申請案件」分頁，點擊任意申請案列可開啟該項技術之專利家族成果詳情。
+            </p>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>家族編號</th>
+                    <th>院內案件編號</th>
+                    <th>國家／地區</th>
+                    <th>申請類型</th>
+                    <th>專利名稱</th>
+                    <th>申請號</th>
+                    <th>專利號</th>
+                    <th>狀態</th>
+                  </tr>
+                </thead>
+                <tbody id="all-apps-tbody">
+                  <!-- 由 JS 動態渲染 -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 成果詳情檢視 (PDF Pages 3-8 架構) -->
+      <article id="detail-view" class="detail-view">
+        <!-- 麵包屑導航 -->
+        <nav class="breadcrumb-bar" aria-label="麵包屑路徑">
+          <a href="#patents" class="breadcrumb-link" id="breadcrumb-back">智財與技術成果</a>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-link" id="breadcrumb-category">太陽能</span>
+          <span class="breadcrumb-separator">/</span>
+          <span class="breadcrumb-current" id="breadcrumb-case-id">34A-1131114</span>
+        </nav>
+
+        <!-- 標題與標籤 -->
+        <div class="detail-header">
+          <div class="detail-tags">
+            <span class="badge" id="detail-category-badge">太陽能</span>
+            <span class="badge badge-family">專利家族</span>
+          </div>
+          <h1 class="detail-title" id="detail-title">高品質超導金屬材料蝕刻與氧化製程</h1>
+        </div>
+
+        <!-- 雙欄架構 (PDF Pages 3-8) -->
+        <div class="detail-layout">
+          <!-- 左欄：技術摘要與各國申請案佈局 -->
+          <div class="detail-main-column">
+            <!-- 技術摘要卡片 -->
+            <div class="content-box">
+              <h2 class="content-box-title">技術摘要</h2>
+              <p class="abstract-text" id="detail-abstract">
+                正在載入技術摘要內容...
+              </p>
+            </div>
+
+            <!-- 各國專利申請佈局卡片 (整合各國申請案件分頁) -->
+            <div class="content-box">
+              <h2 class="content-box-title">各國專利申請佈局</h2>
+              <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 4px;">
+                本項研發成果於各國智財局之申請與獲證狀況（與 Google Sheet「各國申請案件」即時同步）：
+              </p>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>國家／地區</th>
+                      <th>申請類型</th>
+                      <th>申請號</th>
+                      <th>申請日</th>
+                      <th>專利號</th>
+                      <th>法律狀態</th>
+                    </tr>
+                  </thead>
+                  <tbody id="detail-applications-tbody">
+                    <!-- 由 JS 動態生成 -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- 右欄：基本資訊 Card (PDF Pages 3-8) -->
+          <aside class="detail-sidebar">
+            <div class="info-card">
+              <h2 class="info-card-title">基本資訊</h2>
+              <div class="info-list">
+                <div class="info-item">
+                  <span class="info-label">本院覽號</span>
+                  <span class="info-value" id="detail-case-id" style="font-family: ui-monospace, monospace;">34A-1131114</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">公告日期</span>
+                  <span class="info-value" id="detail-publish-date">2025-02-06</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">發明人</span>
+                  <span class="info-value" id="detail-inventors">陳啟東</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">法律狀態</span>
+                  <span class="info-value" id="detail-legal-status">專利申請中</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">家族編號</span>
+                  <span class="info-value" id="detail-family-id" style="font-family: ui-monospace, monospace;">PF-001</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">相關計畫</span>
+                  <span class="info-value" id="detail-project">Alpha計畫</span>
+                </div>
+                <div class="info-item">
+                  <span class="info-label">授權狀態</span>
+                  <span class="info-value" id="detail-license-status">可授權合作</span>
+                </div>
+              </div>
+
+              <!-- PDF Page 3-8 底部重點按鈕：直連智財技轉處官方案件技術資料 -->
+              <a class="btn-primary-action" id="btn-tech-link" href="#" target="_blank" rel="noopener noreferrer">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                <span>智財技轉處-案件技術資料 ↗</span>
+              </a>
+            </div>
+          </aside>
+        </div>
+      </article>
+    </section>
+
+    <!-- ========================================================
+         5. 設施服務專區 (#facilities)
+         ======================================================== -->
+    <section id="section-facilities" class="page-section">
+      <div class="hero-header">
+        <h1 class="hero-title">尖端科研設施與共用服務</h1>
+        <p class="hero-subtitle">支援先進太陽能量測、超導量子晶片微奈米製程 (QC-Fab) 與高階分析平台</p>
+      </div>
+
+      <!-- 6 大設施卡片網格 -->
+      <div class="facilities-grid" id="facilities-container">
+        <!-- 由 JS 動態生成 -->
+      </div>
+
+      <!-- 設施服務收費與預約指引 (對齊官網 charge.php) -->
+      <div class="charge-box">
+        <h2 style="font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 12px;">設施服務收費與繳款指引</h2>
+        <p style="font-size: 14.5px; color: #475569; line-height: 1.7; margin-bottom: 16px;">
+          本中心各項共用設施依中研院法規採非現金金融繳款機制，款項核對入帳後統一開立中研院收據/發票。
+        </p>
+
+        <div class="bank-info-grid">
+          <div>
+            <div style="font-size: 12px; color: var(--text-muted);">匯款銀行</div>
+            <div style="font-weight: 700; color: var(--text-main); font-size: 14.5px;">0050049 台灣土地銀行 南港分行</div>
+          </div>
+          <div>
+            <div style="font-size: 12px; color: var(--text-muted);">匯款戶名</div>
+            <div style="font-weight: 700; color: var(--text-main); font-size: 14.5px;">中央研究院科學研究基金 401 專戶</div>
+          </div>
+          <div>
+            <div style="font-size: 12px; color: var(--text-muted);">繳款專屬帳號</div>
+            <div style="font-weight: 700; color: var(--primary); font-family: ui-monospace, monospace; font-size: 15px;">004-056-030-625</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
+          <a href="https://reservation.iis.sinica.edu.tw/servlet/SignInHandler" target="_blank" rel="noopener noreferrer" class="btn-primary-action" style="display: inline-flex; width: auto; padding: 0 24px;">
+            <span>前往中央研究院儀器預約系統 ↗</span>
+          </a>
+          <a href="mailto:rcci@gate.sinica.edu.tw" class="btn-sync" style="background: #ffffff; color: var(--text-main); padding: 0 20px; height: 44px; font-size: 14px;">
+            ✉ 設施委託與收費洽詢窗口
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================
+         6. 人才招募專區 (#careers)
+         ======================================================== -->
+    <section id="section-careers" class="page-section">
+      <div class="hero-header">
+        <h1 class="hero-title">加入關鍵議題研究中心</h1>
+        <p class="hero-subtitle">誠徵優秀科研與工程技術人才，共同開創前瞻科學新紀元</p>
+      </div>
+
+      <!-- 徵才篩選標籤 -->
+      <div class="controls-bar" style="margin-bottom: 24px;">
+        <div class="filter-group" id="career-filter-group">
+          <!-- 由 JS 動態生成 -->
+        </div>
+      </div>
+
+      <!-- 職缺列表網格 -->
+      <div class="career-grid" id="careers-container">
+        <!-- 由 JS 動態生成 -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <p style="font-weight: 700; color: var(--text-main); font-size: 15px;">中央研究院 關鍵議題研究中心</p>
+      <p style="font-size: 13px; color: var(--text-muted);">Research Center for Critical Issues (RCCI) | Academia Sinica</p>
+      <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">
+        院區地址：711010 台南市歸仁區歸仁十三路一段100號 · 總機電話：(06) 216-7700 · 電子郵件：rcci@gate.sinica.edu.tw
+      </p>
+      <p style="font-size: 12.5px; color: var(--text-light); margin-top: 8px;">
+        © 2026 中央研究院 關鍵議題研究中心 版權所有 · 智財專利成果即時同步自 Google Sheets
+      </p>
+    </div>
+  </footer>
+
+  <!-- 腳本引入 -->
+  <script src="js/data.js"></script>
+  <script src="js/rcci-content.js"></script>
+  <script src="js/sync.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
