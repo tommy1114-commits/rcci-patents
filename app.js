@@ -980,7 +980,11 @@
   }
 
 
-  // 程式啟動
-  document.addEventListener('DOMContentLoaded', init);
+  // 程式啟動（支援 DOMContentLoaded 及非同步載入情境）
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
 })();

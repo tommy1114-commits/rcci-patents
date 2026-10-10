@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>中央研究院 關鍵議題研究中心 (RCCI)</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/style.css?v=20261010_03">
+  <link rel="stylesheet" href="style.css?v=20261010_04">
+  <link rel="stylesheet" href="css/style.css?v=20261010_04">
 </head>
 <body>
 
@@ -443,10 +444,39 @@
     </div>
   </footer>
 
-  <!-- 腳本引入 (加入版本查詢字串強制更新快取) -->
-  <script src="js/data.js?v=20261010_03"></script>
-  <script src="js/rcci-content.js?v=20261010_03"></script>
-  <script src="js/sync.js?v=20261010_03"></script>
-  <script src="js/app.js?v=20261010_03"></script>
+  <!-- 智慧雙軌載入器：優先載入根目錄最新檔案，相容 js/ 子目錄 -->
+  <script>
+    (function () {
+      const v = '20261010_04';
+      function loadScript(name) {
+        return new Promise(function (resolve) {
+          const s = document.createElement('script');
+          s.src = name + '?v=' + v;
+          s.onload = function () { resolve(true); };
+          s.onerror = function () {
+            const fallback = document.createElement('script');
+            fallback.src = 'js/' + name + '?v=' + v;
+            fallback.onload = function () { resolve(true); };
+            fallback.onerror = function () { resolve(false); };
+            document.body.appendChild(fallback);
+          };
+          document.body.appendChild(s);
+        });
+      }
+
+      async function boot() {
+        await loadScript('data.js');
+        await loadScript('rcci-content.js');
+        await loadScript('sync.js');
+        await loadScript('app.js');
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot);
+      } else {
+        boot();
+      }
+    })();
+  </script>
 </body>
 </html>
