@@ -99,67 +99,130 @@ class GoogleSheetSync {
     return dataObjects;
   }
 
-  // 嘗試從網路非同步同步 Google 試算表
+  // 核心同步邏輯：優先讀取 Google Drive 資料夾中的 CSV 或專案內建 CSV 檔案
   async sync() {
-    this.updateStatus('syncing', '正在連線 Google 試算表同步資料...');
+    this.updateStatus('syncing', '正在讀取 CSV 資料檔...');
+    
+    // 策略 1: 嘗試透過 Google Drive API (GAS 代理) 讀取 Drive 資料夾中的最新 CSV 檔
+    if (this.config.driveApiUrl) {
+      try {
+        const driveResp = await fetch(this.config.driveApiUrl, { cache: 'no-cache' });
+        if (driveResp.ok) {
+          const resJson = await driveResp.json();
+          if (resJson.status === 'success' && resJson.appsCsv) {
+            const appsData = this.parseCsv(resJson.appsCsv);
+            const famsData = resJson.famsCsv ? this.parseCsv(resJson.famsCsv) : [];
+            if (appsData && appsData.length > 0) {
+              const mergedData = this.processAndMergeData(appsData, famsData);
+              this.lastSyncTime = new Date();
+              this.saveToStorage(mergedData, this.lastSyncTime);
+              this.updateStatus('synced', '已從 Google Drive 資料夾載入 CSV (' + this.formatTime(this.lastSyncTime) + ')');
+              if (typeof this.onDataUpdated === 'function') {
+                this.onDataUpdated(mergedData, true);
+              }
+              return mergedData;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('Google Drive 資料夾讀取嘗試未果，轉向讀取靜態/本機 CSV 檔案:', e.message);
+      }
+    }
+
+    // 策略 2: 讀取 GitHub Pages / 專案本機的靜態 CSV 檔案 (data/sheet_data.csv & data/patent_families.csv)
     try {
-      const fetchWithTimeout = (url, timeoutMs = 8000) => {
-        return Promise.race([
-          fetch(url, { cache: 'no-cache' }),
-          new Promise((_, reject) => setTimeout(() => reject(new Error('連線逾時')), timeoutMs))
-        ]);
+      const fetchCsv = async (path) => {
+        const r = await fetch(path + '?_t=' + Date.now(), { cache: 'no-cache' });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return await r.text();
       };
 
-      // 同時取得「各國申請案件」與「專利家族」兩個分頁
-      const [appsResp, famsResp] = await Promise.all([
-        fetchWithTimeout(this.getCsvUrl(this.config.gidApplications)),
-        fetchWithTimeout(this.getCsvUrl(this.config.gidFamilies))
+      const [appsCsvText, famsCsvText] = await Promise.all([
+        fetchCsv(this.config.localCsvApplications || 'data/sheet_data.csv'),
+        fetchCsv(this.config.localCsvFamilies || 'data/patent_families.csv').catch(() => '')
       ]);
 
-      if (!appsResp.ok) throw new Error('各國申請案件讀取失敗 (HTTP ' + appsResp.status + ')');
-      if (!famsResp.ok) throw new Error('專利家族讀取失敗 (HTTP ' + famsResp.status + ')');
-
-      const appsCsvText = await appsResp.text();
-      const famsCsvText = await famsResp.text();
-
       const appsData = this.parseCsv(appsCsvText);
-      const famsData = this.parseCsv(famsCsvText);
+      const famsData = famsCsvText ? this.parseCsv(famsCsvText) : [];
 
-      if (!appsData || appsData.length === 0) {
-        throw new Error('試算表解析無有效資料行');
+      if (appsData && appsData.length > 0) {
+        const mergedData = this.processAndMergeData(appsData, famsData);
+        this.lastSyncTime = new Date();
+        this.saveToStorage(mergedData, this.lastSyncTime);
+        this.updateStatus('synced', '已載入專案 CSV 檔案資料 (' + this.formatTime(this.lastSyncTime) + ')');
+        if (typeof this.onDataUpdated === 'function') {
+          this.onDataUpdated(mergedData, true);
+        }
+        return mergedData;
       }
+    } catch (err) {
+      console.warn('專案 CSV 讀取遭遇阻礙，載入快顯/預設快照:', err.message);
+    }
 
+    // 策略 3: 使用 LocalStorage 本地儲存的快顯
+    const cached = this.loadFromStorage();
+    if (cached) {
+      this.updateStatus('fallback', '使用前次已儲存之 CSV 快顯 (' + this.formatTime(new Date(cached.syncTime)) + ')');
+      if (typeof this.onDataUpdated === 'function') {
+        this.onDataUpdated(cached.data, false);
+      }
+      return cached.data;
+    }
+
+    // 策略 4: 使用內建快照
+    const snapshotMerged = this.processAndMergeData(SNAPSHOT_APPLICATIONS, SNAPSHOT_FAMILIES);
+    this.updateStatus('fallback', '目前顯示預設快照展示資料');
+    if (typeof this.onDataUpdated === 'function') {
+      this.onDataUpdated(snapshotMerged, false);
+    }
+    return snapshotMerged;
+  }
+
+  // 處理使用者從瀏覽器手動選取的本機 CSV 檔案 (支援一次選取 1 或 2 個檔案)
+  async importLocalCsvFiles(fileList) {
+    if (!fileList || fileList.length === 0) return null;
+    this.updateStatus('syncing', '正在解析本機 CSV 檔案...');
+
+    let appsCsvText = '';
+    let famsCsvText = '';
+
+    for (let i = 0; i < fileList.length; i++) {
+      const file = fileList[i];
+      const text = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(e.target.result);
+        reader.onerror = reject;
+        reader.readAsText(file, 'UTF-8');
+      });
+
+      const name = file.name || '';
+      if (name.includes('家族') || name.includes('families') || name.includes('patent_families')) {
+        famsCsvText = text;
+      } else {
+        appsCsvText = text;
+      }
+    }
+
+    if (!appsCsvText && famsCsvText) {
+      appsCsvText = famsCsvText;
+      famsCsvText = '';
+    }
+
+    const appsData = this.parseCsv(appsCsvText);
+    const famsData = famsCsvText ? this.parseCsv(famsCsvText) : [];
+
+    if (appsData && appsData.length > 0) {
       const mergedData = this.processAndMergeData(appsData, famsData);
-      
-      // 成功同步，儲存至本地快顯
       this.lastSyncTime = new Date();
       this.saveToStorage(mergedData, this.lastSyncTime);
-      this.updateStatus('synced', `已連線同步至 Google Sheet (${this.formatTime(this.lastSyncTime)})`);
-      
+      this.updateStatus('synced', '已成功載入本機 CSV (' + this.formatTime(this.lastSyncTime) + ')');
       if (typeof this.onDataUpdated === 'function') {
         this.onDataUpdated(mergedData, true);
       }
-
       return mergedData;
-    } catch (err) {
-      console.warn('Google Sheet 即時同步遭遇阻礙，載入快取/預設快照資料:', err.message);
-      
-      const cached = this.loadFromStorage();
-      if (cached) {
-        this.updateStatus('fallback', `使用本地快顯資料 (最後更新: ${this.formatTime(new Date(cached.syncTime))})`);
-        if (typeof this.onDataUpdated === 'function') {
-          this.onDataUpdated(cached.data, false);
-        }
-        return cached.data;
-      }
-
-      // 若無快顯，使用內建 snapshot
-      const snapshotMerged = this.processAndMergeData(SNAPSHOT_APPLICATIONS, SNAPSHOT_FAMILIES);
-      this.updateStatus('fallback', '目前顯示內建快照展示資料（點擊可重試連線）');
-      if (typeof this.onDataUpdated === 'function') {
-        this.onDataUpdated(snapshotMerged, false);
-      }
-      return snapshotMerged;
+    } else {
+      this.updateStatus('error', 'CSV 檔案解析失敗或無有效資料');
+      throw new Error('CSV 檔案解析失敗');
     }
   }
 

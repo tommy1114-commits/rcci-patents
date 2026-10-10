@@ -9,18 +9,27 @@
 </head>
 <body>
 
-  <!-- 頂部 Google Sheet 即時同步狀態列 (支援智財與技術成果分頁即時同步) -->
-  <aside class="sync-banner" aria-label="資料同步狀態">
+  <!-- 頂部 CSV 資料來源狀態列 (支援 Google Drive 與本機 CSV 載入) -->
+  <aside class="sync-banner" aria-label="資料來源狀態">
     <div class="sync-status-indicator">
       <span class="status-dot syncing" id="sync-dot"></span>
-      <span id="sync-text">正在載入試算表資料...</span>
+      <span id="sync-text">正在載入 CSV 資料...</span>
     </div>
     <div class="sync-actions">
-      <button class="btn-sync" id="btn-refresh" title="從 Google 試算表立即同步更新">
+      <label class="btn-sync" title="載入您下載的各國申請案件/專利家族 CSV 檔案" style="cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="17 8 12 3 7 8"/>
+          <line x1="12" y1="3" x2="12" y2="15"/>
+        </svg>
+        <span>載入本機 CSV</span>
+        <input type="file" id="csv-file-input" accept=".csv" multiple style="display: none;">
+      </label>
+      <button class="btn-sync" id="btn-refresh" title="重新載入 CSV 資料檔案">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
         </svg>
-        <span>即時同步</span>
+        <span>重新載入</span>
       </button>
     </div>
   </aside>
@@ -176,7 +185,7 @@
       <div id="list-view">
         <div class="hero-header">
           <h1 class="hero-title">智財與技術成果</h1>
-          <p class="hero-subtitle">從技術領域或關鍵字快速找到可合作的研發成果（即時同步 Google 試算表）</p>
+          <p class="hero-subtitle">從技術領域或關鍵字快速找到可合作的研發成果（依據各國申請案件與專利家族 CSV 資料）</p>
         </div>
 
         <!-- 控制列：搜尋與分類篩選 (PDF Page 2: 全部 6, 太陽能 5, 量子科技 1...) -->
@@ -230,7 +239,7 @@
           <div class="content-box">
             <div class="content-box-title">各國申請案件完整總表</div>
             <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">
-              即時同步自 Google Sheet「各國申請案件」分頁，點擊任意申請案列可開啟該項技術之專利家族成果詳情。
+              資料來源為「各國申請案件」CSV 檔案，點擊任意申請案列可開啟該項技術之專利家族成果詳情。
             </p>
             <div class="table-responsive">
               <table class="data-table">
@@ -443,7 +452,7 @@
         院區地址：711010 台南市歸仁區歸仁十三路一段100號 · 總機電話：(06) 216-7700 · 電子郵件：rcci@gate.sinica.edu.tw
       </p>
       <p style="font-size: 12.5px; color: var(--text-light); margin-top: 8px;">
-        © 2026 中央研究院 關鍵議題研究中心 版權所有 · 智財專利成果即時同步自 Google Sheets
+        © 2026 中央研究院 關鍵議題研究中心 版權所有 · 智財與技術成果專區
       </p>
     </div>
   </footer>

@@ -72,6 +72,7 @@
     syncDot: document.getElementById('sync-dot'),
     syncText: document.getElementById('sync-text'),
     btnRefresh: document.getElementById('btn-refresh'),
+    csvFileInput: document.getElementById('csv-file-input'),
     
     // 智財成果 - 列表視圖
     listView: document.getElementById('list-view'),
@@ -190,6 +191,20 @@
     elements.btnRefresh.addEventListener('click', () => {
       state.syncEngine.sync();
     });
+
+    // 載入本機 CSV 檔案變更監聽
+    if (elements.csvFileInput) {
+      elements.csvFileInput.addEventListener('change', async (e) => {
+        const files = e.target.files;
+        if (!files || files.length === 0) return;
+        try {
+          await state.syncEngine.importLocalCsvFiles(files);
+        } catch (err) {
+          alert('載入 CSV 檔案失敗：' + err.message);
+        }
+        elements.csvFileInput.value = '';
+      });
+    }
 
     // 智財搜尋輸入（防抖）
     let debounceTimer = null;

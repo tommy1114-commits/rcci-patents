@@ -4,13 +4,23 @@
  */
 
 const APP_CONFIG = {
+  // Google Drive 資料夾配置與 API 代理端點 (GAS)
+  driveFolderId: '1DmEhARSr0kUhi4fKTfSaDpFVitdk39-t',
+  driveFolderUrl: 'https://drive.google.com/drive/folders/1DmEhARSr0kUhi4fKTfSaDpFVitdk39-t',
+  driveApiUrl: 'https://script.google.com/macros/s/AKfycbykHkLyKkmuug5PGTFXSgMlTTBScbIjgMzoxbUMsvFwp3tefBF3hqEsvvv0U2NooHyuww/exec?action=getCsv',
+
+  // 靜態 CSV 檔案路徑（GitHub Pages / 本機專案路徑）
+  localCsvApplications: 'data/sheet_data.csv',
+  localCsvFamilies: 'data/patent_families.csv',
+
+  // 原始 Google Sheet 配置 (僅作極限備援)
   spreadsheetId: '1EwYvwygeiKB5Z9qsaTFrA-WWA62p2qarsDBZUhbppuA',
-  gidApplications: '427151405',   // 各國申請案件
-  gidFamilies: '2147396292',      // 專利家族
-  sheetUrl: 'https://docs.google.com/spreadsheets/d/1EwYvwygeiKB5Z9qsaTFrA-WWA62p2qarsDBZUhbppuA/edit?gid=427151405#gid=427151405',
-  autoSyncIntervalMs: 60000,      // 每分鐘自動背景檢查
-  localCacheKey: 'rcci_patent_cache_v2',
-  lastSyncKey: 'rcci_last_sync_time'
+  gidApplications: '427151405',
+  gidFamilies: '2147396292',
+
+  autoSyncIntervalMs: 120000,
+  localCacheKey: 'rcci_patent_csv_cache_v1',
+  lastSyncKey: 'rcci_last_csv_sync_time'
 };
 
 // 來自 PDF 規範文件（Pages 3-8）的詳細技術摘要與規格資料（包含智財技轉處官方超連結）
