@@ -1,6 +1,6 @@
 /**
  * RCCI 智財與技術成果專區 - 前端核心應用控制器
- * 整合官方網站 (https://rcci.sinica.edu.tw/) 完整內容與 Google 試算表即時同步
+ * 整合官方網站 (https://rcci.sinica.edu.tw/) 完整內容與智財技術成果專區
  * Research Center for Critical Issues | Academia Sinica
  */
 
@@ -12,7 +12,7 @@
     // 導覽狀態
     activeSection: 'patents', // 'news' | 'about' | 'projects' | 'patents' | 'facilities' | 'careers'
     
-    // 智財成果與試算表資料
+    // 智財成果與申請案資料
     outcomes: [],
     allApplications: [],
     currentCategory: '全部',
@@ -164,13 +164,13 @@
       state.outcomes = cached.data.outcomes;
       state.allApplications = cached.data.allApplications || [];
       elements.syncDot.className = 'status-dot fallback';
-      elements.syncText.textContent = `已載入快取資料 (最後更新: ${state.syncEngine.formatTime(new Date(cached.syncTime))})`;
+      elements.syncText.textContent = `資料已載入 (最後更新: ${state.syncEngine.formatTime(new Date(cached.syncTime))})`;
     } else {
       const initialSnapshot = state.syncEngine.processAndMergeData(SNAPSHOT_APPLICATIONS, SNAPSHOT_FAMILIES);
       state.outcomes = initialSnapshot.outcomes;
       state.allApplications = initialSnapshot.allApplications;
       elements.syncDot.className = 'status-dot fallback';
-      elements.syncText.textContent = '已載入預設快照展示資料';
+      elements.syncText.textContent = '已載入展示資料';
     }
 
     renderCategories();
@@ -200,7 +200,7 @@
         try {
           await state.syncEngine.importLocalCsvFiles(files);
         } catch (err) {
-          alert('載入 CSV 檔案失敗：' + err.message);
+          alert('載入資料檔案失敗：' + err.message);
         }
         elements.csvFileInput.value = '';
       });
@@ -631,7 +631,7 @@
   }
 
   // ========================================================
-  // 智財成果邏輯 (Google 試算表即時同步、卡片、詳情視圖)
+  // 智財成果邏輯 (卡片、詳情視圖)
   // ========================================================
   function getFilteredOutcomes() {
     return state.outcomes.filter(item => {

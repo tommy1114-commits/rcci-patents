@@ -1,5 +1,5 @@
 /**
- * RCCI 智財與技術成果專區 - Google Sheet 同步引擎
+ * RCCI 智財與技術成果專區 - 專利資料讀取與聚合引擎
  * Research Center for Critical Issues | Academia Sinica
  */
 
@@ -101,7 +101,7 @@ class GoogleSheetSync {
 
   // 核心同步邏輯：優先讀取 Google Drive 資料夾中的 CSV 或專案內建 CSV 檔案
   async sync() {
-    this.updateStatus('syncing', '正在讀取 CSV 資料檔...');
+    this.updateStatus('syncing', '正在讀取最新資料...');
     
     // 策略 1: 嘗試透過 Google Drive API (GAS 代理) 讀取 Drive 資料夾中的最新 CSV 檔
     if (this.config.driveApiUrl) {
@@ -116,7 +116,7 @@ class GoogleSheetSync {
               const mergedData = this.processAndMergeData(appsData, famsData);
               this.lastSyncTime = new Date();
               this.saveToStorage(mergedData, this.lastSyncTime);
-              this.updateStatus('synced', '已從 Google Drive 資料夾載入 CSV (' + this.formatTime(this.lastSyncTime) + ')');
+              this.updateStatus('synced', '資料已更新 (' + this.formatTime(this.lastSyncTime) + ')');
               if (typeof this.onDataUpdated === 'function') {
                 this.onDataUpdated(mergedData, true);
               }
@@ -149,7 +149,7 @@ class GoogleSheetSync {
         const mergedData = this.processAndMergeData(appsData, famsData);
         this.lastSyncTime = new Date();
         this.saveToStorage(mergedData, this.lastSyncTime);
-        this.updateStatus('synced', '已載入專案 CSV 檔案資料 (' + this.formatTime(this.lastSyncTime) + ')');
+        this.updateStatus('synced', '資料已更新 (' + this.formatTime(this.lastSyncTime) + ')');
         if (typeof this.onDataUpdated === 'function') {
           this.onDataUpdated(mergedData, true);
         }
@@ -162,7 +162,7 @@ class GoogleSheetSync {
     // 策略 3: 使用 LocalStorage 本地儲存的快顯
     const cached = this.loadFromStorage();
     if (cached) {
-      this.updateStatus('fallback', '使用前次已儲存之 CSV 快顯 (' + this.formatTime(new Date(cached.syncTime)) + ')');
+      this.updateStatus('fallback', '已載入快取資料 (' + this.formatTime(new Date(cached.syncTime)) + ')');
       if (typeof this.onDataUpdated === 'function') {
         this.onDataUpdated(cached.data, false);
       }
@@ -171,7 +171,7 @@ class GoogleSheetSync {
 
     // 策略 4: 使用內建快照
     const snapshotMerged = this.processAndMergeData(SNAPSHOT_APPLICATIONS, SNAPSHOT_FAMILIES);
-    this.updateStatus('fallback', '目前顯示預設快照展示資料');
+    this.updateStatus('fallback', '已載入展示資料');
     if (typeof this.onDataUpdated === 'function') {
       this.onDataUpdated(snapshotMerged, false);
     }
@@ -181,7 +181,7 @@ class GoogleSheetSync {
   // 處理使用者從瀏覽器手動選取的本機 CSV 檔案 (支援一次選取 1 或 2 個檔案)
   async importLocalCsvFiles(fileList) {
     if (!fileList || fileList.length === 0) return null;
-    this.updateStatus('syncing', '正在解析本機 CSV 檔案...');
+    this.updateStatus('syncing', '正在解析資料檔案...');
 
     let appsCsvText = '';
     let famsCsvText = '';
@@ -215,14 +215,14 @@ class GoogleSheetSync {
       const mergedData = this.processAndMergeData(appsData, famsData);
       this.lastSyncTime = new Date();
       this.saveToStorage(mergedData, this.lastSyncTime);
-      this.updateStatus('synced', '已成功載入本機 CSV (' + this.formatTime(this.lastSyncTime) + ')');
+      this.updateStatus('synced', '資料已更新 (' + this.formatTime(this.lastSyncTime) + ')');
       if (typeof this.onDataUpdated === 'function') {
         this.onDataUpdated(mergedData, true);
       }
       return mergedData;
     } else {
-      this.updateStatus('error', 'CSV 檔案解析失敗或無有效資料');
-      throw new Error('CSV 檔案解析失敗');
+      this.updateStatus('error', '檔案解析失敗或無有效資料');
+      throw new Error('檔案解析失敗');
     }
   }
 
