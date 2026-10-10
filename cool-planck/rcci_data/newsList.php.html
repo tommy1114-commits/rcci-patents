@@ -1,0 +1,882 @@
+﻿<!DOCTYPE HTML>
+<!--
+Optics by Pixelarity
+pixelarity.com | hello@pixelarity.com
+License: pixelarity.com/license
+-->
+<html>
+    <head>
+        <title>中央研究院 關鍵議題研究中心</title>
+        <base href="https://rcci.sinica.edu.tw/">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="assets/css/main.css" />
+                <link rel="stylesheet" href="assets/css/nav.css" />
+                <link rel="stylesheet" href="assets/css/rcci.css" />
+        <link rel="stylesheet" href="assets/css/h3.css" />
+        <style>
+
+            .flex-container {
+                display: flex;
+                align-items:center;
+                flex-wrap: wrap;
+                width:100%;
+            }
+            .flex-item{
+                flex:1;
+                flex-grow:0;
+                text-align:center;
+                padding:30px;
+            }
+            .flex-item-25{
+                flex-basis:25%;
+            }
+            .flex-item-50{
+                flex-basis:50%;
+            }
+            .flex-item-100{
+                flex-basis:100%;
+            }
+            body{
+                background-image: url('images/gray.png');
+
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center center;
+            }
+        </style>
+    </head>
+    <body class="is-preload">
+        <div id="page-wrapper">
+
+            <!-- Header -->
+            <style>
+    /* 針對整個搜尋元件容器 (您程式碼中的 <div class="gcse-search">) */
+    #___gcse_0 {
+        /* 設定搜尋框的寬度，避免其佔滿整個空間 */
+        width: 250px; 
+
+        /* 在搜尋框右側添加間距，與後續連結隔開 */
+        margin-right: 15px; 
+    }
+
+    /* 針對搜尋輸入框本身 */
+    .gsc-input {
+        /* 寬度通常由 .gcse-search 控制，但您也可以在這裡微調 */
+        /* height: 40px; */ /* 如果需要調整高度 */
+    }
+
+    /* 針對搜尋按鈕 */
+    .gsc-search-button {
+        /* 調整按鈕的樣式 */
+        height:34px;
+    }
+    .search-link-container {
+        display: flex; 
+
+        /* 讓所有內容靠右對齊 (從容器的起點推到終點) */
+        justify-content: flex-end; 
+
+        /* 垂直居中對齊 (確保搜尋框和連結高度一致) */
+        align-items: center; 
+
+        /* 確保容器有足夠的寬度，通常是 100% */
+        width: 100%; 
+    }
+
+    /* 2. 微調搜尋框和連結之間的間距 */
+
+    .search-link-container a {
+        /* 設定連結之間的間距 */
+        margin-left: 10px;
+
+        /* 移除 a 標籤的預設樣式 (可選) */
+        text-decoration: none; 
+        /* color: #333; */ 
+    }
+    .gsc-control-cse {
+        padding: 0;
+    }
+    .gsc-control-cse td{
+        border:none;
+    }
+    .gsc-control-cse tr{
+        border:none;
+    }
+    .gsc-input-box{
+        border:none;
+    }
+    #gs_id50{
+        margin:0;
+    }
+    #gs_id50 td{
+        padding:0;
+    }
+    .gsc-input{
+        padding:0;
+    }
+    .gsc-search-box tr{
+        background-color:#fff !important;
+        border-color: #fff;
+    }
+    .gsc-search-box td{
+        padding:0;
+		border-left:none !important;
+    }
+	/*
+    table.gsc-search-box td.gsc-input {
+        padding-right: 0;
+    }
+	*/
+    .gsc-input-box {
+border: none !important;
+background: #fff;
+}
+    #gs_tti50 input[type="text"]{
+        margin:0 !important;
+        border:1px solid #6B9CAE !important;
+        /*padding:1em !important;*/
+		height:34px !important;
+        background:none !important;
+    }
+</style>
+<link rel="stylesheet" href="assets/css/nav.css" />
+<header id="header">
+    <h1><a href="/index.php"><img class="logo" src="images/logo_rcci.png" style=""></a></h1>
+    <script async src="https://cse.google.com/cse.js?cx=d33f944540b974a51">
+    </script>
+    <script async src="https://cse.google.com/cse.js?cx=d33f944540b974a51">
+    </script>
+    <div class="search-link-container">
+
+        <a href="lang.php?lang=en" class="headerA">En</a>
+        <a href="#nav" id="headerNav"></a>
+    </div>
+    <!--<h1><img src="images/droid_heado.png" style="max-height:3.3em; margin-right:1em;"><span class="headText"><a href="https://www.sinica.edu.tw" target="_blank" rel="noopener noreferrer">中央研究院</a> <span id="headText2"><a href="index.php">關鍵議題研究中心</a></span></span></h1>
+<a href="lang.php?lang=en">En</a>
+<a href="#nav"></a>-->
+</header>
+
+<script>
+(function() {
+    // 使用 MutationObserver 監聽 Google 搜尋結果變化
+    const observer = new MutationObserver(() => {
+        const links = document.querySelectorAll(".gs-title a");
+        links.forEach(link => {
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer");
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+})();
+</script>
+            <!-- Nav -->
+            <style>
+    #newsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #linksUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #aboutUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #thematicsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #projectsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #facilitiesUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #linksUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+</style>
+<nav id="nav">
+    <ul class="links">
+        <li><a href="#" id="newsA">最新消息 <i id="newsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="newsUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="newsList.php" style="text-decoration:none;">最新消息</a></li>
+                <li style="list-style:none;"><a href="newsListH.php" style="text-decoration:none;">歷史消息</a></li>
+            </ul>
+        </li>
+        <li><a href="newsList2.php">活動公告</a></li>
+        <!--<li><a href="#" id="activitiesA">活動公告 <i id="activitiesAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="activitiesUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="newsList2.php" style="text-decoration:none;">活動公告</a></li>
+                <li style="list-style:none;"><a href="newsList2H.php" style="text-decoration:none;">歷史活動</a></li>
+            </ul>
+        </li>-->
+        <li><a href="#" id="aboutA">關於中心 <i id="aboutAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="aboutUL" style="margin-bottom:1em;display:none; ">
+                <li style="list-style:none;"><a href="intro.php" style="text-decoration:none;">中心簡介</a></li>
+                <li style="list-style:none;"><a href="histories.php" style="text-decoration:none;">南部院區發展沿革</a></li>
+                <li style="list-style:none;"><a href="committee.php" style="text-decoration:none;">學術諮詢委員</a></li>
+                <li style="list-style:none;"><a href="members.php" style="text-decoration:none;">人員</a></li>
+                <li style="list-style:none;"><a href="form.php" style="text-decoration:none;">規定及表件下載</a></li>
+            </ul>
+        </li>
+        <li><a href="#" id="thematicsA">專題中心 <i id="thematicsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="thematicsUL" style="margin-bottom:1em;display:none; ">
+                                <li style="list-style:none;"><a href="thematic.php?id=4" style="text-decoration:none;">海洋能專題中心</a></li>
+                                <li style="list-style:none;"><a href="thematic.php?id=5" style="text-decoration:none;">量子電腦專題中心</a></li>
+                            </ul>
+        </li>
+        <li><a href="#" id="projectsA">研究計畫 <i id="projectsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="projectsUL" style="margin-bottom:1em;display:none; ">
+                                <li style="list-style:none;"><a href="project.php?id=6" style="text-decoration:none;">下世代太陽能電池研究計畫</a></li>
+                                <li style="list-style:none;"><a href="project.php?id=7" style="text-decoration:none;">量子光電研究計畫</a></li>
+                                <li style="list-style:none;"><a href="project.php?id=9" style="text-decoration:none;">運用人工智慧解鎖歷史文本研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://netzero.sinica.edu.tw/feature/mptp" target="_blank"  style="text-decoration:none;">去碳燃氫研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://netzero.sinica.edu.tw/feature/bluecarbon" target="_blank"  style="text-decoration:none;">海藻藍碳研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://tai-mos.rcci.tw/" target="_blank"  style="text-decoration:none;">台灣海洋觀測系統核心設施研究計畫</a></li>
+                            </ul>
+        </li>
+        <li><a href="#" id="facilitiesA">設施服務 <i id="facilitiesAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="facilitiesUL" style="margin-bottom:1em;display:none; ">
+                <li style="list-style:none;"><a href="http://reservation.iis.sinica.edu.tw/servlet/Member/ReservationInfo/ReservationApply?groupId=95" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">儀器預約系統</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=4" style="text-decoration:none;">先進太陽能電池研發與量測設施</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=1" style="text-decoration:none;">量子光電前瞻製程與精密分析設施</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=6" style="text-decoration:none;">量子晶片製程研發平台</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=7" style="text-decoration:none;">量子計算測試平台</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=9" style="text-decoration:none;">環境生地化參數測量設施</a></li>
+                                <li style="list-style:none;"><a href="https://www.rcas.sinica.edu.tw/web/fac_MINFLUX.html" target="_blank"  style="text-decoration:none;">最小螢光光子通量顯微鏡</a></li>
+                                <li style="list-style:none;"><a href="charge.php" target="_blank" style="text-decoration:none;">設施服務收費流程</a></li>
+            </ul>
+        </li>
+        <!--<li><a href="#" id="eventsA">活動 <i id="eventsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="eventsUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="academicEvents.php" style="text-decoration:none;">學術活動</a></li>
+                <li style="list-style:none;"><a href="activities.php" style="text-decoration:none;">活動花絮</a></li>
+            </ul>
+        </li>-->
+        <li><a href="activities.php">活動花絮</a></li>
+        <li><a href="recruitments.php">人才招募</a></li>
+        <li><a href="#" id="linksA">相關連結 <i id="linksAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="linksUL" style="margin-bottom:1em; display:none;">
+                <li style="list-style:none;"><a href="https://www.qcshub.org" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Quantum Computing &amp; Simulation Hub</a></li>
+                <li style="list-style:none;"><a href="https://m.facebook.com/profile.php?id=61558611787406" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">人文社會研究基地</a></li>
+                <li style="list-style:none;"><a href="https://www.ssgesc.tw" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">沙崙智慧科學城</a></li>
+                <li style="list-style:none;"><a href="https://www.ps-taiwan.org/tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">台灣物理學會</a></li>
+                <li style="list-style:none;"><a href="https://iyq.tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">量子年官網</a></li>
+                <li style="list-style:none;"><a href="https://www.quantumtaiwan.org/tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">量子系統推動小組</a></li>
+                <li style="list-style:none;"><a href="https://www.asva.ndc.gov.tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">亞矽暨AI政策執行中心</a></li>
+            </ul>
+        </li>
+        <li><a href="lang.php?lang=en">English</a></li>
+        <li><a href="innerHome.php">中心內專區</a></li>
+    </ul>
+    <!--<ul class="actions stacked">
+<li><a href="#" class="button fit primary">Sign Up</a></li>
+<li><a href="#" class="button fit">Log In</a></li>
+</ul>-->
+</nav>
+<script src="assets/js/jquery.min.js"></script>
+<script>
+    /*
+    $('#aboutAngle').click(function() {
+        $( "#aboutUL" ).toggle();
+
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#eventsAngle').click(function() {
+        $( "#eventsUL" ).toggle();
+
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#linksAngle').click(function() {
+        $( "#linksUL" ).toggle();
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    */
+    $('#newsA').click(function() {
+        $( "#newsUL" ).toggle();
+
+
+        $('#newsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#activitiesA').click(function() {
+        $( "#activitiesUL" ).toggle();
+
+
+        $('#activitiesAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+
+    $('#aboutA').click(function() {
+        $( "#aboutUL" ).toggle();
+
+
+        $('#aboutAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#eventsA').click(function() {
+        $( "#eventsUL" ).toggle();
+
+
+        $('#eventsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#linksA').click(function() {
+        $( "#linksUL" ).toggle();
+
+        $('#linksAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#thematicsA').click(function() {
+        $( "#thematicsUL" ).toggle();
+
+        $('#thematicsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#projectsA').click(function() {
+        $( "#projectsUL" ).toggle();
+
+        $('#projectsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#facilitiesA').click(function() {
+        $( "#facilitiesUL" ).toggle();
+
+        $('#facilitiesAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+</script>
+            <!-- Main -->
+            <article id="main">
+
+                <section class="wrapper">
+                    <div class="inner">
+                        <h2 style="text-align:center;"><img src="images/blueIcon.png" style="width:60px;height:auto;vertical-align:middle; margin-right:6px;">最新消息</h2>
+
+                        
+                        <div class="flex-container">
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_4.png" style="width:36px;height:auto;"> <a href="news.php?id=118" style="color:#555;text-decoration:none;">【設施公告】2026/09/30 QC-Fab「超導金屬薄膜成長」服務開放接受委託</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-09-30</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=115" style="color:#555;text-decoration:none;">【活動報導】2026/09/01 Open Lab 關鍵中心跨領域大專生體驗營圓滿結束!</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-09-08</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_4.png" style="width:36px;height:auto;"> <a href="news.php?id=114" style="color:#555;text-decoration:none;">【人事動態】2026/09/03 恭賀夏復國研究員獲聘為中央研究院特聘研究員</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-09-03</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=113" style="color:#555;text-decoration:none;">【活動報導】2026/08/20 阿曼國立科技大學參訪去碳燃氫團隊試驗場</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-08-26</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="news.php?id=112" style="color:#555;text-decoration:none;">【研究成果】2026/08/14 恭喜量子團隊榮獲 2026 未來科技獎！</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-08-14</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=111" style="color:#555;text-decoration:none;">【活動報導】2026/08/07 量子與AI，SINICA × NCHC CUDA-Q Agentic Coding Bootcamp 圓滿落幕</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-08-12</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="news.php?id=110" style="color:#555;text-decoration:none;">【研究成果】2026/08/06 海洋能-使用混合型AI預測黑潮發電機場址效能</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-08-06</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=109" style="color:#555;text-decoration:none;">【活動報導】2026/08/05 國際學術講座：探索可擴展超導量子計算技術</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-08-05</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=107" style="color:#555;text-decoration:none;">【活動報導】2026/08/03 成大半導體暑期學校參訪關鍵中心，探索量子與綠能前瞻科技</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-08-03</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=105" style="color:#555;text-decoration:none;">【活動報導】2026/07/27 第六屆台灣鈣鈦礦技術暨應用論壇盛大登場</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-07-27</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="news.php?id=102" style="color:#555;text-decoration:none;">【科學報導】2026/06/25 量子電腦專題中心 開啟台灣量子製程新篇章</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-06-25</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="news.php?id=100" style="color:#555;text-decoration:none;">【研究成果】2026/06/22  量子電腦-超導量子位元與耦合器系統中磁通串擾的特徵分析與抑制</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-06-22</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="news.php?id=101" style="color:#555;text-decoration:none;">【研究成果】2026/06/22 量子電腦-用於超導量子位元製程的輔助窗口接面</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-06-22</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=99" style="color:#555;text-decoration:none;">【活動報導】2026/06/09 海軍官校師生親臨 Tai-MOS 實驗室，海洋科學新體驗！</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-06-09</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=98" style="color:#555;text-decoration:none;">【活動報導】中山大學物理系蒞臨參觀，激盪量子科技新火花！</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-06-01</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=96" style="color:#555;text-decoration:none;">【活動報導】關鍵中心舉辦Real-Time Feedback and Automation for Scalable Quantum Computing Systems Workshop</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-05-27</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=97" style="color:#555;text-decoration:none;">【活動報導】芬蘭商務辦事處與量子台團隊蒞臨訪問關鍵量子電腦專題中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-05-27</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=95" style="color:#555;text-decoration:none;">【活動報導】南部院區實驗室災害防救教育訓練</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-05-21</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=91" style="color:#555;text-decoration:none;">【活動報導】英國在台辦事處代表參觀關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-05-07</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=88" style="color:#555;text-decoration:none;">【活動報導】德國萊布尼茲光學技術研究所來訪關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-04-28</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=89" style="color:#555;text-decoration:none;">【活動報導】臺南大學經營與管理學系科技管理參觀南部院區</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-04-28</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=87" style="color:#555;text-decoration:none;">【活動報導】關鍵設施使用者會議圓滿落幕</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-04-21</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=86" style="color:#555;text-decoration:none;">【活動報導】中研院南部院區迎來台大生物多樣性國際學程參訪</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-04-15</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=83" style="color:#555;text-decoration:none;">【活動報導】守護未來世代--「永續世代健康學術研討會」</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-04-02</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=79" style="color:#555;text-decoration:none;">【活動報導】輝達NVIDIA 於2026年3月26日來關鍵中心討論合作案</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-03-27</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=80" style="color:#555;text-decoration:none;">【活動報導】史丹佛學生參觀關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-03-27</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=82" style="color:#555;text-decoration:none;">【活動報導】日本台灣鈣鈦礦太陽能電池聯合座談會，開啟國際合作之路</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-03-27</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1em;transform:unset;font-size: 2rem;"><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="https://www.sinica.edu.tw/news_content/55/3729" target="_blank" style="color:#555;text-decoration:none;">【研究成果】中研院推進淨零能源 地熱與海洋能Alpha計畫再達里程碑</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-03-27</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=78" style="color:#555;text-decoration:none;">【活動報導】航空產業淨零碳排永續發展研討會</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-03-26</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_4.png" style="width:36px;height:auto;"> <a href="news.php?id=77" style="color:#555;text-decoration:none;">【最新消息】恭喜! 關鍵中心多團隊獲得中研院「淨零排放」多項獎勵</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-03-20</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=74" style="color:#555;text-decoration:none;">【活動報導】臺灣海洋能論壇 - 開啟海洋能源的下一哩路</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-03-12</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=73" style="color:#555;text-decoration:none;">【活動報導】諾貝爾物理學獎得主馬汀尼斯教授來訪關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-02-26</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_4.png" style="width:36px;height:auto;"> <a href="news.php?id=68" style="color:#555;text-decoration:none;">【最新消息】中研院關鍵中心成立「下世代高效太陽能電池技術合作聯盟」</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-02-24</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=65" style="color:#555;text-decoration:none;">【活動報導】關鍵中心量子電腦Superconducting Quantum Computer Winter Workshop 圓滿落幕!</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-02-12</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=66" style="color:#555;text-decoration:none;">【活動報導】關鍵中心營業秘密講座</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-02-12</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1em;transform:unset;font-size: 2rem;"><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="https://research.sinica.edu.tw/superconducting-quantum-bit-technology-chung-ting-ke/" target="_blank" style="color:#555;text-decoration:none;">【科學報導】<研之有物-專欄> 量子電腦的關鍵：中研院自製量子位元大揭密！</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-02-06</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1em;transform:unset;font-size: 2rem;"><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="https://www.sinica.edu.tw/news_content/55/3655" target="_blank" style="color:#555;text-decoration:none;">【研究成果】中研院發表20位元超導量子電腦 製程實力躋身全球領先行列 </a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-02-05</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_4.png" style="width:36px;height:auto;"> <a href="news.php?id=72" style="color:#555;text-decoration:none;">【最新消息】關鍵中心獲2025年院區開放系列人氣獎</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2026-01-10</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=59" style="color:#555;text-decoration:none;">【活動報導】台南一中科學班參訪關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-12-10</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=56" style="color:#555;text-decoration:none;">【活動報導】XPS、PPMS使用者技術交流會</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-12-05</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="news.php?id=58" style="color:#555;text-decoration:none;">【研究成果】本中心甲烷裂解製氫設備達試量產規模，技術成果獲國際期刊刊登</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-12-05</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1em;transform:unset;font-size: 2rem;"><img src="images/icons_4.png" style="width:36px;height:auto;"> <a href="https://www.sinica.edu.tw/news_content/557/3387" target="_blank" style="color:#555;text-decoration:none;">【科學報導】<中研院訊-專欄> 綠色能源的未來之光：解密鈣鈦礦／矽基疊層太陽能電池</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-11-27</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=37" style="color:#555;text-decoration:none;">【活動花絮】國立臺北教育大學校外參訪關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-11-15</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=33" style="color:#555;text-decoration:none;">【活動花絮】中央研究院南院開放日，完美落幕!</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-11-13</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=36" style="color:#555;text-decoration:none;">【活動花絮】韓國及新加坡量子參訪關鍵中心量子電腦專題中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-11-11</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1em;transform:unset;font-size: 2rem;"><img src="images/icons_4.png" style="width:36px;height:auto;"> <a href="https://www.sinica.edu.tw/news_content/556/3354" target="_blank" style="color:#555;text-decoration:none;">【科學報導】<院訊特刊-03> 洞察黑潮能源的未來——開箱中研院海洋能專題中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-11-10</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1em;transform:unset;font-size: 2rem;"><img src="images/icons_4.png" style="width:36px;height:auto;"> <a href="https://www.sinica.edu.tw/news_content/556/3358" target="_blank" style="color:#555;text-decoration:none;">【科學報導】<院訊特刊-06> 24小時不停歇的永晝實驗室——開箱量子電腦專題中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-11-10</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1em;transform:unset;font-size: 2rem;"><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="https://www.sinica.edu.tw/news_content/55/3368" target="_blank" style="color:#555;text-decoration:none;">【活動花絮】「南部院區開放日」呼應國際量子年 中研院點燃南臺灣科學熱潮</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-11-10</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=23" style="color:#555;text-decoration:none;">【活動花絮】法國巴黎-薩克雷大學及格勒諾布爾-阿爾卑斯大學團隊參訪</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-10-23</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=71" style="color:#555;text-decoration:none;">【活動花絮】數位發展部部長參訪關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-09-26</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_2.png" style="width:36px;height:auto;"> <a href="news.php?id=12" style="color:#555;text-decoration:none;">【設施公告】114/8/6舉辦關鍵議題服務型設施推廣說明會</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-07-03</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_4.png" style="width:36px;height:auto;"> <a href="news.php?id=11" style="color:#555;text-decoration:none;">【活動公告】跨領域大專生體驗營</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-06-24</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="news.php?id=10" style="color:#555;text-decoration:none;">【研究成果】探索黑潮能量熱點：觀測浮標引領的選址革命</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-06-20</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_2.png" style="width:36px;height:auto;"> <a href="news.php?id=9" style="color:#555;text-decoration:none;">【設施服務】「紫外/可見/近紅外光分光光譜儀」操作說明課程，歡迎報名</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-06-12</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=39" style="color:#555;text-decoration:none;">【活動報導】國立中央大學研發長率團參訪關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-06-12</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1em;transform:unset;font-size: 2rem;"><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="https://www.sinica.edu.tw/News_Content/55/3181" target="_blank" style="color:#555;text-decoration:none;">【研究成果】中研院發布量子晶片製程科學成果　揭牌兩項研發平台 推動臺灣量子科技研發</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-06-10</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_4.png" style="width:36px;height:auto;"> <a href="news.php?id=7" style="color:#555;text-decoration:none;">【活動公告】先進超解析顯微技術工作坊 5/19(Mon.)-5/20(Tue.)</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-05-06</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=41" style="color:#555;text-decoration:none;">【活動報導】成功大學水利及海洋工程系學生參訪關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-04-29</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=40" style="color:#555;text-decoration:none;">【活動報導】康橋及新豐高中地球科學資優班學生，參訪關鍵中心海洋能專題中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-04-25</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=6" style="color:#555;text-decoration:none;">【活動花絮】清華大學高為元校長與邱博文研發長於4月9日蒞臨關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-04-09</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=42" style="color:#555;text-decoration:none;">【活動報導】德國特里爾大學學者參訪</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-04-02</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=43" style="color:#555;text-decoration:none;">【活動報導】中研院分子生物研究所參訪關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-03-27</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=5" style="color:#555;text-decoration:none;">【活動花絮】太陽能電池技術說明會熱烈登場，產學研共構綠能未來</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-03-26</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=44" style="color:#555;text-decoration:none;">【活動花絮】臺灣師範大學參訪關鍵中心</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-03-26</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_3.png" style="width:36px;height:auto;"> <a href="news.php?id=45" style="color:#555;text-decoration:none;">【活動報導】國科會自然處處長來訪</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-02-26</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_4.png" style="width:36px;height:auto;"> <a href="news.php?id=46" style="color:#555;text-decoration:none;">【活動報導】2025年量子科學青年論壇在台南</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-02-23</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="news.php?id=3" style="color:#555;text-decoration:none;">【研究成果】中研院宣布突破高效太陽能關鍵技術，國產下世代太陽能電池效率突破31%！</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-01-20</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                                                        <div class="flex-item-100" style="padding:0.2em; text-align:left;">
+                                <div style="background-color:#EFF5F6;border-radius:15px; padding:15px; color:#484F55;">
+                                                                       <div style="color:#484F55;margin-bottom:0em;line-height:1.3em;text-transform:unset;font-size: 2rem; "><img src="images/icons_1.png" style="width:36px;height:auto;"> <a href="news.php?id=1" style="color:#555;text-decoration:none;">【研究成果】聖嬰現象形塑了西北太平洋洋流</a></div>
+                                                                        <div style="text-align:right;line-height:1em;">2025-01-09</div>
+                                </div>
+                            <hr style="border-bottom-color:#6B9CAE; margin:0;">
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </section>
+            </article>
+
+            <!-- Footer -->
+                        <footer id="footer">
+                <div class="copyright" style="color:#555;">
+                    關鍵議題研究中心
+                <div>711010 台南市歸仁區歸仁十三路一段100號 中央研究院關鍵議題研究中心</div>
+                <div>電子郵件：<a href="mailto:rcci@gate.sinica.eud.tw">rcci@gate.sinica.edu.tw</a></div>
+                <a href="https://maps.app.goo.gl/pxor19nPte4UgrA39" target="_blank" rel="noopener noreferrer" class="button">在Google地圖上查看</a>
+                </div>
+            </footer>
+            
+        </div>
+
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.scrollex.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+
+    </body>
+</html>

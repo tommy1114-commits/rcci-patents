@@ -1,0 +1,423 @@
+﻿<!DOCTYPE HTML>
+<!--
+Optics by Pixelarity
+pixelarity.com | hello@pixelarity.com
+License: pixelarity.com/license
+-->
+<html>
+    <head>
+        <title>中央研究院 關鍵議題研究中心</title>
+        <base href="https://rcci.sinica.edu.tw/">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline' 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:;script-src 'self';">-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="assets/css/main.css" />
+                <link rel="stylesheet" href="assets/css/nav.css" />
+                <link rel="stylesheet" href="assets/css/rcci.css" />
+        <link rel="stylesheet" href="assets/css/h3.css" />
+        <style>
+            body{
+                background-image: url('images/wave.png');
+
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center center;
+            }
+        </style>
+    </head>
+    <body class="is-preload">
+        <div id="page-wrapper">
+
+            <!-- Header -->
+            <style>
+    /* 針對整個搜尋元件容器 (您程式碼中的 <div class="gcse-search">) */
+    #___gcse_0 {
+        /* 設定搜尋框的寬度，避免其佔滿整個空間 */
+        width: 250px; 
+
+        /* 在搜尋框右側添加間距，與後續連結隔開 */
+        margin-right: 15px; 
+    }
+
+    /* 針對搜尋輸入框本身 */
+    .gsc-input {
+        /* 寬度通常由 .gcse-search 控制，但您也可以在這裡微調 */
+        /* height: 40px; */ /* 如果需要調整高度 */
+    }
+
+    /* 針對搜尋按鈕 */
+    .gsc-search-button {
+        /* 調整按鈕的樣式 */
+        height:34px;
+    }
+    .search-link-container {
+        display: flex; 
+
+        /* 讓所有內容靠右對齊 (從容器的起點推到終點) */
+        justify-content: flex-end; 
+
+        /* 垂直居中對齊 (確保搜尋框和連結高度一致) */
+        align-items: center; 
+
+        /* 確保容器有足夠的寬度，通常是 100% */
+        width: 100%; 
+    }
+
+    /* 2. 微調搜尋框和連結之間的間距 */
+
+    .search-link-container a {
+        /* 設定連結之間的間距 */
+        margin-left: 10px;
+
+        /* 移除 a 標籤的預設樣式 (可選) */
+        text-decoration: none; 
+        /* color: #333; */ 
+    }
+    .gsc-control-cse {
+        padding: 0;
+    }
+    .gsc-control-cse td{
+        border:none;
+    }
+    .gsc-control-cse tr{
+        border:none;
+    }
+    .gsc-input-box{
+        border:none;
+    }
+    #gs_id50{
+        margin:0;
+    }
+    #gs_id50 td{
+        padding:0;
+    }
+    .gsc-input{
+        padding:0;
+    }
+    .gsc-search-box tr{
+        background-color:#fff !important;
+        border-color: #fff;
+    }
+    .gsc-search-box td{
+        padding:0;
+		border-left:none !important;
+    }
+	/*
+    table.gsc-search-box td.gsc-input {
+        padding-right: 0;
+    }
+	*/
+    .gsc-input-box {
+border: none !important;
+background: #fff;
+}
+    #gs_tti50 input[type="text"]{
+        margin:0 !important;
+        border:1px solid #6B9CAE !important;
+        /*padding:1em !important;*/
+		height:34px !important;
+        background:none !important;
+    }
+</style>
+<link rel="stylesheet" href="assets/css/nav.css" />
+<header id="header">
+    <h1><a href="/index.php"><img class="logo" src="images/logo_rcci.png" style=""></a></h1>
+    <script async src="https://cse.google.com/cse.js?cx=d33f944540b974a51">
+    </script>
+    <script async src="https://cse.google.com/cse.js?cx=d33f944540b974a51">
+    </script>
+    <div class="search-link-container">
+
+        <a href="lang.php?lang=en" class="headerA">En</a>
+        <a href="#nav" id="headerNav"></a>
+    </div>
+    <!--<h1><img src="images/droid_heado.png" style="max-height:3.3em; margin-right:1em;"><span class="headText"><a href="https://www.sinica.edu.tw" target="_blank" rel="noopener noreferrer">中央研究院</a> <span id="headText2"><a href="index.php">關鍵議題研究中心</a></span></span></h1>
+<a href="lang.php?lang=en">En</a>
+<a href="#nav"></a>-->
+</header>
+
+<script>
+(function() {
+    // 使用 MutationObserver 監聽 Google 搜尋結果變化
+    const observer = new MutationObserver(() => {
+        const links = document.querySelectorAll(".gs-title a");
+        links.forEach(link => {
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer");
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+})();
+</script>
+            <!-- Nav -->
+            <style>
+    #newsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #linksUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #aboutUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #thematicsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #projectsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #facilitiesUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #linksUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+</style>
+<nav id="nav">
+    <ul class="links">
+        <li><a href="#" id="newsA">最新消息 <i id="newsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="newsUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="newsList.php" style="text-decoration:none;">最新消息</a></li>
+                <li style="list-style:none;"><a href="newsListH.php" style="text-decoration:none;">歷史消息</a></li>
+            </ul>
+        </li>
+        <li><a href="newsList2.php">活動公告</a></li>
+        <!--<li><a href="#" id="activitiesA">活動公告 <i id="activitiesAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="activitiesUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="newsList2.php" style="text-decoration:none;">活動公告</a></li>
+                <li style="list-style:none;"><a href="newsList2H.php" style="text-decoration:none;">歷史活動</a></li>
+            </ul>
+        </li>-->
+        <li><a href="#" id="aboutA">關於中心 <i id="aboutAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="aboutUL" style="margin-bottom:1em;display:none; ">
+                <li style="list-style:none;"><a href="intro.php" style="text-decoration:none;">中心簡介</a></li>
+                <li style="list-style:none;"><a href="histories.php" style="text-decoration:none;">南部院區發展沿革</a></li>
+                <li style="list-style:none;"><a href="committee.php" style="text-decoration:none;">學術諮詢委員</a></li>
+                <li style="list-style:none;"><a href="members.php" style="text-decoration:none;">人員</a></li>
+                <li style="list-style:none;"><a href="form.php" style="text-decoration:none;">規定及表件下載</a></li>
+            </ul>
+        </li>
+        <li><a href="#" id="thematicsA">專題中心 <i id="thematicsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="thematicsUL" style="margin-bottom:1em;display:none; ">
+                                <li style="list-style:none;"><a href="thematic.php?id=4" style="text-decoration:none;">海洋能專題中心</a></li>
+                                <li style="list-style:none;"><a href="thematic.php?id=5" style="text-decoration:none;">量子電腦專題中心</a></li>
+                            </ul>
+        </li>
+        <li><a href="#" id="projectsA">研究計畫 <i id="projectsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="projectsUL" style="margin-bottom:1em;display:none; ">
+                                <li style="list-style:none;"><a href="project.php?id=6" style="text-decoration:none;">下世代太陽能電池研究計畫</a></li>
+                                <li style="list-style:none;"><a href="project.php?id=7" style="text-decoration:none;">量子光電研究計畫</a></li>
+                                <li style="list-style:none;"><a href="project.php?id=9" style="text-decoration:none;">運用人工智慧解鎖歷史文本研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://netzero.sinica.edu.tw/feature/mptp" target="_blank"  style="text-decoration:none;">去碳燃氫研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://netzero.sinica.edu.tw/feature/bluecarbon" target="_blank"  style="text-decoration:none;">海藻藍碳研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://tai-mos.rcci.tw/" target="_blank"  style="text-decoration:none;">台灣海洋觀測系統核心設施研究計畫</a></li>
+                            </ul>
+        </li>
+        <li><a href="#" id="facilitiesA">設施服務 <i id="facilitiesAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="facilitiesUL" style="margin-bottom:1em;display:none; ">
+                <li style="list-style:none;"><a href="http://reservation.iis.sinica.edu.tw/servlet/Member/ReservationInfo/ReservationApply?groupId=95" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">儀器預約系統</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=4" style="text-decoration:none;">先進太陽能電池研發與量測設施</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=1" style="text-decoration:none;">量子光電前瞻製程與精密分析設施</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=6" style="text-decoration:none;">量子晶片製程研發平台</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=7" style="text-decoration:none;">量子計算測試平台</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=9" style="text-decoration:none;">環境生地化參數測量設施</a></li>
+                                <li style="list-style:none;"><a href="https://www.rcas.sinica.edu.tw/web/fac_MINFLUX.html" target="_blank"  style="text-decoration:none;">最小螢光光子通量顯微鏡</a></li>
+                                <li style="list-style:none;"><a href="charge.php" target="_blank" style="text-decoration:none;">設施服務收費流程</a></li>
+            </ul>
+        </li>
+        <!--<li><a href="#" id="eventsA">活動 <i id="eventsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="eventsUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="academicEvents.php" style="text-decoration:none;">學術活動</a></li>
+                <li style="list-style:none;"><a href="activities.php" style="text-decoration:none;">活動花絮</a></li>
+            </ul>
+        </li>-->
+        <li><a href="activities.php">活動花絮</a></li>
+        <li><a href="recruitments.php">人才招募</a></li>
+        <li><a href="#" id="linksA">相關連結 <i id="linksAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="linksUL" style="margin-bottom:1em; display:none;">
+                <li style="list-style:none;"><a href="https://www.qcshub.org" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Quantum Computing &amp; Simulation Hub</a></li>
+                <li style="list-style:none;"><a href="https://m.facebook.com/profile.php?id=61558611787406" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">人文社會研究基地</a></li>
+                <li style="list-style:none;"><a href="https://www.ssgesc.tw" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">沙崙智慧科學城</a></li>
+                <li style="list-style:none;"><a href="https://www.ps-taiwan.org/tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">台灣物理學會</a></li>
+                <li style="list-style:none;"><a href="https://iyq.tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">量子年官網</a></li>
+                <li style="list-style:none;"><a href="https://www.quantumtaiwan.org/tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">量子系統推動小組</a></li>
+                <li style="list-style:none;"><a href="https://www.asva.ndc.gov.tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">亞矽暨AI政策執行中心</a></li>
+            </ul>
+        </li>
+        <li><a href="lang.php?lang=en">English</a></li>
+        <li><a href="innerHome.php">中心內專區</a></li>
+    </ul>
+    <!--<ul class="actions stacked">
+<li><a href="#" class="button fit primary">Sign Up</a></li>
+<li><a href="#" class="button fit">Log In</a></li>
+</ul>-->
+</nav>
+<script src="assets/js/jquery.min.js"></script>
+<script>
+    /*
+    $('#aboutAngle').click(function() {
+        $( "#aboutUL" ).toggle();
+
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#eventsAngle').click(function() {
+        $( "#eventsUL" ).toggle();
+
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#linksAngle').click(function() {
+        $( "#linksUL" ).toggle();
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    */
+    $('#newsA').click(function() {
+        $( "#newsUL" ).toggle();
+
+
+        $('#newsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#activitiesA').click(function() {
+        $( "#activitiesUL" ).toggle();
+
+
+        $('#activitiesAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+
+    $('#aboutA').click(function() {
+        $( "#aboutUL" ).toggle();
+
+
+        $('#aboutAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#eventsA').click(function() {
+        $( "#eventsUL" ).toggle();
+
+
+        $('#eventsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#linksA').click(function() {
+        $( "#linksUL" ).toggle();
+
+        $('#linksAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#thematicsA').click(function() {
+        $( "#thematicsUL" ).toggle();
+
+        $('#thematicsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#projectsA').click(function() {
+        $( "#projectsUL" ).toggle();
+
+        $('#projectsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#facilitiesA').click(function() {
+        $( "#facilitiesUL" ).toggle();
+
+        $('#facilitiesAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+</script>
+            <!-- Main -->
+            <article id="main">
+
+                <section class="wrapper">
+                    <div class="inner">
+                        <h2 style="text-align:center;"><img src="images/blueIcon.png" style="width:60px;height:auto;vertical-align:middle; margin-right:6px;">
+                            中心簡介</h2>
+                       <div style="text-align:center;"><img src="images/building.jpeg" style="width:50%; height:auto;"></div>
+                        <h3>成立宗旨與任務</h3>
+
+<p>中央研究院為協助國家社會因應重大挑戰，以具世界級競爭力之研發成果，提出關鍵問題解方，於2024年1月成立關鍵議題研究中心（Research Center for Critical Issues, RCCI。以下簡稱關鍵中心。）。其主要任務包括：</p>
+
+<ol>
+	<li>負責關鍵議題研究計畫相關的學術行政，與南部院區研究大樓Ⅱ和未來量子大樓的設施維運。</li>
+	<li>根據世界科技發展前沿及社會需求，挑選關鍵議題，規劃合適的研究計畫。</li>
+	<li>協助本院向政府提出建言，並規劃適當預算。</li>
+	<li>邀請院內外專家組成研究團隊，進行垂直整合研究，驗證可行的解決方案，並探究其社會影響力。</li>
+</ol>
+
+<h3>關鍵議題</h3>
+
+<p>關鍵議題研究計畫之選題原則如下：</p>
+
+<p>1. 協助解決科學及社會關鍵問題。<br />
+2. 與基礎研究（包括人文社會科學）相關。<br />
+3. 已有初步解題方向，且在3-5年可達階段性里程碑。<br />
+4. 合聘院內外專家，組成團隊進行垂直整合。<br />
+5. 由學術諮詢總會成立推動辦公室來管考、協助與獎勵。</p>
+
+<h3>運作模式</h3>
+
+<p>關鍵中心僅聘用研究技師為正編研究人員，其他執行計畫的院內外研究人員則以合聘方式加入，合聘期至計畫執行結束為止。關鍵中心的預算係支持內部行政作業與各項研究設施的維護，研究經費則來自本院各類研究計畫。各項計畫的研發成果，將視其應用潛力與院內外學研單位進行垂直整合，並實際測試。關鍵議題研究計畫也將邀請人文社會領域的學者參與，針對新科技可能造成之社會與環境影響，及配套法規制度等，進行深入研究。</p>
+
+<h3>計畫推動</h3>
+
+<p>在關鍵中心內的研究計畫，皆須提出各研發階段的里程碑，由本院學術諮詢總會成立對應的計畫推動辦公室，定期對研發進度與成果潛在影響力進行評估，及建議動態修改里程碑。計畫推動辦公室也將協助各計畫進行與政府機關及產業界的溝通協調。而為了鼓勵研究團隊在時程內達成績效，計畫推動辦公室經過審議後，可向本院推薦，對研發團隊與個別成員發給獎金，以及頒發主持人榮譽講座等獎勵。</p>
+
+<h3>新中心，新思維</h3>
+
+<p>本院並且期許將關鍵中心打造為中研院的大型「實驗室」，除了不同關鍵議題的研究，未來院方有任何新的想法與革新，例如新的組織架構或行政流程，都可以在此中心試行。身為中研院的最新研究單位，關鍵中心將著重於創新力、實踐力、影響力等面向，以新的思維與作法，協助國家社會解決各項重大關鍵問題。</p>
+
+<div class="ckeditor-html5-video" data-responsive="true" style="text-align:center">
+<video controls="controls" height="405" src="/images/rcci_720.mp4" style="height:auto; max-width:100%" width="720">&nbsp;</video>
+</div>
+
+<p>&nbsp;</p>
+
+                    </div>
+                </section>
+            </article>
+
+            <!-- Footer -->
+                        <footer id="footer">
+                <div class="copyright" style="color:#555;">
+                    關鍵議題研究中心
+                <div>711010 台南市歸仁區歸仁十三路一段100號 中央研究院關鍵議題研究中心</div>
+                <div>電子郵件：<a href="mailto:rcci@gate.sinica.eud.tw">rcci@gate.sinica.edu.tw</a></div>
+                <a href="https://maps.app.goo.gl/pxor19nPte4UgrA39" target="_blank" rel="noopener noreferrer" class="button">在Google地圖上查看</a>
+                </div>
+            </footer>
+            
+        </div>
+
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.scrollex.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+        <script src="assets/js/h3.js"></script>
+        <script>
+        </script>
+
+    </body>
+</html>

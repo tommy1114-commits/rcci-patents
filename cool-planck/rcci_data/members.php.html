@@ -1,0 +1,984 @@
+﻿<!DOCTYPE HTML>
+<!--
+Optics by Pixelarity
+pixelarity.com | hello@pixelarity.com
+License: pixelarity.com/license
+-->
+<html>
+    <head>
+        <title>中央研究院 關鍵議題研究中心</title>
+        <base href="https://rcci.sinica.edu.tw/">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC&display=swap" rel="stylesheet">
+        <link href="assets/lib/fancybox3/jquery.fancybox.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="assets/css/main.css" />
+                <link rel="stylesheet" href="assets/css/nav.css" />
+                <link rel="stylesheet" href="assets/css/rcci.css" />
+        <link rel="stylesheet" href="assets/css/h3.css" />
+        <style>
+            body{
+                background-image: url('images/membersBG.png');
+
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-position: center center;
+            }
+
+            .flex-container {
+                display: flex;
+                align-items:center;
+                flex-wrap: wrap;
+            }
+            .flex-item{
+                flex:1;
+                flex-basis:33.3333%;
+                flex-grow:0;
+                text-align:center;
+            }
+            .roundImg
+            {
+                width:240px;
+                height:240px;
+                border-radius:120px;
+                box-shadow: 5px 5px 5px #484F55;
+                background-color:#fff;
+            }
+            .roundCImg
+            {
+                width:150px;
+                height:200px;
+                border-radius:20px;
+                box-shadow: 5px 5px 5px #484F55;
+                background-color:#fff;
+            }
+            .tbcell
+            {
+                display: table-cell;
+                padding:1em;
+            }
+            .tbcName{
+                white-space:nowrap;
+            }
+
+            .flex-container{
+                margin:1em;
+            }
+            .flex-item50 {
+                flex: 1;
+                flex-basis: 50%;
+                flex-grow: 0;
+                text-align: center;
+                padding:1em;
+                align-self: stretch;
+                justify-content: stretch;
+            }
+            .flex-item60 {
+                flex: 1;
+                flex-basis: 60%;
+                flex-grow: 0;
+                text-align: center;
+                padding:1em;
+                align-self: stretch;
+                justify-content: stretch;
+            }
+            .flex-item70 {
+                flex: 1;
+                flex-basis: 70%;
+                flex-grow: 0;
+                text-align: center;
+                padding:1em;
+                align-self: stretch;
+                justify-content: stretch;
+            }
+            .flex-item100 {
+                flex: 1;
+                flex-basis: 100%;
+                flex-grow: 0;
+                text-align: center;
+                padding:1em;
+                align-self: stretch;
+                justify-content: stretch;
+            }
+            hr {
+                border-bottom-color: #6B9CAE;
+                margin:1rem;
+                border-bottom-width:3px;
+            }
+            .officerTitle{
+                font-size:36px;font-family: 'Noto Sans TC', Helvetica, sans-serif;
+                font-weight:400;
+                text-decoration:none;
+                color:#484F55;
+                position:absolute; 
+                z-index:101; 
+                                left:100px;
+                                background: rgba(255, 255, 255, .3); 
+                top:0;
+            }
+        </style>
+    </head>
+    <body class="is-preload">
+        <div id="page-wrapper">
+
+            <!-- Header -->
+            <style>
+    /* 針對整個搜尋元件容器 (您程式碼中的 <div class="gcse-search">) */
+    #___gcse_0 {
+        /* 設定搜尋框的寬度，避免其佔滿整個空間 */
+        width: 250px; 
+
+        /* 在搜尋框右側添加間距，與後續連結隔開 */
+        margin-right: 15px; 
+    }
+
+    /* 針對搜尋輸入框本身 */
+    .gsc-input {
+        /* 寬度通常由 .gcse-search 控制，但您也可以在這裡微調 */
+        /* height: 40px; */ /* 如果需要調整高度 */
+    }
+
+    /* 針對搜尋按鈕 */
+    .gsc-search-button {
+        /* 調整按鈕的樣式 */
+        height:34px;
+    }
+    .search-link-container {
+        display: flex; 
+
+        /* 讓所有內容靠右對齊 (從容器的起點推到終點) */
+        justify-content: flex-end; 
+
+        /* 垂直居中對齊 (確保搜尋框和連結高度一致) */
+        align-items: center; 
+
+        /* 確保容器有足夠的寬度，通常是 100% */
+        width: 100%; 
+    }
+
+    /* 2. 微調搜尋框和連結之間的間距 */
+
+    .search-link-container a {
+        /* 設定連結之間的間距 */
+        margin-left: 10px;
+
+        /* 移除 a 標籤的預設樣式 (可選) */
+        text-decoration: none; 
+        /* color: #333; */ 
+    }
+    .gsc-control-cse {
+        padding: 0;
+    }
+    .gsc-control-cse td{
+        border:none;
+    }
+    .gsc-control-cse tr{
+        border:none;
+    }
+    .gsc-input-box{
+        border:none;
+    }
+    #gs_id50{
+        margin:0;
+    }
+    #gs_id50 td{
+        padding:0;
+    }
+    .gsc-input{
+        padding:0;
+    }
+    .gsc-search-box tr{
+        background-color:#fff !important;
+        border-color: #fff;
+    }
+    .gsc-search-box td{
+        padding:0;
+		border-left:none !important;
+    }
+	/*
+    table.gsc-search-box td.gsc-input {
+        padding-right: 0;
+    }
+	*/
+    .gsc-input-box {
+border: none !important;
+background: #fff;
+}
+    #gs_tti50 input[type="text"]{
+        margin:0 !important;
+        border:1px solid #6B9CAE !important;
+        /*padding:1em !important;*/
+		height:34px !important;
+        background:none !important;
+    }
+</style>
+<link rel="stylesheet" href="assets/css/nav.css" />
+<header id="header">
+    <h1><a href="/index.php"><img class="logo" src="images/logo_rcci.png" style=""></a></h1>
+    <script async src="https://cse.google.com/cse.js?cx=d33f944540b974a51">
+    </script>
+    <script async src="https://cse.google.com/cse.js?cx=d33f944540b974a51">
+    </script>
+    <div class="search-link-container">
+
+        <a href="lang.php?lang=en" class="headerA">En</a>
+        <a href="#nav" id="headerNav"></a>
+    </div>
+    <!--<h1><img src="images/droid_heado.png" style="max-height:3.3em; margin-right:1em;"><span class="headText"><a href="https://www.sinica.edu.tw" target="_blank" rel="noopener noreferrer">中央研究院</a> <span id="headText2"><a href="index.php">關鍵議題研究中心</a></span></span></h1>
+<a href="lang.php?lang=en">En</a>
+<a href="#nav"></a>-->
+</header>
+
+<script>
+(function() {
+    // 使用 MutationObserver 監聽 Google 搜尋結果變化
+    const observer = new MutationObserver(() => {
+        const links = document.querySelectorAll(".gs-title a");
+        links.forEach(link => {
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer");
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+})();
+</script>
+            <!-- Nav -->
+            <style>
+    #newsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #linksUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #aboutUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #thematicsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #projectsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #facilitiesUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #linksUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+</style>
+<nav id="nav">
+    <ul class="links">
+        <li><a href="#" id="newsA">最新消息 <i id="newsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="newsUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="newsList.php" style="text-decoration:none;">最新消息</a></li>
+                <li style="list-style:none;"><a href="newsListH.php" style="text-decoration:none;">歷史消息</a></li>
+            </ul>
+        </li>
+        <li><a href="newsList2.php">活動公告</a></li>
+        <!--<li><a href="#" id="activitiesA">活動公告 <i id="activitiesAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="activitiesUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="newsList2.php" style="text-decoration:none;">活動公告</a></li>
+                <li style="list-style:none;"><a href="newsList2H.php" style="text-decoration:none;">歷史活動</a></li>
+            </ul>
+        </li>-->
+        <li><a href="#" id="aboutA">關於中心 <i id="aboutAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="aboutUL" style="margin-bottom:1em;display:none; ">
+                <li style="list-style:none;"><a href="intro.php" style="text-decoration:none;">中心簡介</a></li>
+                <li style="list-style:none;"><a href="histories.php" style="text-decoration:none;">南部院區發展沿革</a></li>
+                <li style="list-style:none;"><a href="committee.php" style="text-decoration:none;">學術諮詢委員</a></li>
+                <li style="list-style:none;"><a href="members.php" style="text-decoration:none;">人員</a></li>
+                <li style="list-style:none;"><a href="form.php" style="text-decoration:none;">規定及表件下載</a></li>
+            </ul>
+        </li>
+        <li><a href="#" id="thematicsA">專題中心 <i id="thematicsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="thematicsUL" style="margin-bottom:1em;display:none; ">
+                                <li style="list-style:none;"><a href="thematic.php?id=4" style="text-decoration:none;">海洋能專題中心</a></li>
+                                <li style="list-style:none;"><a href="thematic.php?id=5" style="text-decoration:none;">量子電腦專題中心</a></li>
+                            </ul>
+        </li>
+        <li><a href="#" id="projectsA">研究計畫 <i id="projectsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="projectsUL" style="margin-bottom:1em;display:none; ">
+                                <li style="list-style:none;"><a href="project.php?id=6" style="text-decoration:none;">下世代太陽能電池研究計畫</a></li>
+                                <li style="list-style:none;"><a href="project.php?id=7" style="text-decoration:none;">量子光電研究計畫</a></li>
+                                <li style="list-style:none;"><a href="project.php?id=9" style="text-decoration:none;">運用人工智慧解鎖歷史文本研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://netzero.sinica.edu.tw/feature/mptp" target="_blank"  style="text-decoration:none;">去碳燃氫研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://netzero.sinica.edu.tw/feature/bluecarbon" target="_blank"  style="text-decoration:none;">海藻藍碳研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://tai-mos.rcci.tw/" target="_blank"  style="text-decoration:none;">台灣海洋觀測系統核心設施研究計畫</a></li>
+                            </ul>
+        </li>
+        <li><a href="#" id="facilitiesA">設施服務 <i id="facilitiesAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="facilitiesUL" style="margin-bottom:1em;display:none; ">
+                <li style="list-style:none;"><a href="http://reservation.iis.sinica.edu.tw/servlet/Member/ReservationInfo/ReservationApply?groupId=95" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">儀器預約系統</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=4" style="text-decoration:none;">先進太陽能電池研發與量測設施</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=1" style="text-decoration:none;">量子光電前瞻製程與精密分析設施</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=6" style="text-decoration:none;">量子晶片製程研發平台</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=7" style="text-decoration:none;">量子計算測試平台</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=9" style="text-decoration:none;">環境生地化參數測量設施</a></li>
+                                <li style="list-style:none;"><a href="https://www.rcas.sinica.edu.tw/web/fac_MINFLUX.html" target="_blank"  style="text-decoration:none;">最小螢光光子通量顯微鏡</a></li>
+                                <li style="list-style:none;"><a href="charge.php" target="_blank" style="text-decoration:none;">設施服務收費流程</a></li>
+            </ul>
+        </li>
+        <!--<li><a href="#" id="eventsA">活動 <i id="eventsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="eventsUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="academicEvents.php" style="text-decoration:none;">學術活動</a></li>
+                <li style="list-style:none;"><a href="activities.php" style="text-decoration:none;">活動花絮</a></li>
+            </ul>
+        </li>-->
+        <li><a href="activities.php">活動花絮</a></li>
+        <li><a href="recruitments.php">人才招募</a></li>
+        <li><a href="#" id="linksA">相關連結 <i id="linksAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="linksUL" style="margin-bottom:1em; display:none;">
+                <li style="list-style:none;"><a href="https://www.qcshub.org" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Quantum Computing &amp; Simulation Hub</a></li>
+                <li style="list-style:none;"><a href="https://m.facebook.com/profile.php?id=61558611787406" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">人文社會研究基地</a></li>
+                <li style="list-style:none;"><a href="https://www.ssgesc.tw" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">沙崙智慧科學城</a></li>
+                <li style="list-style:none;"><a href="https://www.ps-taiwan.org/tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">台灣物理學會</a></li>
+                <li style="list-style:none;"><a href="https://iyq.tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">量子年官網</a></li>
+                <li style="list-style:none;"><a href="https://www.quantumtaiwan.org/tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">量子系統推動小組</a></li>
+                <li style="list-style:none;"><a href="https://www.asva.ndc.gov.tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">亞矽暨AI政策執行中心</a></li>
+            </ul>
+        </li>
+        <li><a href="lang.php?lang=en">English</a></li>
+        <li><a href="innerHome.php">中心內專區</a></li>
+    </ul>
+    <!--<ul class="actions stacked">
+<li><a href="#" class="button fit primary">Sign Up</a></li>
+<li><a href="#" class="button fit">Log In</a></li>
+</ul>-->
+</nav>
+<script src="assets/js/jquery.min.js"></script>
+<script>
+    /*
+    $('#aboutAngle').click(function() {
+        $( "#aboutUL" ).toggle();
+
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#eventsAngle').click(function() {
+        $( "#eventsUL" ).toggle();
+
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#linksAngle').click(function() {
+        $( "#linksUL" ).toggle();
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    */
+    $('#newsA').click(function() {
+        $( "#newsUL" ).toggle();
+
+
+        $('#newsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#activitiesA').click(function() {
+        $( "#activitiesUL" ).toggle();
+
+
+        $('#activitiesAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+
+    $('#aboutA').click(function() {
+        $( "#aboutUL" ).toggle();
+
+
+        $('#aboutAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#eventsA').click(function() {
+        $( "#eventsUL" ).toggle();
+
+
+        $('#eventsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#linksA').click(function() {
+        $( "#linksUL" ).toggle();
+
+        $('#linksAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#thematicsA').click(function() {
+        $( "#thematicsUL" ).toggle();
+
+        $('#thematicsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#projectsA').click(function() {
+        $( "#projectsUL" ).toggle();
+
+        $('#projectsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#facilitiesA').click(function() {
+        $( "#facilitiesUL" ).toggle();
+
+        $('#facilitiesAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+</script>
+            <!-- Main -->
+            <article id="main">
+
+                <section class="wrapper">
+                    <div class="inner">
+                        <h2 style="text-align:center;"><img src="images/blueIcon.png" style="width:60px;height:auto;vertical-align:middle; margin-right:6px;">人員</h2>
+
+
+                                                <h2>主任</h2>
+                        <div class="flex-container">
+                                                        <div class="flex-item100" style="padding:1em;">
+                                <div style=" background-color:#EFF5F6; padding:1em; border-radius:25px;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a href="https://www.rcas.sinica.edu.tw/web/mem_faculty/Lee_ChauHwang.html" target="_blank" rel="noopener noreferrer"><img src='upload/members/20240702135004.jpg' style="width:100%; height:auto;"></a>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div style="text-decoration:none;color:#484F55; font-size:26px; text-align:left;"><a href="https://www.rcas.sinica.edu.tw/web/mem_faculty/Lee_ChauHwang.html" target="_blank" rel="noopener noreferrer" style="color:#555;">李超煌</a> <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">clee@as.edu.tw</span></span></div>
+                                            <hr>
+                                            <div style="text-align:left; font-weight:normal;">
+                                                <p><strong>最高學歷</strong></p>
+
+<p>1997 國立台灣大學電機工程博士</p>
+
+<p><strong>主要經歷</strong></p>
+
+<p>2024-迄今 中央研究院關鍵議題中心主任<br />
+2016-迄今 中央研究院學術諮詢總會副執行秘書<br />
+2014-2016 中央研究院應用科學研究中心副主任<br />
+2011-2014 國立陽明大學生醫光電研究所所長<br />
+2011-迄今 國立陽明大學生醫光電研究所合聘教授<br />
+2010-迄今 中央研究院應用科學研究中心研究員</p>
+
+<p><strong>研究領域</strong></p>
+
+<ul>
+	<li>光學顯微術與相關科技</li>
+	<li>細胞－細胞與細胞－微環境交互作用</li>
+	<li>微流道元件的生醫應用</li>
+</ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                                                    </div>
+
+                                                <h2>副主任</h2>
+                        <div class="flex-container">
+                                                        <div class="flex-item100" style="padding:1em;">
+                                <div style=" background-color:#EFF5F6; padding:1em; border-radius:25px;height: 100%;
+                                            ">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a href="https://rcec.sinica.edu.tw/?action=member&id=15" target="_blank" rel="noopener noreferrer"><img src='upload/members/20240702135012.jpg' style="width:100%; height:auto;"></a>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div style="text-decoration:none;color:#484F55; font-size:26px; text-align:left;"><a href="https://rcec.sinica.edu.tw/?action=member&id=15" target="_blank" rel="noopener noreferrer" style="color:#555;">夏復國</a> <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">fkshiah@as.edu.tw</span></span></div>
+                                            <hr>
+                                            <div style="text-align:left; font-weight:normal;">
+                                                <p><strong>最高學歷</strong></p>
+
+<p>1993 美國馬里蘭大學海洋河口環境科學學程博士 &nbsp;</p>
+
+<p><strong>主要經歷</strong></p>
+
+<p>2024-迄今 中央研究院關鍵議題中心副主任<br />
+2021-2024 中央研究院環境變遷研究中心副主任<br />
+2026-迄今 中央研究院環境變遷研究中心特聘研究員<br />
+2004-2026 中央研究院環境變遷研究中心研究員<br />
+2007-2023 國立臺灣大學海洋研究所所長合聘教授<br />
+2004-迄今 國立臺灣海洋大學海洋環境與生態研究所合聘教授<br />
+2004-2005 國立臺灣海洋大學海洋環境與生態研究所所長</p>
+
+<p><strong>研究領域</strong></p>
+
+<ul>
+	<li>湖沼海洋學</li>
+	<li>微生物生態學</li>
+	<li>水域生態系統時間序列研究站經營管理</li>
+</ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    </div>
+                                                
+                        
+                                                <h2>研究副技師</h2>
+                        <div class="flex-container">
+                                                        <div class="flex-item100" style="padding:1em;">
+                                <div style=" background-color:#F3F3E4; padding:1em; border-radius:25px;height: 100%;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src='upload/members/20240603121530.jpg' style="width:100%; height:auto;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div style="text-decoration:none;color:#484F55; font-size:26px; text-align:left;">戴仁華 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">jhtai@as.edu.tw</span></span></div>
+                                            <hr>
+                                            <div style="text-align:left; font-weight:normal;">
+                                                <p><strong>最高學歷</strong></p>
+
+<p>2010 國立台灣大學海洋研究所博士</p>
+
+<p><strong>主要經歷</strong></p>
+
+<p>2024/06-迄今 中央研究院關鍵議題研究中心研究副技師<br />
+2021/02-2024/05 中央研究院環境變遷研究中心研究副技師<br />
+2014/10-2021/02 中央研究院環境變遷研究中心研究助技師<br />
+2011/01-2014/10 中央研究院環境變遷研究中心博士後研究員<br />
+2010/08-2010/12 國立台灣大學海洋研究所博士後研究員</p>
+
+<p><strong>研究領域</strong></p>
+
+<ul>
+	<li>海洋錨碇觀測系統開發</li>
+	<li>海流資料分析</li>
+	<li>海洋流場及水文結構分析</li>
+</ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    </div>
+                                                        
+                            
+                                                <h2>研究助技師</h2>
+                        <div class="flex-container">
+                                                        <div class="flex-item100" style="padding:1em;">
+                                <div style=" background-color:#F3F3E4; padding:1em; border-radius:25px;height: 100%;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src='upload/members/20260205031320.JPG' style="width:100%; height:auto;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div style="text-decoration:none;color:#484F55; font-size:26px; text-align:left;">陳彥君 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">ycchen22537@as.edu.tw</span></span></div>
+                                            <hr>
+                                            <div style="text-align:left; font-weight:normal;">
+                                                <p><strong>最高學歷</strong></p>
+
+<p>2019 國立清華大學物理研究所博士</p>
+
+<p><strong>主要經歷</strong></p>
+
+<p>2024/06-迄今&nbsp;&nbsp;中央研究院關鍵議題研究中心研究助技師<br />
+2024/01-2024/06 中央研究院應用科學中心研究助技師<br />
+2020/02-2024/01 中央研究院物理研究所博士後研究員<br />
+2017/12-2019/01 加州理工學院訪問研究員</p>
+
+<p><strong>研究領域</strong></p>
+
+<ul>
+	<li>超導通用量子電腦硬體製程技術、物理與應用</li>
+	<li>凝聚態物理、超導物理，以及低維度量子傳輸系統</li>
+	<li>二維凡德瓦異質結構能谷電子和自旋電子學量子傳輸</li>
+</ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                        <div class="flex-item100" style="padding:1em;">
+                                <div style=" background-color:#F3F3E4; padding:1em; border-radius:25px;height: 100%;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src='upload/members/20260812014833.JPG' style="width:100%; height:auto;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div style="text-decoration:none;color:#484F55; font-size:26px; text-align:left;">呂德輝 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">takehuge@as.edu.tw</span></span></div>
+                                            <hr>
+                                            <div style="text-align:left; font-weight:normal;">
+                                                <p><strong>最高學歷</strong></p>
+
+<p>2015 國立台灣大學物理研究所博士</p>
+
+<p><strong>主要經歷</strong></p>
+
+<p>2025/06-迄今 中央研究院關鍵議題研究中心研究助技師&nbsp;<br />
+2021/12-2025/05 中央研究院物理研究所專案研究員&nbsp;<br />
+2015/12-2021/11 中央研究院物理研究所博士後研究學者&nbsp;</p>
+
+<p><strong>研究領域&nbsp;</strong></p>
+
+<ul>
+	<li>超導量子處理器控制讀取、基準測試、基閘優化技術、物理與應用</li>
+	<li>超導量子處理器與圖形處理器於高效能運算之整合&nbsp;</li>
+	<li>隨機電路取樣、量子實用性與量子優勢</li>
+</ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                        <div class="flex-item100" style="padding:1em;">
+                                <div style=" background-color:#F3F3E4; padding:1em; border-radius:25px;height: 100%;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src='upload/members/20250617030517.JPG' style="width:100%; height:auto;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div style="text-decoration:none;color:#484F55; font-size:26px; text-align:left;">李育凭 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">yupinglee@as.edu.tw</span></span></div>
+                                            <hr>
+                                            <div style="text-align:left; font-weight:normal;">
+                                                <p><strong>最高學歷</strong></p>
+
+<p>2017 國立台灣大學化學工程研究所博士</p>
+
+<p><strong>主要經歷</strong></p>
+
+<p>2025/06-迄今 中央研究院關鍵議題研究中心研究助技師<br />
+2024/10-2025/05 中央研究院關鍵議題研究中心專案研究員<br />
+2021/10-2024/09 中央研究院物理研究所專案研究員<br />
+2017/10-2021/09 國立台灣大學化學工程研究所博士後研究學者</p>
+
+<p><strong>研究領域</strong></p>
+
+<ul>
+	<li>高溫觸媒催化甲烷裂解技術、熔融金屬催化甲烷裂解技術。</li>
+	<li>直流電漿炬甲烷裂解技術、高溫火炬電漿甲烷裂解技術。</li>
+	<li>高分子偶合合成技術、陰離子聚合合成技術、乳化聚合合成技術。</li>
+	<li>有機敏化太陽能電池元件製備、高分子太陽能電池元件製備。</li>
+</ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                        <div class="flex-item100" style="padding:1em;">
+                                <div style=" background-color:#F3F3E4; padding:1em; border-radius:25px;height: 100%;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src='upload/members/20250617031525.jpg' style="width:100%; height:auto;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div style="text-decoration:none;color:#484F55; font-size:26px; text-align:left;">吳杉洛 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">slwu@as.edu.tw</span></span></div>
+                                            <hr>
+                                            <div style="text-align:left; font-weight:normal;">
+                                                <p><strong>最高學歷</strong></p>
+
+<p>2020 國立中興大學環境工程所博士</p>
+
+<p><strong>主要經歷</strong></p>
+
+<p>2025/06-迄今 中央研究院關鍵議題研究中心研究助技師<br />
+2024/10-2025/05 中央研究院關鍵議題研究中心博士後研究學者<br />
+2022/11-2024/09 中央研究院物理研究所博士後研究學者<br />
+2019/11-2020/05 加州大學戴維斯分校訪問學者</p>
+
+<p><strong>研究領域</strong></p>
+
+<ul>
+	<li>去碳燃氫、產氫技術及氫能應用</li>
+	<li>電漿技術、工業化應用</li>
+	<li>潔淨能源及再生能源、混氫發電技術</li>
+</ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                        <div class="flex-item100" style="padding:1em;">
+                                <div style=" background-color:#F3F3E4; padding:1em; border-radius:25px;height: 100%;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <img src='upload/members/20260812014848.JPG' style="width:100%; height:auto;">
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div style="text-decoration:none;color:#484F55; font-size:26px; text-align:left;">紀秉夆 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">binbincookie@as.edu.tw</span></span></div>
+                                            <hr>
+                                            <div style="text-align:left; font-weight:normal;">
+                                                <p><strong>最高學歷</strong></p>
+
+<p>2024 國立成功大學光電科學與工程學系博士</p>
+
+<p><strong>主要經歷</strong></p>
+
+<p>2026/08-迄今 中央研究院關鍵議題研究中心研究助技師<br />
+2024/06-2026/07 中央研究院關鍵議題研究中心研究博士後研究員<br />
+2019/05-2019/12 信越光電股份有限公司工程師<br />
+2011/11-2019/05 安徽德豪润达电气股份有限公司研發主管<br />
+2009/09-2011/10 晶元光電股份有限公司工程師</p>
+
+<p><strong>研究領域</strong></p>
+
+<ul>
+	<li>二維半導體異質相垂直堆疊技術</li>
+	<li>化學氣相沉積技術應用於光電元件</li>
+	<li>寬能隙半導體製備與應用</li>
+	<li>MOCVD磊晶工程(砷化鎵、氮化鎵)</li>
+</ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                    </div>
+                            
+
+
+                                                <h2>台南行政室</h2>
+                        <div class="flex-container">
+                            <div class="flex-item100" style="padding:1em;">
+                                <div style=" background-color:#F3EDE4; padding:1em; border-radius:25px;height: 100%;">
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            張小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">chunfang@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                專案經理                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7710                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            王小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">g601123@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                會計                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7706                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            林小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">fangyu45@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                會計                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7714                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            張先生 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">hsinchang@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                會計                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7724                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            黃小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">a10461@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                出納                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7723                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            黃小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">lynneh@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                採購                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7712                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            林小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">eting@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                採購                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7713                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            陳小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">iching5880@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                採購                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7722                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            李小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">uni0326@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                人事                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7703                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            尤先生 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">ccyu@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                總務                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7708                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            謝先生 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">pingheng@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                資訊                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7721                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            侯小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">lisahou@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                副主任秘書、學術秘書                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7705                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            吳小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">wzw@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                環安衛                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7725                                            </div>
+                                        </div>
+                                            <hr>
+                                                                <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            蕭先生 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">hsiao369@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                資訊、財管                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (06) 216-7727                                            </div>
+                                        </div>
+                                            <hr>
+                                                            </div>
+                            </div>
+                        </div>
+
+
+
+                                                <h2>台北辦公室</h2>
+                        <div class="flex-container">
+                            <div class="flex-item100" style="padding:1em;">
+                                <div style=" background-color:#F3EDE4; padding:1em; border-radius:25px;height: 100%;">
+                                                        
+                                    <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            尤小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">sj828@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                主任秘書、設施營運組組長、行政總監                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (02) 2789-8727                                            </div>
+                                        </div>
+                                            <hr>
+                                                        
+                                    <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            許小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">yjhsu02@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                行政、人事                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (02) 2787-2615                                            </div>
+                                        </div>
+                                            <hr>
+                                                        
+                                    <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            張小姐 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">sookie7511@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                會計                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (02) 2787-2715                                            </div>
+                                        </div>
+                                            <hr>
+                                                        
+                                    <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            劉先生 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">lmliu@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                量子科技推動辦公室 計畫經理                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (02) 2787-2714                                            </div>
+                                        </div>
+                                            <hr>
+                                                        
+                                    <div class="row">
+                                        <div class="col-md-2" style="text-decoration:none;color:#484F55; text-align:center;">
+                                            林先生 <span class="tooltipN"><i class="fa fa-envelope" aria-hidden="true"></i><span class="tooltiptext tooltip-right">tommy1114@as.edu.tw</span></span>
+                                        </div>
+                                            <div class="col-md-6" style="text-align:left; font-weight:normal;">
+                                                智財                                            </div>
+                                            <div class="col-md-4" style="text-align:left; font-weight:normal;">
+                                                (02) 2787-2721                                            </div>
+                                        </div>
+                                            <hr>
+                                                            </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </section>
+            </article>
+
+            <!-- Footer -->
+                        <footer id="footer">
+                <div class="copyright" style="color:#555;">
+                    關鍵議題研究中心
+                <div>711010 台南市歸仁區歸仁十三路一段100號 中央研究院關鍵議題研究中心</div>
+                <div>電子郵件：<a href="mailto:rcci@gate.sinica.eud.tw">rcci@gate.sinica.edu.tw</a></div>
+                <a href="https://maps.app.goo.gl/pxor19nPte4UgrA39" target="_blank" rel="noopener noreferrer" class="button">在Google地圖上查看</a>
+                </div>
+            </footer>
+            
+        </div>
+
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-4.0.2.js"></script>
+        <script src="assets/lib/fancybox3/jquery.fancybox.min.js"></script>
+        <script src="assets/js/jquery.scrollex.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+
+    </body>
+</html>

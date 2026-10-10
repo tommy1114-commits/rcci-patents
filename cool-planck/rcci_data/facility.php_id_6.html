@@ -1,0 +1,737 @@
+﻿<!DOCTYPE HTML>
+<!--
+Optics by Pixelarity
+pixelarity.com | hello@pixelarity.com
+License: pixelarity.com/license
+-->
+<html>
+    <head>
+        <title>中央研究院 關鍵議題研究中心</title>
+        <base href="https://rcci.sinica.edu.tw/">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="assets/lib/bootstrap/css/bootstrap.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC&display=swap" rel="stylesheet">
+        <link href="assets/lib/fancybox3/jquery.fancybox.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="assets/css/main.css" />
+                <link rel="stylesheet" href="assets/css/nav.css" />
+                <link rel="stylesheet" href="assets/css/rcci.css" />
+        <!--<link rel="stylesheet" href="assets/css/h3.css" />-->
+        <style>
+            /*
+            #main{
+            color:;
+            }
+            #main h1,h2,h3,h5{
+            color:;
+            }
+            */
+            .colorBlock
+            {
+                background-color:; 
+                color:;
+            }
+            .flex-container {
+                display: flex;
+                align-items:flex-start;
+                flex-wrap: wrap;
+            }
+            .flex-item{
+                flex:1;
+                flex-grow:0;
+                text-align:center;
+                padding:30px;
+            }
+            .flex-item-20{
+                flex-basis:20%;
+            }
+            .flex-item-25{
+                flex-basis:25%;
+            }
+            .flex-item-50{
+                flex-basis:50%;
+            }
+            .flex-item-30{
+                flex-basis:30%;
+            }
+            .flex-item-70{
+                flex-basis:70%;
+            }
+            .flex-item-80{
+                flex-basis:80%;
+            }
+            .members{
+                /* background-color:#41AFD6; */
+                border-radius:25px;
+                color:#fff;
+                text-align:left;
+                padding:25px;
+                display:table-cell;
+                width:50%;
+                margin:20px;
+            }
+
+            .members h4{
+                color:#fff;
+            }
+            .flex-item img{
+                width:100%; 
+                height:auto;
+                border-radius:15px;
+            }
+            .videoDiv{
+                text-align:center;
+            }
+            .roundCImg
+            {
+                width:150px;
+                height:200px;
+                border-radius:20px;
+                box-shadow: 5px 5px 5px #484F55;
+                background-color:#fff;
+            }
+            .officerTitle{
+                font-size:36px;font-family: 'Noto Sans TC', Helvetica, sans-serif;
+                font-weight:400;
+            }
+
+            body{
+                background-image: url('images/thematicSec.jpg');
+
+                background-repeat: no-repeat;
+                background-attachment: fixed;
+                background-size: cover;
+                background-position: top top;
+            }
+
+            .flex-item50 {
+                flex: 1;
+                flex-basis: 50%;
+                flex-grow: 0;
+                text-align: center;
+                align-self: stretch;
+                justify-content: stretch;
+            }
+            .flex-item100 {
+                flex: 1;
+                flex-basis: 100%;
+                flex-grow: 0;
+                text-align: center;
+                align-self: stretch;
+                justify-content: stretch;
+            }
+            hr {
+                border-bottom-color: #ffd700;
+                margin:1rem;
+                border-bottom-width:3px;
+            }
+            #pageLink
+            {
+                text-align:center;
+                margin-bottom:2em;
+            }
+            #gotop{
+                position: fixed;
+                /* top: 70vh; */
+                left: 50px;
+                bottom: 0;
+                z-index: 200;
+            }
+            .inner2{
+                width: 100%;
+                padding-left: 10%;
+                padding-right: 10%;
+                padding-top:1em;
+                padding-bottom:1em;
+            }
+            .inner2 h2 {
+                /* font-family: "Noto Serif TC", Helvetica, sans-serif; */
+                font-family: Arial, "微軟正黑體", "Helvetica Neue", Helvetica, sans-serif, "新細明體";
+                font-size: 2.5rem;
+                font-weight: bold;
+                margin-bottom: 0em;
+                color:#fff;
+            }
+            @media screen and (max-width: 980px) {
+
+                .flex-item50 {
+                    flex-basis: 100%;
+                }
+                .flex-item-25 {
+                    flex-basis: 50%;
+                }
+            }
+            @media screen and (max-width: 736px) {
+
+                .flex-item50 {
+                    flex-basis: 100%;
+                }
+                .flex-item-25 {
+                    flex-basis: 50%;
+                }
+                #pageLink{
+                    display:none;
+                }
+                .eqpName{
+                    min-width:50vw;
+                }
+                #five{
+                    overflow:auto;
+                }
+                #fivef{
+                    width:fit-content;
+                }
+            }
+            table td{
+                font-weight:normal;
+                font-size:0.9em;
+            }
+            .wrapper
+            {
+                padding-top:1.3em;
+            }
+            h2{
+                text-transform:none;
+            }
+        </style>
+    </head>
+    <body class="is-preload">
+        <div id="page-wrapper">
+
+            <!-- Header -->
+            <style>
+    /* 針對整個搜尋元件容器 (您程式碼中的 <div class="gcse-search">) */
+    #___gcse_0 {
+        /* 設定搜尋框的寬度，避免其佔滿整個空間 */
+        width: 250px; 
+
+        /* 在搜尋框右側添加間距，與後續連結隔開 */
+        margin-right: 15px; 
+    }
+
+    /* 針對搜尋輸入框本身 */
+    .gsc-input {
+        /* 寬度通常由 .gcse-search 控制，但您也可以在這裡微調 */
+        /* height: 40px; */ /* 如果需要調整高度 */
+    }
+
+    /* 針對搜尋按鈕 */
+    .gsc-search-button {
+        /* 調整按鈕的樣式 */
+        height:34px;
+    }
+    .search-link-container {
+        display: flex; 
+
+        /* 讓所有內容靠右對齊 (從容器的起點推到終點) */
+        justify-content: flex-end; 
+
+        /* 垂直居中對齊 (確保搜尋框和連結高度一致) */
+        align-items: center; 
+
+        /* 確保容器有足夠的寬度，通常是 100% */
+        width: 100%; 
+    }
+
+    /* 2. 微調搜尋框和連結之間的間距 */
+
+    .search-link-container a {
+        /* 設定連結之間的間距 */
+        margin-left: 10px;
+
+        /* 移除 a 標籤的預設樣式 (可選) */
+        text-decoration: none; 
+        /* color: #333; */ 
+    }
+    .gsc-control-cse {
+        padding: 0;
+    }
+    .gsc-control-cse td{
+        border:none;
+    }
+    .gsc-control-cse tr{
+        border:none;
+    }
+    .gsc-input-box{
+        border:none;
+    }
+    #gs_id50{
+        margin:0;
+    }
+    #gs_id50 td{
+        padding:0;
+    }
+    .gsc-input{
+        padding:0;
+    }
+    .gsc-search-box tr{
+        background-color:#fff !important;
+        border-color: #fff;
+    }
+    .gsc-search-box td{
+        padding:0;
+		border-left:none !important;
+    }
+	/*
+    table.gsc-search-box td.gsc-input {
+        padding-right: 0;
+    }
+	*/
+    .gsc-input-box {
+border: none !important;
+background: #fff;
+}
+    #gs_tti50 input[type="text"]{
+        margin:0 !important;
+        border:1px solid #6B9CAE !important;
+        /*padding:1em !important;*/
+		height:34px !important;
+        background:none !important;
+    }
+</style>
+<link rel="stylesheet" href="assets/css/nav.css" />
+<header id="header">
+    <h1><a href="/index.php"><img class="logo" src="images/logo_rcci.png" style=""></a></h1>
+    <script async src="https://cse.google.com/cse.js?cx=d33f944540b974a51">
+    </script>
+    <script async src="https://cse.google.com/cse.js?cx=d33f944540b974a51">
+    </script>
+    <div class="search-link-container">
+
+        <a href="lang.php?lang=en" class="headerA">En</a>
+        <a href="#nav" id="headerNav"></a>
+    </div>
+    <!--<h1><img src="images/droid_heado.png" style="max-height:3.3em; margin-right:1em;"><span class="headText"><a href="https://www.sinica.edu.tw" target="_blank" rel="noopener noreferrer">中央研究院</a> <span id="headText2"><a href="index.php">關鍵議題研究中心</a></span></span></h1>
+<a href="lang.php?lang=en">En</a>
+<a href="#nav"></a>-->
+</header>
+
+<script>
+(function() {
+    // 使用 MutationObserver 監聽 Google 搜尋結果變化
+    const observer = new MutationObserver(() => {
+        const links = document.querySelectorAll(".gs-title a");
+        links.forEach(link => {
+            link.setAttribute("target", "_blank");
+            link.setAttribute("rel", "noopener noreferrer");
+        });
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
+    });
+})();
+</script>
+            <!-- Nav -->
+            <style>
+    #newsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #linksUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #aboutUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #thematicsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #projectsUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #facilitiesUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+    #linksUL li{
+        line-height:1em;
+        padding-bottom:0.7em;
+    }
+</style>
+<nav id="nav">
+    <ul class="links">
+        <li><a href="#" id="newsA">最新消息 <i id="newsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="newsUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="newsList.php" style="text-decoration:none;">最新消息</a></li>
+                <li style="list-style:none;"><a href="newsListH.php" style="text-decoration:none;">歷史消息</a></li>
+            </ul>
+        </li>
+        <li><a href="newsList2.php">活動公告</a></li>
+        <!--<li><a href="#" id="activitiesA">活動公告 <i id="activitiesAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="activitiesUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="newsList2.php" style="text-decoration:none;">活動公告</a></li>
+                <li style="list-style:none;"><a href="newsList2H.php" style="text-decoration:none;">歷史活動</a></li>
+            </ul>
+        </li>-->
+        <li><a href="#" id="aboutA">關於中心 <i id="aboutAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="aboutUL" style="margin-bottom:1em;display:none; ">
+                <li style="list-style:none;"><a href="intro.php" style="text-decoration:none;">中心簡介</a></li>
+                <li style="list-style:none;"><a href="histories.php" style="text-decoration:none;">南部院區發展沿革</a></li>
+                <li style="list-style:none;"><a href="committee.php" style="text-decoration:none;">學術諮詢委員</a></li>
+                <li style="list-style:none;"><a href="members.php" style="text-decoration:none;">人員</a></li>
+                <li style="list-style:none;"><a href="form.php" style="text-decoration:none;">規定及表件下載</a></li>
+            </ul>
+        </li>
+        <li><a href="#" id="thematicsA">專題中心 <i id="thematicsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="thematicsUL" style="margin-bottom:1em;display:none; ">
+                                <li style="list-style:none;"><a href="thematic.php?id=4" style="text-decoration:none;">海洋能專題中心</a></li>
+                                <li style="list-style:none;"><a href="thematic.php?id=5" style="text-decoration:none;">量子電腦專題中心</a></li>
+                            </ul>
+        </li>
+        <li><a href="#" id="projectsA">研究計畫 <i id="projectsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="projectsUL" style="margin-bottom:1em;display:none; ">
+                                <li style="list-style:none;"><a href="project.php?id=6" style="text-decoration:none;">下世代太陽能電池研究計畫</a></li>
+                                <li style="list-style:none;"><a href="project.php?id=7" style="text-decoration:none;">量子光電研究計畫</a></li>
+                                <li style="list-style:none;"><a href="project.php?id=9" style="text-decoration:none;">運用人工智慧解鎖歷史文本研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://netzero.sinica.edu.tw/feature/mptp" target="_blank"  style="text-decoration:none;">去碳燃氫研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://netzero.sinica.edu.tw/feature/bluecarbon" target="_blank"  style="text-decoration:none;">海藻藍碳研究計畫</a></li>
+                                <li style="list-style:none;"><a href="https://tai-mos.rcci.tw/" target="_blank"  style="text-decoration:none;">台灣海洋觀測系統核心設施研究計畫</a></li>
+                            </ul>
+        </li>
+        <li><a href="#" id="facilitiesA">設施服務 <i id="facilitiesAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="facilitiesUL" style="margin-bottom:1em;display:none; ">
+                <li style="list-style:none;"><a href="http://reservation.iis.sinica.edu.tw/servlet/Member/ReservationInfo/ReservationApply?groupId=95" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">儀器預約系統</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=4" style="text-decoration:none;">先進太陽能電池研發與量測設施</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=1" style="text-decoration:none;">量子光電前瞻製程與精密分析設施</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=6" style="text-decoration:none;">量子晶片製程研發平台</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=7" style="text-decoration:none;">量子計算測試平台</a></li>
+                                <li style="list-style:none;"><a href="facility.php?id=9" style="text-decoration:none;">環境生地化參數測量設施</a></li>
+                                <li style="list-style:none;"><a href="https://www.rcas.sinica.edu.tw/web/fac_MINFLUX.html" target="_blank"  style="text-decoration:none;">最小螢光光子通量顯微鏡</a></li>
+                                <li style="list-style:none;"><a href="charge.php" target="_blank" style="text-decoration:none;">設施服務收費流程</a></li>
+            </ul>
+        </li>
+        <!--<li><a href="#" id="eventsA">活動 <i id="eventsAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="eventsUL" style="margin-bottom:1em;display:none;">
+                <li style="list-style:none;"><a href="academicEvents.php" style="text-decoration:none;">學術活動</a></li>
+                <li style="list-style:none;"><a href="activities.php" style="text-decoration:none;">活動花絮</a></li>
+            </ul>
+        </li>-->
+        <li><a href="activities.php">活動花絮</a></li>
+        <li><a href="recruitments.php">人才招募</a></li>
+        <li><a href="#" id="linksA">相關連結 <i id="linksAngle" class="fa fa-angle-down" aria-hidden="true"></i></a>
+            <ul id="linksUL" style="margin-bottom:1em; display:none;">
+                <li style="list-style:none;"><a href="https://www.qcshub.org" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Quantum Computing &amp; Simulation Hub</a></li>
+                <li style="list-style:none;"><a href="https://m.facebook.com/profile.php?id=61558611787406" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">人文社會研究基地</a></li>
+                <li style="list-style:none;"><a href="https://www.ssgesc.tw" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">沙崙智慧科學城</a></li>
+                <li style="list-style:none;"><a href="https://www.ps-taiwan.org/tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">台灣物理學會</a></li>
+                <li style="list-style:none;"><a href="https://iyq.tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">量子年官網</a></li>
+                <li style="list-style:none;"><a href="https://www.quantumtaiwan.org/tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">量子系統推動小組</a></li>
+                <li style="list-style:none;"><a href="https://www.asva.ndc.gov.tw/" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">亞矽暨AI政策執行中心</a></li>
+            </ul>
+        </li>
+        <li><a href="lang.php?lang=en">English</a></li>
+        <li><a href="innerHome.php">中心內專區</a></li>
+    </ul>
+    <!--<ul class="actions stacked">
+<li><a href="#" class="button fit primary">Sign Up</a></li>
+<li><a href="#" class="button fit">Log In</a></li>
+</ul>-->
+</nav>
+<script src="assets/js/jquery.min.js"></script>
+<script>
+    /*
+    $('#aboutAngle').click(function() {
+        $( "#aboutUL" ).toggle();
+
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#eventsAngle').click(function() {
+        $( "#eventsUL" ).toggle();
+
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#linksAngle').click(function() {
+        $( "#linksUL" ).toggle();
+
+        $(this).toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    */
+    $('#newsA').click(function() {
+        $( "#newsUL" ).toggle();
+
+
+        $('#newsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#activitiesA').click(function() {
+        $( "#activitiesUL" ).toggle();
+
+
+        $('#activitiesAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+
+    $('#aboutA').click(function() {
+        $( "#aboutUL" ).toggle();
+
+
+        $('#aboutAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#eventsA').click(function() {
+        $( "#eventsUL" ).toggle();
+
+
+        $('#eventsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#linksA').click(function() {
+        $( "#linksUL" ).toggle();
+
+        $('#linksAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#thematicsA').click(function() {
+        $( "#thematicsUL" ).toggle();
+
+        $('#thematicsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#projectsA').click(function() {
+        $( "#projectsUL" ).toggle();
+
+        $('#projectsAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+    $('#facilitiesA').click(function() {
+        $( "#facilitiesUL" ).toggle();
+
+        $('#facilitiesAngle').toggleClass("fa-chevron-up fa-chevron-down");
+        //alert($('#importantRow:visible').length);
+    });
+</script>
+            <!-- Main -->
+            <article id="main">
+
+                <section class="wrapper">
+                    <div style="background-color:#61C8ED">
+                        <div class="inner2" style="padding-top:0; padding-bottom:0;">
+                            <h2 style="text-align:center;"><img src="images/facility6.png" style="width:100px;height:auto;vertical-align:middle; margin-right:6px;"> 量子晶片製程研發平台</h2>
+                        </div>
+
+                    </div>
+                    <div class="inner">
+                        <!--<h2>標題</h2>-->
+                        
+                        <div id="pageLink" style="margin-top:1em;"><a href="javascript:void(0);" id="scrollF1">最新消息</a> | <a href="javascript:void(0);" id="scrollF2">設施簡介</a> | <a href="javascript:void(0);" id="scrollF3">使用規則</a></div>
+
+                        <div id="gotop"><img src="images/gotop.png" style="width:100px;height:auto;"></div>                        
+
+                        <div id="one" class="flex-container">
+                                                        <div class="flex-item100" style="padding:1em;">
+                                <div style="padding:1em; border-radius:25px;height: 100%;background: rgba(255, 255, 255, .6)">
+                                    <div style="font-size:1.5em; font-weight:bold; text-align:left;">
+                                        最新消息                                    </div>
+                                    <div style="text-align:left;">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">發佈日期</th>
+                                                    <th scope="col">標題</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                                                                <tr>     
+                                                    <td nowrap>2026-10-02</td>
+                                                    <td>
+                                                                                                                        <a href="facilityNews.php?tId=6&id=45" target="_blank" rel="noopener noreferrer">
+                                                                                                                                        【學術活動】Superconducting Quantum Computer Winter Workshop (Feb 4–6, 2026)                                                                                                                                    </a>
+                                                                                                                                </td>
+                                                            </tr>  
+                                                                                                        <tr>     
+                                                    <td nowrap>2026-10-01</td>
+                                                    <td>
+                                                                                                                        <a href="facilityNews.php?tId=6&id=43" target="_blank" rel="noopener noreferrer">
+                                                                                                                                        【設施公告】QC-Fab「超導金屬薄膜成長」服務開放接受委託                                                                                                                                    </a>
+                                                                                                                                </td>
+                                                            </tr>  
+                                                                                                        <tr>     
+                                                    <td nowrap>2026-10-01</td>
+                                                    <td>
+                                                                                                                    <a href="https://www.sinica.edu.tw/news_content/56/3313" target="_blank" rel="noopener noreferrer">
+                                                                                                                                    【設施公告】中研院自製量子計算測試平台開放申請使用                                                                                                                                    </a>
+                                                                                                                                </td>
+                                                            </tr>  
+                                                                                                    </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+
+                        <div id="two" class="flex-container">
+                            <div class="flex-item100" style="padding:1em;">
+                                <div style="padding:1em; border-radius:25px;height: 100%;background: rgba(255, 255, 255, .6)">
+                                    <div style="font-size:1.5em; font-weight:bold; text-align:left;">
+                                        設施簡介                                    </div>
+                                    <div style="text-align:left;">
+                                        量子晶片製程技術是實現量子電腦硬體架構的核心關鍵，有助於推進具高相干性、高可擴展性及高製程再現性的量子處理器開發。「量子晶片製程研發平台」（Quantum Chip Fabrication Space, QC-Fab）專注於超導量子元件製造技術的創新，致力於建立量子電腦晶片的在地研發與小量產測試能力，並成為量子科技跨領域合作的關鍵基地。<br />
+QC-Fab 的核心使命是推動超導量子元件製造技術邁向國際領先水準，平台策略性地採購具備先進製程能力的全自動八吋晶圓製造設備，建構可與半導體業界接軌的高規格製程環境。主要設施包含：曝光直寫系統（DWL）、超導金屬與氧化物薄膜濺鍍系統、乾式/濕式蝕刻系統、光學/電子顯微鏡、自動電性量測探針台等，支持從材料沉積、圖形化製程到量測與封裝的全製程研發流程。<br />
+平台採用標準化的 8 吋晶圓全自動製程，具備製程穩定性與結果重現性，能有效支援大面積晶圓的製作與量測驗證。技術服務由專業工程團隊執行，並以合作與開放的精神，提供國內外產學研界製程支援。平台服務項目包括：超導金屬與介電層薄膜沉積、電路圖形化與蝕刻、約瑟夫森接面製作，以及完整量子位元晶片製造，可搭配「量子計算測試平台」進行垂直整合驗證，支援從設計、製造到測試的一體化發展。<br />
+透過設備能量、製程技術與合作平台的整合，QC-Fab 致力於打造具國際競爭力的量子硬體研發生態系，為未來世界級的超導量子電腦研究奠定堅實基礎。<br />
+平台之服務性質為製程委託開發與執行，內容將依時程陸續開放包含：<br />
+1.	超導金屬與介電層薄膜成長<br />
+2.	薄膜圖形化與元件電路圖形曝光蝕刻<br />
+3.	超導約瑟夫森接面製作（包含氧化層形成與接面定義流程）<br />
+4.	完整量子位元晶片製造（包括整合製程與晶片後段封裝前製程）<br />
+<br />
+ <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="three" class="flex-container">
+                            <div class="flex-item100" style="padding:1em;">
+                                <div style="padding:1em; border-radius:25px;height: 100%;background: rgba(255, 255, 255, .6)">
+                                    <div style="font-size:1.5em; font-weight:bold; text-align:left;">
+                                        使用規則                                    </div>
+                                    <div style="text-align:left;">
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+
+                                                <div style="text-align:center;">預約請洽:<br>qcfab@gate.sinica.edu.tw</div>
+                        
+
+                    </div>
+
+                </section>
+
+            </article>
+
+            <!-- Footer -->
+                        <footer id="footer">
+                <div class="copyright" style="color:#555;">
+                    關鍵議題研究中心
+                <div>711010 台南市歸仁區歸仁十三路一段100號 中央研究院關鍵議題研究中心</div>
+                <div>電子郵件：<a href="mailto:rcci@gate.sinica.eud.tw">rcci@gate.sinica.edu.tw</a></div>
+                <a href="https://maps.app.goo.gl/pxor19nPte4UgrA39" target="_blank" rel="noopener noreferrer" class="button">在Google地圖上查看</a>
+                </div>
+            </footer>
+            
+        </div>
+
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-4.0.2.js"></script>
+        <script src="assets/lib/fancybox3/jquery.fancybox.min.js"></script>
+        <script src="assets/js/jquery.scrollex.min.js"></script>
+        <script src="assets/js/jquery.scrolly.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+        <script>
+
+
+            $(".fI").hover(function(){
+                //alert($(this).prop("id"));
+                var id=$(this).prop("id");
+                var nid=id.slice(0,-1)+"n";
+                //alert(nid)
+
+
+                if($(window).width()<=800){
+                    $("#"+nid).css("font-weight","bold");
+                }
+                else
+                {
+                    $("#"+nid).css("font-size","1.3em");
+                    //$("#"+nid).css("font-weight","bold");
+                }
+
+                //$(this).css("background-color","rgba(0, 0, 0, 0)");
+                $("#"+nid).css("width","120%");
+
+            },function(){
+
+                var id=$(this).prop("id");
+                var nid=id.slice(0,-1)+"n";
+                $("#"+nid).css("font-size","1em");
+                //$("#"+nid).css("font-weight","300");
+                //$(this).css("background-color","rgba(0, 0, 0, .3)");
+                $("#"+nid).css("width","100%");
+            });
+
+            $(".fN").hover(function(){
+                //alert($(this).prop("id"));
+                var id=$(this).prop("id");
+                var nid=id.slice(0,-1)+"i";
+                //alert(nid)
+
+                $("#"+id).css("font-weight","bold");
+                //$('#'+id).css("color","#1414ff");
+                if($(window).width()<=800){
+
+                }
+                else
+                {
+                    $("#"+id).css("font-size","1.3em");
+                }
+
+                //$("#"+nid).css("background-color","rgba(0, 0, 0, 0)");
+                $("#"+nid).css("width","120%");
+
+            },function(){
+
+                var id=$(this).prop("id");
+                var nid=id.slice(0,-1)+"i";
+                $("#"+id).css("font-size","1em");
+                //$("#"+id).css("font-weight","300");
+                //$("#"+nid).css("width","rgba(0, 0, 0, .3)");
+                $("#"+nid).css("width","100%");
+            });
+
+            $( "#scrollF1" ).on( "click", function() {
+                $('html, body').animate({
+                    scrollTop: $("#one").offset().top - 125
+                });
+            } );
+            $( "#scrollF2" ).on( "click", function() {
+                $('html, body').animate({
+                    scrollTop: $("#two").offset().top -125
+                });
+            } );
+            $( "#scrollF3" ).on( "click", function() {
+                $('html, body').animate({
+                    scrollTop: $("#three").offset().top -125
+                });
+            } );
+            $( "#scrollF4" ).on( "click", function() {
+                $('html, body').animate({
+                    scrollTop: $("#four").offset().top -125
+                });
+            } );
+            $( "#scrollF5" ).on( "click", function() {
+                $('html, body').animate({
+                    scrollTop: $("#five").offset().top -125
+                });
+            } );
+
+            $('#gotop').on( "click", function() {
+                $('html, body').animate({
+                    scrollTop: 0
+                });
+            } );
+        </script>
+
+    </body>
+</html>
