@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>中央研究院 關鍵議題研究中心 (RCCI)</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=20261010_02">
 </head>
 <body>
 
   <!-- 頂部資料狀態列 -->
   <aside class="sync-banner" aria-label="資料狀態">
     <div class="sync-status-indicator" id="sync-status-wrapper" style="cursor: pointer;" title="點擊可重新整理最新資料">
-      <span class="status-dot syncing" id="sync-dot"></span>
+      <span class="status-dot synced" id="sync-dot"></span>
       <span id="sync-text">資料已更新</span>
     </div>
+    <!-- 隱藏相容元件（防止舊版 JS 快取拋出 null 錯誤） -->
+    <button id="btn-refresh" style="display:none;" aria-hidden="true"></button>
+    <input type="file" id="csv-file-input" style="display:none;" aria-hidden="true">
   </aside>
 
   <!-- 主導覽列 (Navbar - 依據提案 PDF 規範配置) -->
@@ -440,10 +443,10 @@
     </div>
   </footer>
 
-  <!-- 腳本引入 -->
-  <script src="js/data.js"></script>
-  <script src="js/rcci-content.js"></script>
-  <script src="js/sync.js"></script>
-  <script src="js/app.js"></script>
+  <!-- 腳本引入 (加入版本查詢字串強制更新快取) -->
+  <script src="js/data.js?v=20261010_02"></script>
+  <script src="js/rcci-content.js?v=20261010_02"></script>
+  <script src="js/sync.js?v=20261010_02"></script>
+  <script src="js/app.js?v=20261010_02"></script>
 </body>
 </html>
