@@ -1,7 +1,6 @@
 # 中央研究院 關鍵議題研究中心 (RCCI)
 ## 官方網站全站資訊整合 暨 智財與技術成果展示平台
 
-本專案深入遍覽並完整收錄中央研究院關鍵議題研究中心官方網站（https://rcci.sinica.edu.tw/）所有核心單元之真實資訊，依據《智財與技術成果專區 網站視覺與互動架構提案》之品牌規範（RCCI 品牌色調、三欄卡片、響應式排版）進行深度重構；同時完整支援「**各國申請案件**」與「**專利家族**」之智財管理與展示系統。
 
 🔗 **線上展示網址 (GitHub Pages)**：[https://tommy1114-commits.github.io/rcci-patents/](https://tommy1114-commits.github.io/rcci-patents/)
 
