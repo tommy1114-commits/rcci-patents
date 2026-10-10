@@ -162,7 +162,7 @@ class GoogleSheetSync {
     // 策略 3: 使用 LocalStorage 本地儲存的快顯
     const cached = this.loadFromStorage();
     if (cached) {
-      this.updateStatus('fallback', '已載入快取資料 (' + this.formatTime(new Date(cached.syncTime)) + ')');
+      this.updateStatus('fallback', '資料已更新 (' + this.formatTime(new Date(cached.syncTime)) + ')');
       if (typeof this.onDataUpdated === 'function') {
         this.onDataUpdated(cached.data, false);
       }
@@ -171,7 +171,7 @@ class GoogleSheetSync {
 
     // 策略 4: 使用內建快照
     const snapshotMerged = this.processAndMergeData(SNAPSHOT_APPLICATIONS, SNAPSHOT_FAMILIES);
-    this.updateStatus('fallback', '已載入展示資料');
+    this.updateStatus('fallback', '資料已更新 (' + this.formatTime(new Date()) + ')');
     if (typeof this.onDataUpdated === 'function') {
       this.onDataUpdated(snapshotMerged, false);
     }

@@ -9,28 +9,11 @@
 </head>
 <body>
 
-  <!-- 頂部資料來源狀態列 -->
+  <!-- 頂部資料狀態列 -->
   <aside class="sync-banner" aria-label="資料狀態">
-    <div class="sync-status-indicator">
+    <div class="sync-status-indicator" id="sync-status-wrapper" style="cursor: pointer;" title="點擊可重新整理最新資料">
       <span class="status-dot syncing" id="sync-dot"></span>
-      <span id="sync-text">正在載入最新資料...</span>
-    </div>
-    <div class="sync-actions">
-      <label class="btn-sync" title="載入本地資料檔案" style="cursor: pointer; display: inline-flex; align-items: center; gap: 4px;">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-          <polyline points="17 8 12 3 7 8"/>
-          <line x1="12" y1="3" x2="12" y2="15"/>
-        </svg>
-        <span>載入本地資料</span>
-        <input type="file" id="csv-file-input" accept=".csv" multiple style="display: none;">
-      </label>
-      <button class="btn-sync" id="btn-refresh" title="重新整理資料">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
-        </svg>
-        <span>重新整理</span>
-      </button>
+      <span id="sync-text">資料已更新</span>
     </div>
   </aside>
 

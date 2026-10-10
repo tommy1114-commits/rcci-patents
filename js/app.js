@@ -71,6 +71,7 @@
     // 同步與通知
     syncDot: document.getElementById('sync-dot'),
     syncText: document.getElementById('sync-text'),
+    syncStatusWrapper: document.getElementById('sync-status-wrapper'),
     btnRefresh: document.getElementById('btn-refresh'),
     csvFileInput: document.getElementById('csv-file-input'),
     
@@ -140,10 +141,9 @@
     state.syncEngine.onStatusChange = (status, message) => {
       elements.syncDot.className = `status-dot ${status}`;
       elements.syncText.textContent = message;
-      if (status === 'syncing') {
-        elements.btnRefresh.classList.add('spinning');
-      } else {
-        elements.btnRefresh.classList.remove('spinning');
+      if (elements.btnRefresh) {
+        if (status === 'syncing') elements.btnRefresh.classList.add('spinning');
+        else elements.btnRefresh.classList.remove('spinning');
       }
     };
 
@@ -164,13 +164,13 @@
       state.outcomes = cached.data.outcomes;
       state.allApplications = cached.data.allApplications || [];
       elements.syncDot.className = 'status-dot fallback';
-      elements.syncText.textContent = `資料已載入 (最後更新: ${state.syncEngine.formatTime(new Date(cached.syncTime))})`;
+      elements.syncText.textContent = '資料已更新 (' + state.syncEngine.formatTime(new Date(cached.syncTime)) + ')';
     } else {
       const initialSnapshot = state.syncEngine.processAndMergeData(SNAPSHOT_APPLICATIONS, SNAPSHOT_FAMILIES);
       state.outcomes = initialSnapshot.outcomes;
       state.allApplications = initialSnapshot.allApplications;
       elements.syncDot.className = 'status-dot fallback';
-      elements.syncText.textContent = '已載入展示資料';
+      elements.syncText.textContent = '資料已更新 (' + state.syncEngine.formatTime(new Date()) + ')';
     }
 
     renderCategories();
@@ -187,10 +187,17 @@
 
   // 事件綁定
   function setupEventListeners() {
-    // 手動同步按鈕
-    elements.btnRefresh.addEventListener('click', () => {
-      state.syncEngine.sync();
-    });
+    // 點擊頂部狀態列或刷新按鈕手動更新
+    if (elements.syncStatusWrapper) {
+      elements.syncStatusWrapper.addEventListener('click', () => {
+        state.syncEngine.sync();
+      });
+    }
+    if (elements.btnRefresh) {
+      elements.btnRefresh.addEventListener('click', () => {
+        state.syncEngine.sync();
+      });
+    }
 
     // 載入本機 CSV 檔案變更監聽
     if (elements.csvFileInput) {
