@@ -665,19 +665,26 @@
     filtered.forEach(r => {
       const card = document.createElement('div');
       card.className = 'career-card';
+      const detailUrl = r.url || `https://rcci.sinica.edu.tw/recruitment.php?id=${r.id}`;
 
       card.innerHTML = `
         <div>
           <div class="career-unit">${r.campus} ｜ ${r.unit}</div>
-          <h3 class="career-title">${r.position}</h3>
+          <h3 class="career-title">
+            <a href="${detailUrl}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;" title="前往官方網站查看詳細內容">
+              ${r.position}
+            </a>
+          </h3>
           <div class="career-period">📅 徵才期間：${r.period}</div>
           <p class="career-desc">${r.description}</p>
           <div class="career-req"><strong>資格條件：</strong>${r.requirements}</div>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 14px;">
-          <span style="font-size: 13px; color: var(--text-muted);">聯絡信箱：${r.contact}</span>
-          <a href="mailto:${r.contact}?subject=應徵關鍵中心職缺：${encodeURIComponent(r.position)}" class="btn-apply">
-            ✉ 立即應徵
+          <span style="font-size: 13px; color: var(--text-muted);">
+            聯絡信箱：<a href="mailto:${r.contact}?subject=應徵關鍵中心職缺：${encodeURIComponent(r.position)}" style="color: inherit; text-decoration: underline;">${r.contact}</a>
+          </span>
+          <a href="${detailUrl}" target="_blank" rel="noopener noreferrer" class="btn-apply" title="前往官方網站查看詳細內容">
+            詳細內容 ➔
           </a>
         </div>
       `;
