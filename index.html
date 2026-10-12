@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>中央研究院 關鍵議題研究中心 (RCCI)</title>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="stylesheet" href="style.css?v=20261010_04">
-  <link rel="stylesheet" href="css/style.css?v=20261010_04">
+  <link rel="stylesheet" href="style.css?v=20261012_02">
+  <link rel="stylesheet" href="css/style.css?v=20261012_02">
 </head>
 <body>
 
@@ -21,14 +21,19 @@
     <input type="file" id="csv-file-input" style="display:none;" aria-hidden="true">
   </aside>
 
-  <!-- 主導覽列 (Navbar - 依據提案 PDF 規範配置) -->
+  <!-- 主導覽列 (Navbar - 支援多裝置響應式 RWD) -->
   <header class="main-header">
     <div class="nav-container">
       <a href="#patents" class="logo-link">
         <img src="assets/rcci-logo.svg" alt="中央研究院 關鍵議題研究中心 Research Center for Critical Issues | Academia Sinica" class="logo-img">
       </a>
-      <nav aria-label="主選單">
-        <ul class="nav-menu">
+      <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="切換導覽選單" aria-expanded="false">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <nav id="main-nav" aria-label="主選單">
+        <ul class="nav-menu" id="nav-menu">
           <li class="nav-item" id="nav-news"><a href="#news">最新消息</a></li>
           <li class="nav-item" id="nav-about"><a href="#about">關於中心</a></li>
           <li class="nav-item" id="nav-projects"><a href="#projects">研究計畫</a></li>
@@ -447,7 +452,7 @@
   <!-- 智慧雙軌載入器：優先載入根目錄最新檔案，相容 js/ 子目錄 -->
   <script>
     (function () {
-      const v = '20261012_01';
+      const v = '20261012_02';
       function loadScript(name) {
         return new Promise(function (resolve) {
           const s = document.createElement('script');

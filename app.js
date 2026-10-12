@@ -68,6 +68,10 @@
       careers: document.getElementById('section-careers')
     },
 
+    // 手機導覽元件
+    mobileToggle: document.getElementById('mobile-nav-toggle'),
+    navMenu: document.getElementById('nav-menu'),
+
     // 同步與通知
     syncDot: document.getElementById('sync-dot'),
     syncText: document.getElementById('sync-text'),
@@ -224,6 +228,34 @@
       }
     });
 
+    // 手機版導覽選單開關互動
+    if (elements.mobileToggle && elements.navMenu) {
+      elements.mobileToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = elements.navMenu.classList.toggle('open');
+        elements.mobileToggle.classList.toggle('active', isOpen);
+        elements.mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+
+      // 點選任意選單連結後自動關閉手機選單
+      elements.navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          elements.navMenu.classList.remove('open');
+          elements.mobileToggle.classList.remove('active');
+          elements.mobileToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      // 點選選單外任意區域自動收合
+      document.addEventListener('click', (e) => {
+        if (!elements.navMenu.contains(e.target) && !elements.mobileToggle.contains(e.target)) {
+          elements.navMenu.classList.remove('open');
+          elements.mobileToggle.classList.remove('active');
+          elements.mobileToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
     // 點擊頂部狀態列或刷新按鈕手動更新
     if (elements.syncStatusWrapper) {
       elements.syncStatusWrapper.addEventListener('click', () => {
@@ -362,6 +394,13 @@
         elements.sections[key].classList.toggle('active', key === sectionKey);
       }
     });
+
+    // 切換專區時收合手機版導覽選單
+    if (elements.mobileToggle && elements.navMenu) {
+      elements.navMenu.classList.remove('open');
+      elements.mobileToggle.classList.remove('active');
+      elements.mobileToggle.setAttribute('aria-expanded', 'false');
+    }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
