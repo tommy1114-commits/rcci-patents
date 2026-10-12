@@ -130,7 +130,7 @@ class GoogleSheetSync {
       }
     }
 
-    // 策略 2: 讀取 GitHub Pages / 專案本機的靜態 CSV 檔案 (data/sheet_data.csv & data/patent_families.csv)
+    // 策略 2: 讀取專案 assets/RCCI-IP.csv 檔案（支援本機同步與 GitHub Pages 靜態快顯）
     try {
       const fetchCsv = async (path) => {
         const r = await fetch(path + '?_t=' + Date.now(), { cache: 'no-cache' });
@@ -138,10 +138,19 @@ class GoogleSheetSync {
         return await r.text();
       };
 
-      const [appsCsvText, famsCsvText] = await Promise.all([
-        fetchCsv(this.config.localCsvApplications || 'data/sheet_data.csv'),
-        fetchCsv(this.config.localCsvFamilies || 'data/patent_families.csv').catch(() => '')
-      ]);
+      const primaryAppCsv = this.config.localCsvApplications || 'assets/RCCI-IP.csv';
+      const backupAppCsv = 'data/sheet_data.csv';
+
+      let appsCsvText = '';
+      try {
+        appsCsvText = await fetchCsv(primaryAppCsv);
+      } catch (e1) {
+        if (primaryAppCsv !== backupAppCsv) {
+          appsCsvText = await fetchCsv(backupAppCsv).catch(() => '');
+        }
+      }
+
+      const famsCsvText = await fetchCsv(this.config.localCsvFamilies || 'data/patent_families.csv').catch(() => '');
 
       const appsData = this.parseCsv(appsCsvText);
       const famsData = famsCsvText ? this.parseCsv(famsCsvText) : [];
@@ -157,7 +166,7 @@ class GoogleSheetSync {
         return mergedData;
       }
     } catch (err) {
-      console.warn('專案 CSV 讀取遭遇阻礙，載入快顯/預設快照:', err.message);
+      console.warn('專案 assets/RCCI-IP.csv 讀取遭遇阻礙，載入快顯/預設快照:', err.message);
     }
 
     // 策略 3: 使用 LocalStorage 本地儲存的快顯

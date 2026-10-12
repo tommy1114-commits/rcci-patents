@@ -45,12 +45,14 @@
 
 #### 4. 💡 智財與技術成果專區 (`#patents` & `#patent/{id}`)
 
+* **視覺呈現與互動體驗**：
   * 三欄式技術成果卡片網格（包含技術領域 Badge、本院案件編號、專利名稱、提申國家旗幟、法律狀態）。
   * 成果詳情專頁：麵包屑路徑、PDF 官方技術摘要、各國專利申請佈局表格（US、TW、CN、JP、KR、EP、AU、CA、PCT）。
   * 右欄基本資訊卡片與「智財技轉處-案件技術資料」外部專屬連結（直接開啟中研院智財技轉處各案技術官方專屬頁面）。
-* **資料驅動智財管理系統**：
-  * 支援讀取雲端資料夾中下載的 CSV 專利資料，自動解析並聚合為專利家族與各國案件明細。
-  * 支援 0 秒極速首屏載入、瀏覽器離線快照與資料更新時間標註。
+* **資料驅動智財管理系統 (CSV 自動同步)**：
+  * **Google 雲端硬碟直連**：自動即時讀取 [Google 雲端硬碟資料夾 (1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j)](https://drive.google.com/drive/u/0/folders/1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j) 內名稱為 `RCCI-IP` 的最新 CSV 檔案。
+  * **本機與 GitHub 儲存庫雙軌支援**：支援讀取 `assets/RCCI-IP.csv`，自動解析並聚合為專利家族與各國案件明細。
+  * **極速體驗**：支援 0 秒極速首屏載入、瀏覽器離線快照與資料更新來源/時間狀態標註。
 
 #### 5. 🛠️ 設施服務 (`#facilities`)
 * **6 大尖端共用研發設施**：
@@ -77,41 +79,75 @@
 ### 📂 檔案目錄架構
 
 ```
-cool-planck/
+rcci-patents-main/
 ├── index.html            # 主頁面結構（整合 6 大核心專區、卡片網格、成果詳情、申請案明細表）
-├── css/
-│   └── style.css         # 視覺樣式表（中研院 RCCI 品牌配色、PDF 兩欄排版、6 大專區專屬樣式）
-├── js/
-│   ├── rcci-content.js   # 官方網站全站真實內容資料庫（新聞、關於、計畫、設施、徵才）
-│   ├── data.js           # 智財專利 PDF 官方摘要字典、雲端路徑設定與離線快照備援
-│   ├── sync.js           # CSV 資料讀取、跨國案件聚合與資料快顯引擎
-│   └── app.js            # SPA 路由控制器、全站頁面渲染、即時搜尋過濾、專案與智財跨區連動
-├── data/
-│   ├── sheet_data.csv    # 專案靜態申請案件資料庫備份
-│   └── patent_families.csv # 專案靜態專利家族資料庫備份
-├── gas/
-│   ├── Code.gs           # Google Drive 資料夾 CSV 讀取代理服務端程式
-│   └── Index.html        # Google Apps Script 單檔整合部署版（含內嵌 CSS/JS）
+├── style.css             # 視覺樣式表（中研院 RCCI 品牌配色、全裝置 RWD 響應式排版、漢堡選單）
+├── data.js               # 智財專利 PDF 官方摘要字典、雲端路徑設定與離線快照備援
+├── sync.js               # CSV 自動同步引擎（Google Drive API + 本地 assets/RCCI-IP.csv 雙軌聚合）
+├── app.js                # SPA 路由控制器、全站頁面渲染、即時搜尋過濾、專案與智財跨區連動
+├── rcci-content.js       # 官方網站全站真實內容資料庫（新聞、關於、計畫、設施、徵才）
 ├── assets/
+│   ├── RCCI-IP.csv       # 【核心資料】最新智財專利清單（26筆案卷資料庫）
 │   ├── rcci-logo.svg     # 中研院關鍵議題研究中心向量 SVG 標誌
 │   └── favicon.svg       # 網站圖示
+├── gas/
+│   ├── Code.gs           # Google Drive 資料夾 CSV 讀取代理服務端程式 (Google Apps Script)
+│   └── Index.html        # Google Apps Script 單檔整合部署版（含內嵌 CSS/JS）
+├── data/
+│   ├── sheet_data.csv    # 備份資料
+│   └── patent_families.csv # 專利家族備份資料
 ├── start-server.ps1      # 本機 HTTP 伺服器一鍵啟動腳本（http://localhost:8080）
 └── README.md             # 專案說明文件
 ```
 
 ---
 
-### 📊 資料維護與更新方式
+### 📊 CSV 自動更新架構與資料維護方式
 
-本網站採用自動讀取 CSV 資料之架構，當專利資料有變更時：
-1. **雲端更新**：將最新下載的 CSV 檔案放入指定的 Google 雲端硬碟資料夾中（例如：`rcci-patents.csv`）。
-2. **自動載入**：網頁開啟或重新整理時，將自動讀取該資料夾中的最新 CSV 檔案並即時呈現，頂部狀態列會自動顯示「**● 資料已更新 (載入時間)**」。
-3. **本機/靜態備份**：若需將資料固化於 GitHub 儲存庫中，亦可將 CSV 檔案覆蓋放置於 `data/` 資料夾內。
+本系統設計為**「雲端即時同步」**與**「靜態儲存庫」**雙軌驅動架構，專門對接最新智財資料檔案 `RCCI-IP`：
+
+#### 1. 目標雲端硬碟位置與檔案
+* **Google 雲端硬碟資料夾網址**：  
+  👉 [https://drive.google.com/drive/u/0/folders/1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j](https://drive.google.com/drive/u/0/folders/1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j)
+* **資料夾 ID**：`1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j`
+* **目標檔案名稱**：`RCCI-IP.csv`（或檔名包含 `RCCI-IP` 的 CSV 檔案）
+
+#### 2. 本機與 GitHub 儲存庫路徑
+* **本機檔案位置**：  
+  `G:\我的雲端硬碟\antigravity\rcci-patents-main\rcci-patents-main\assets\RCCI-IP.csv`
+* **專案相對路徑**：  
+  `assets/RCCI-IP.csv`
+
+#### 3. 自動更新與運作機制
+1. **雲端直連策略 (GAS API)**：
+   * 系統透過配置在 Google Apps Script (GAS) 的代理端點，動態請求指定的雲端資料夾 `1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j`。
+   * 自動搜尋並取得檔名為 `RCCI-IP` 的最新 CSV 檔案內容。
+   * **日常維護只需將最新導出的 `RCCI-IP.csv` 覆蓋上傳至該 Google 雲端硬碟資料夾，前端網頁重新整理時即會自動載入最新專利與狀態**。
+2. **靜態與離線雙軌備援策略 (Local / GitHub Pages Fetch)**：
+   * 若雲端 API 未連通或在離線環境下，系統會自動切換讀取 `assets/RCCI-IP.csv`。
+   * 此機制保證上傳至 GitHub Pages 或以本機伺服器運行時，能 100% 穩定呈現完整的 26 筆專利資料與各國家族明細。
+3. **極速載入與狀態回饋**：
+   * 搭載智慧本地快取機制（LocalStorage / 快照快顯），讓訪客能在 0 秒內看見成果卡片。
+   * 頂端狀態列會即時提示當前資料來源：
+     * `● 已載入 Google 雲端硬碟 (RCCI-IP) 最新資料 (HH:MM:SS)`
+     * `● 已載入本機 (assets/RCCI-IP.csv) 最新資料 (HH:MM:SS)`
+
+---
+
+### 📤 上傳至 GitHub 建議清單
+
+當更新專案欲推送（Push）至 GitHub 時，建議上傳以下核心檔案與資料夾：
+* `index.html`：入口網頁
+* `style.css`、`css/`：樣式表（含響應式 RWD 行動版適配）
+* `app.js`、`data.js`、`sync.js`、`rcci-content.js`、`js/`：核心邏輯與資料腳本
+* `assets/`：**包含最新的 `assets/RCCI-IP.csv`**、logo、圖示
+* `gas/`：Google Apps Script 雲端代理腳本
+* `README.md`：專案最新說明文件
 
 ---
 
 ### 🚀 開啟與使用方式
 
 1. **線上瀏覽**：直接點擊 [GitHub Pages 線上展示網址](https://tommy1114-commits.github.io/rcci-patents/) 即可瀏覽。
-2. **本機開啟**：在檔案總管中雙擊 `index.html`，即可於任何瀏覽器暢順瀏覽。
-3. **本機伺服器預覽**：在 PowerShell 執行 `.\start-server.ps1`，即可於 `http://localhost:8080` 預覽。
+2. **本機伺服器預覽 (推薦)**：在 PowerShell 執行 `.\start-server.ps1`，即可於 `http://localhost:8080` 預覽完整功能。
+3. **靜態檔案開啟**：亦可直接於瀏覽器中雙擊 `index.html` 開啟。

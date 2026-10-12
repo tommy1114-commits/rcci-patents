@@ -457,8 +457,7 @@ const RCCI_WEBSITE_DATA = {
       period: '2026/10/07 ~ 2026/12/31',
       description: '負責鈣鈦礦/矽疊層太陽能電池製程開發、鍍膜設備操作與標準 AM1.5G 量測系統維護，協助推動下世代太陽能關鍵技術產學聯盟合作。',
       requirements: '具材料、化學、化工、光電或物理相關領域碩博士學位，具半導體或薄膜製程經驗者佳。',
-      contact: 'gchu@as.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=54'
+      contact: 'gchu@as.edu.tw'
     },
     {
       id: 55,
@@ -468,8 +467,7 @@ const RCCI_WEBSITE_DATA = {
       period: '2026/10/07 ~ 2026/12/31',
       description: '協助量子光電研究計畫之經費報銷、儀器採購、學術會議舉辦與訪客接待等日常行政事務。',
       requirements: '國內外大專院校畢業，具良好溝通協調能力與基本英語讀寫能力，熟悉中研院行政流程者優先。',
-      contact: 'mingjye@as.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=55'
+      contact: 'mingjye@as.edu.tw'
     },
     {
       id: 52,
@@ -479,8 +477,7 @@ const RCCI_WEBSITE_DATA = {
       period: '2026/10/06 ~ 2027/12/31',
       description: '負責南部院區研究大樓Ⅱ共用儀器平台（無塵室、低溫系統、真空設備）之日常營運、安全防護與對外技術服務諮詢。',
       requirements: '理工相關研究所碩博士畢業，具真空技術、極低溫或無塵室設備維運 2 年以上實務經驗。',
-      contact: 'rcci@gate.sinica.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=52'
+      contact: 'rcci@gate.sinica.edu.tw'
     },
     {
       id: 53,
@@ -490,8 +487,7 @@ const RCCI_WEBSITE_DATA = {
       period: '2026/10/06 ~ 2026/12/31',
       description: '協助中心南部院區總務、出納、財產管理及場地空間租借協調。',
       requirements: '大專以上學歷，細心負責，熟悉 Office 文書處理軟體。',
-      contact: 'chunfang@as.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=53'
+      contact: 'chunfang@as.edu.tw'
     },
     {
       id: 49,
@@ -501,8 +497,7 @@ const RCCI_WEBSITE_DATA = {
       period: '2026/10/01 ~ 2026/12/31',
       description: '執行超導奈米線單光子偵測器（SNSPD）之微影製程與低溫低雜訊量測分析。',
       requirements: '物理、光電或電子工程博士學位，具微波高頻電路或低溫量測經驗者優先考量。',
-      contact: 'mingjye@as.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=49'
+      contact: 'mingjye@as.edu.tw'
     },
     {
       id: 50,
@@ -512,8 +507,7 @@ const RCCI_WEBSITE_DATA = {
       period: '2026/10/01 ~ 2026/12/31',
       description: '協助單光子光源製備、共焦顯微量測與光譜數據整理。',
       requirements: '理工科系學士或碩士學位，具光學實驗操作經驗者佳。',
-      contact: 'mingjye@as.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=50'
+      contact: 'mingjye@as.edu.tw'
     },
     {
       id: 51,
@@ -523,8 +517,7 @@ const RCCI_WEBSITE_DATA = {
       period: '2026/10/01 ~ 2026/12/31',
       description: '主導室溫光量子系統與量子感測元件之理論模擬與實驗驗證。',
       requirements: '國內外知名大學物理、光電博士學位，具頂尖期刊發表紀錄者佳。',
-      contact: 'mingjye@as.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=51'
+      contact: 'mingjye@as.edu.tw'
     },
     {
       id: 47,
@@ -534,8 +527,7 @@ const RCCI_WEBSITE_DATA = {
       period: '2026/09/15 ~ 2026/12/31',
       description: '協助黑潮海流錨碇浮標數據分析、雷達站維護及水文觀測資料處理。',
       requirements: '海洋科學、大氣科學、地球物理或水利工程學碩士學位。',
-      contact: 'chauron@as.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=47'
+      contact: 'chauron@as.edu.tw'
     },
     {
       id: 45,
@@ -545,52 +537,47 @@ const RCCI_WEBSITE_DATA = {
       period: '2026/09/10 ~ 2026/12/31',
       description: '執行鈣鈦礦溶液調配、薄膜旋塗、熱退火與元件封裝測試。',
       requirements: '化學、材料、化工相關科系畢業，具備化學濕式製程操作能力。',
-      contact: 'guotf@as.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=45'
-    },
-    {
-      id: 31,
-      campus: '北部院區',
-      unit: '量子科技推動辦公室',
-      position: '專任行政助理',
-      period: '2026/06/22 ~ 2026/12/31',
-      description: '協助全國量子系統推動計畫之公文撰寫、跨部會聯絡、各計畫季報彙整與官網內容維護。',
-      requirements: '大專以上學歷，具政府專案或科技計畫執行經驗者優先錄取。',
-      contact: 'lmliu@as.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=31'
+      contact: 'guotf@as.edu.tw'
     },
     {
       id: 40,
       campus: '北部/南部院區',
       unit: '去碳燃氫計畫實驗室',
       position: '專案研究人員 / 博士後研究學者 / 研究助理',
-      period: '2025/12/11 ~ 2026/12/31',
+      period: '2026/08/20 ~ 2026/12/31',
       description: '從事電漿裂解甲烷固碳產氫反應器設計、熱流場模擬、電漿放電控制及產物碳黑結構分析。',
       requirements: '機械、化工、材料、物理工程背景學碩博士，對新能源與固碳技術具高度熱忱。',
-      contact: 'rcci@gate.sinica.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=40'
+      contact: 'rcci@gate.sinica.edu.tw'
     },
     {
       id: 36,
       campus: '南部院區',
       unit: '量子電腦專題中心',
       position: '專任研究助理 / 博士後研究員 / 專案研究人員',
-      period: '2025/10/22 ~ 2026/12/31',
+      period: '2026/08/15 ~ 2026/12/31',
       description: '參與超導量子位元晶片設計、FPGA 脈衝控制電路調適、極低溫稀釋冷凍機測試及量子演算法實作。',
       requirements: '物理、電機、資工、光電相關背景碩博士，具備量子計算基礎知識或 RF 射頻經驗者佳。',
-      contact: 'chiidong@as.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=36'
+      contact: 'chiidong@as.edu.tw'
     },
     {
       id: 37,
       campus: '南部院區',
       unit: '量子電腦專題中心',
       position: '學習型獎助生 (博/碩/大學部)',
-      period: '2025/10/22 ~ 2026/12/31',
+      period: '2026/08/01 ~ 2027/07/31',
       description: '提供對量子科技有興趣之在學學生至南部院區進行專題研究，參與國際級超導量子電腦研發。',
       requirements: '國內各大學理工相關系所學生，每週可固定參與研究 16 小時以上。',
-      contact: 'chiidong@as.edu.tw',
-      url: 'https://rcci.sinica.edu.tw/recruitment.php?id=37'
+      contact: 'chiidong@as.edu.tw'
+    },
+    {
+      id: 31,
+      campus: '北部院區',
+      unit: '量子科技推動辦公室',
+      position: '專任行政助理',
+      period: '2026/07/15 ~ 2026/12/31',
+      description: '協助全國量子系統推動計畫之公文撰寫、跨部會聯絡、各計畫季報彙整與官網內容維護。',
+      requirements: '大專以上學歷，具政府專案或科技計畫執行經驗者優先錄取。',
+      contact: 'lmliu@as.edu.tw'
     }
   ]
 };

@@ -5,12 +5,14 @@
 
 const APP_CONFIG = {
   // Google Drive 資料夾配置與 API 代理端點 (GAS)
-  driveFolderId: '1DmEhARSr0kUhi4fKTfSaDpFVitdk39-t',
-  driveFolderUrl: 'https://drive.google.com/drive/folders/1DmEhARSr0kUhi4fKTfSaDpFVitdk39-t',
-  driveApiUrl: 'https://script.google.com/macros/s/AKfycbykHkLyKkmuug5PGTFXSgMlTTBScbIjgMzoxbUMsvFwp3tefBF3hqEsvvv0U2NooHyuww/exec?action=getCsv',
+  // 指定資料夾：https://drive.google.com/drive/u/0/folders/1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j
+  driveFolderId: '1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j',
+  driveFolderUrl: 'https://drive.google.com/drive/folders/1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j',
+  targetFileName: 'RCCI-IP',
+  driveApiUrl: 'https://script.google.com/macros/s/AKfycbykHkLyKkmuug5PGTFXSgMlTTBScbIjgMzoxbUMsvFwp3tefBF3hqEsvvv0U2NooHyuww/exec?action=getCsv&folderId=1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j&target=RCCI-IP',
 
-  // 靜態 CSV 檔案路徑（GitHub Pages / 本機專案路徑）
-  localCsvApplications: 'data/sheet_data.csv',
+  // 靜態 / 本機 CSV 檔案路徑（GitHub Pages / 本機雲端硬碟 assets 目錄下的 RCCI-IP.csv）
+  localCsvApplications: 'assets/RCCI-IP.csv',
   localCsvFamilies: 'data/patent_families.csv',
 
   // 備援配置
@@ -18,9 +20,9 @@ const APP_CONFIG = {
   gidApplications: '427151405',
   gidFamilies: '2147396292',
 
-  autoSyncIntervalMs: 120000,
-  localCacheKey: 'rcci_patent_csv_cache_v2',
-  lastSyncKey: 'rcci_last_csv_sync_time_v2'
+  autoSyncIntervalMs: 60000,
+  localCacheKey: 'rcci_patent_csv_cache_v3',
+  lastSyncKey: 'rcci_last_csv_sync_time_v3'
 };
 
 // 來自 PDF 規範文件（Pages 3-8）的詳細技術摘要與規格資料（包含智財技轉處官方超連結）
