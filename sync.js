@@ -260,11 +260,11 @@ class GoogleSheetSync {
         const domain = (preset.category || famMeta['單位'] || app['單位'] || '其他領域').trim();
         const mainTitle = (preset.title || famMeta['院內技術名稱'] || app['專利名稱'] || '').trim();
         const mainCaseId = preset.mainCaseId || famMeta['院內案件編號'] || cleanCaseId || caseId;
-        const inventors = (preset.inventors || famMeta['發明人'] || '').trim();
-        const project = (famMeta['相關計畫'] || '').trim();
-        const publishDate = preset.publishDate || app['領證／公告日'] || app['公開日'] || app['申請日'] || '';
-        const abstract = preset.abstract || app['備註'] || famMeta['備註'] || '本項關鍵研發技術已進入智慧財產布局程序，具備高度產業應用潛力與技術創新性。詳細技術細節與授權合作方案，請逕洽中央研究院關鍵議題研究中心智財技轉專責窗口。';
-        const techUrl = preset.techUrl || app['電子檔連結'] || famMeta['文件連結'] || (mainCaseId && mainCaseId !== '?' ? ('https://ticket.apps.sinica.edu.tw/tech/' + mainCaseId) : 'https://ticket.apps.sinica.edu.tw/');
+        const inventors = (preset.inventors !== undefined ? preset.inventors : (famMeta['發明人'] || '')).trim();
+        const project = (preset.project !== undefined ? preset.project : (famMeta['相關計畫'] || '')).trim();
+        const publishDate = (preset.publishDate !== undefined ? preset.publishDate : (app['領證／公告日'] || app['公開日'] || app['申請日'] || '')).trim();
+        const abstract = (preset.abstract !== undefined ? preset.abstract : (app['備註'] || famMeta['備註'] || '')).trim();
+        const techUrl = (preset.techUrl !== undefined ? preset.techUrl : (app['電子檔連結'] || famMeta['文件連結'] || '')).trim();
 
         outcomeMap.set(groupKey, {
           id: groupKey,
@@ -277,7 +277,7 @@ class GoogleSheetSync {
           publishDate: publishDate,
           abstract: abstract,
           techUrl: techUrl,
-          licenseStatus: famMeta['授權／合作狀態'] || '可授權合作',
+          licenseStatus: preset.licenseStatus !== undefined ? preset.licenseStatus : (famMeta['授權／合作狀態'] || ''),
           teamNickname: famMeta['團隊稱呼'] || '',
           applications: []
         });
@@ -318,17 +318,22 @@ class GoogleSheetSync {
       // 國家代碼集合
       const countries = [...new Set(item.applications.map(a => a.country).filter(Boolean))];
       
+      // 查找預設設定
+      const preset = PRESET_ABSTRACTS[item.caseId] || PRESET_ABSTRACTS[item.familyId] || {};
+
       // 判斷整體法律狀態
-      let legalStatus = '專利申請中';
+      let legalStatus = '';
       const hasGranted = item.applications.some(a => Boolean(a.patentNo) || (a.remarks && a.remarks.includes('已獲證')));
       const isReviewing = item.applications.some(a => a.remarks && a.remarks.includes('審閱中'));
 
       if (hasGranted) {
         legalStatus = countries.length > 1 ? '已獲證（多國）' : '已獲證';
+      } else if (preset.legalStatus !== undefined) {
+        legalStatus = preset.legalStatus;
       } else if (isReviewing && item.applications.every(a => !a.appNo)) {
         legalStatus = '智財處審閱中';
-      } else if (PRESET_ABSTRACTS[item.caseId]?.legalStatus) {
-        legalStatus = PRESET_ABSTRACTS[item.caseId].legalStatus;
+      } else if (item.applications.length > 0) {
+        legalStatus = '專利申請中';
       }
 
       return {

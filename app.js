@@ -904,21 +904,25 @@
     elements.detailCategoryBadge.className = `badge ${badgeClass}`;
     elements.detailCategoryBadge.textContent = outcome.domain;
 
-    elements.detailTitle.textContent = outcome.title;
-    elements.detailAbstract.textContent = outcome.abstract;
+    elements.detailTitle.textContent = outcome.title || '—';
+    elements.detailAbstract.textContent = outcome.abstract || '—';
 
-    elements.detailCaseId.textContent = outcome.caseId;
-    elements.detailPublishDate.textContent = outcome.publishDate || '審理進行中';
-    elements.detailInventors.textContent = outcome.inventors || '研究計畫主持人及團隊成員';
-    elements.detailLegalStatus.textContent = outcome.legalStatus;
-    elements.detailFamilyId.textContent = outcome.familyId || outcome.caseId;
-    elements.detailProject.textContent = outcome.project || '關鍵前瞻研發計畫';
-    elements.detailLicenseStatus.textContent = outcome.licenseStatus || '可授權合作';
+    elements.detailCaseId.textContent = outcome.caseId || '—';
+    elements.detailPublishDate.textContent = outcome.publishDate || '—';
+    elements.detailInventors.textContent = outcome.inventors || '—';
+    elements.detailLegalStatus.textContent = outcome.legalStatus || '—';
+    elements.detailFamilyId.textContent = outcome.familyId || outcome.caseId || '—';
+    elements.detailProject.textContent = outcome.project || '—';
+    elements.detailLicenseStatus.textContent = outcome.licenseStatus || '—';
 
     // 設定智財技轉處官方技術資料超連結 (各案件專屬)
     if (elements.btnTechLink) {
-      const techDocUrl = outcome.techUrl || ('https://ticket.apps.sinica.edu.tw/tech/' + outcome.caseId);
-      elements.btnTechLink.href = techDocUrl;
+      if (outcome.techUrl) {
+        elements.btnTechLink.href = outcome.techUrl;
+        elements.btnTechLink.style.display = 'inline-flex';
+      } else {
+        elements.btnTechLink.style.display = 'none';
+      }
     }
 
     renderDetailApplications(outcome.applications);
