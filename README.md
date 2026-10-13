@@ -102,35 +102,35 @@ rcci-patents-main/
 
 ---
 
-### 📊 CSV 自動更新架構與資料維護方式
+### 📊 資料管理與編輯工作流程 (PPT 視覺化編輯 ➔ AI 自動轉碼)
 
-本系統設計為**「雲端即時同步」**與**「靜態儲存庫」**雙軌驅動架構，專門對接最新智財資料檔案 `RCCI-IP`：
+系統現已改為**「純靜態穩定模式」**（停用雲端動態輪詢，不進行背景定時同步，首頁頂部狀態列已簡化收合），並為您提供最直覺、免寫程式的 **PowerPoint 內容校對與更新工作流程**：
 
-#### 1. 目標雲端硬碟位置與檔案
-* **Google 雲端硬碟資料夾網址**：  
-  👉 [https://drive.google.com/drive/u/0/folders/1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j](https://drive.google.com/drive/u/0/folders/1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j)
-* **資料夾 ID**：`1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j`
-* **目標檔案名稱**：`RCCI-IP.csv`（或檔名包含 `RCCI-IP` 的 CSV 檔案）
+#### 1. 🖥️ 可編輯 PPT 簡報檔
+專案中已為您自動生成包含「智財與技術成果」主頁及 9 大子頁完整畫面與資訊的 PowerPoint 簡報：
+* **檔案位置**：  
+  [`RCCI_智財與技術成果_內容編輯簡報.pptx`](file:///g:/我的雲端硬碟/antigravity/rcci-patents-main/rcci-patents-main/RCCI_智財與技術成果_內容編輯簡報.pptx)  
+  （在 `assets/` 目錄與專案根目錄皆有留存）
 
-#### 2. 本機與 GitHub 儲存庫路徑
-* **本機檔案位置**：  
-  `G:\我的雲端硬碟\antigravity\rcci-patents-main\rcci-patents-main\assets\RCCI-IP.csv`
-* **專案相對路徑**：  
-  `assets/RCCI-IP.csv`
+#### 2. 📑 簡報架構與各投影片對應
+* **投影片 1**：封面與使用說明
+* **投影片 2**：智財專區主頁 9 大專利卡片總覽清單
+* **投影片 3～11**：各技術成果詳情子頁面（包含官方技術摘要、發明人、公開日、法律狀態、各國專利申請佈局明細表）：
+  * **P3**：【PF-001】高品質超導金屬材料蝕刻與氧化製程（量子科技）
+  * **P4**：【PF-002】一種適用太陽電池穩定度量測之外包裝真空盒（太陽能）
+  * **P5**：【PF-003】TOPCon表面改質方法以利鈣鈦礦疊層設計（太陽能）
+  * **P6**：【PF-004】具分子內非共價交互作用之自組裝電洞選擇材料（太陽能）
+  * **P7**：【PF-005】應用於疊層光伏元件之複合蒸鍍－溶液法鈣鈦礦製程技術（太陽能）
+  * **P8**：【PF-006】一種用於鈣鈦礦太陽能電池之氧化錫緩衝層及其優化製程（太陽能）
+  * **P9**：【PF-007】以電漿裂解碳氫化合物氣體同時產生碳和氫氣的方法（去碳燃氫）
+  * **P10**：【PF-008】具分離式點火電漿源與反應電漿源之氣體裂解系統（去碳燃氫）
+  * **P11**：【PF-009】多組分可調式墨水及其製備方法（去碳燃氫）
+* **投影片 12**：各國申請案件全域總表（26 筆完整資料庫）
 
-#### 3. 自動更新與運作機制
-1. **雲端直連策略 (GAS API)**：
-   * 系統透過配置在 Google Apps Script (GAS) 的代理端點，動態請求指定的雲端資料夾 `1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j`。
-   * 自動搜尋並取得檔名為 `RCCI-IP` 的最新 CSV 檔案內容。
-   * **日常維護只需將最新導出的 `RCCI-IP.csv` 覆蓋上傳至該 Google 雲端硬碟資料夾，前端網頁重新整理時即會自動載入最新專利與狀態**。
-2. **靜態與離線雙軌備援策略 (Local / GitHub Pages Fetch)**：
-   * 若雲端 API 未連通或在離線環境下，系統會自動切換讀取 `assets/RCCI-IP.csv`。
-   * 此機制保證上傳至 GitHub Pages 或以本機伺服器運行時，能 100% 穩定呈現完整的 26 筆專利資料與各國家族明細。
-3. **極速載入與狀態回饋**：
-   * 搭載智慧本地快取機制（LocalStorage / 快照快顯），讓訪客能在 0 秒內看見成果卡片。
-   * 頂端狀態列會即時提示當前資料來源：
-     * `● 已載入 Google 雲端硬碟 (RCCI-IP) 最新資料 (HH:MM:SS)`
-     * `● 已載入本機 (assets/RCCI-IP.csv) 最新資料 (HH:MM:SS)`
+#### 3. 🔄 編輯與回傳步驟
+1. **直接編輯**：使用微軟 PowerPoint 開啟該簡報，直接在投影片中的文字方塊、表格中微調摘要文字、發明人或申請案號。
+2. **存檔回傳**：修改儲存後，直接將該 PPT 檔案傳給 Antigravity。
+3. **AI 自動轉碼**：Antigravity 將自動解析您在簡報中所做的所有修改，自動更新專案程式碼（`data.js` 與 `assets/RCCI-IP.csv`），並整理好需要上傳至 GitHub 的檔案清單！
 
 ---
 
@@ -138,10 +138,9 @@ rcci-patents-main/
 
 當更新專案欲推送（Push）至 GitHub 時，建議上傳以下核心檔案與資料夾：
 * `index.html`：入口網頁
-* `style.css`、`css/`：樣式表（含響應式 RWD 行動版適配）
+* `style.css`、`css/`：樣式表（含全裝置 RWD 行動版適配）
 * `app.js`、`data.js`、`sync.js`、`rcci-content.js`、`js/`：核心邏輯與資料腳本
-* `assets/`：**包含最新的 `assets/RCCI-IP.csv`**、logo、圖示
-* `gas/`：Google Apps Script 雲端代理腳本
+* `assets/`：包含最新 `assets/RCCI-IP.csv`、`RCCI_智財與技術成果_內容編輯簡報.pptx`、logo、圖示
 * `README.md`：專案最新說明文件
 
 ---

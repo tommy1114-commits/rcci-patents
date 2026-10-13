@@ -58,6 +58,7 @@ body {
 
 /* 頂部全域通知 / 同步狀態列 */
 .sync-banner {
+  display: none !important; /* 已關閉自動同步更新，隱藏頂部狀態列 */
   background: #0f172a;
   color: #e2e8f0;
   font-size: 13px;

@@ -104,8 +104,8 @@ class GoogleSheetSync {
     const displayTime = this.lastSyncTime || new Date();
     this.updateStatus('syncing', '資料已更新 (' + this.formatTime(displayTime) + ')');
     
-    // 策略 1: 嘗試透過 Google Drive API (GAS 代理) 讀取 Drive 資料夾中的最新 CSV 檔
-    if (this.config.driveApiUrl) {
+    // 策略 1: 若有啟用雲端同步，則嘗試透過 Google Drive API 讀取 Drive 資料夾中的最新 CSV 檔
+    if (this.config.enableDriveSync && this.config.driveApiUrl) {
       try {
         const driveResp = await fetch(this.config.driveApiUrl, { cache: 'no-cache' });
         if (driveResp.ok) {

@@ -4,25 +4,23 @@
  */
 
 const APP_CONFIG = {
-  // Google Drive 資料夾配置與 API 代理端點 (GAS)
-  // 指定資料夾：https://drive.google.com/drive/u/0/folders/1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j
-  driveFolderId: '1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j',
-  driveFolderUrl: 'https://drive.google.com/drive/folders/1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j',
-  targetFileName: 'RCCI-IP',
-  driveApiUrl: 'https://script.google.com/macros/s/AKfycbykHkLyKkmuug5PGTFXSgMlTTBScbIjgMzoxbUMsvFwp3tefBF3hqEsvvv0U2NooHyuww/exec?action=getCsv&folderId=1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j&target=RCCI-IP',
+  // 模式設定：已關閉自動雲端同步，採用本機 / GitHub 靜態資料模式
+  enableDriveSync: false,
+  autoSyncIntervalMs: 0, // 設為 0，停止週期性自動更新
 
   // 靜態 / 本機 CSV 檔案路徑（GitHub Pages / 本機雲端硬碟 assets 目錄下的 RCCI-IP.csv）
   localCsvApplications: 'assets/RCCI-IP.csv',
   localCsvFamilies: 'data/patent_families.csv',
 
-  // 備援配置
-  spreadsheetId: '1EwYvwygeiKB5Z9qsaTFrA-WWA62p2qarsDBZUhbppuA',
-  gidApplications: '427151405',
-  gidFamilies: '2147396292',
+  // 雲端硬碟備用配置（若日後需重新啟用時可保留參考）
+  driveFolderId: '1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j',
+  driveFolderUrl: 'https://drive.google.com/drive/folders/1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j',
+  targetFileName: 'RCCI-IP',
+  driveApiUrl: '',
 
-  autoSyncIntervalMs: 60000,
-  localCacheKey: 'rcci_patent_csv_cache_v3',
-  lastSyncKey: 'rcci_last_csv_sync_time_v3'
+  // 快取鍵值
+  localCacheKey: 'rcci_patent_csv_cache_v4',
+  lastSyncKey: 'rcci_last_csv_sync_time_v4'
 };
 
 // 來自 PDF 規範文件（Pages 3-8）的詳細技術摘要與規格資料（包含智財技轉處官方超連結）
@@ -107,6 +105,17 @@ const PRESET_ABSTRACTS = {
     techUrl: '',
     abstract: ''
   },
+  '34A-1151006': {
+    title: '多組分可調式墨水及其製備方法',
+    category: '去碳燃氫',
+    publishDate: '',
+    inventors: '',
+    legalStatus: '',
+    familyId: 'PF-009',
+    mainCaseId: '34A-1151006',
+    techUrl: '',
+    abstract: ''
+  },
   'PF-009': {
     title: '多組分可調式墨水及其製備方法',
     category: '去碳燃氫',
@@ -114,6 +123,7 @@ const PRESET_ABSTRACTS = {
     inventors: '',
     legalStatus: '',
     familyId: 'PF-009',
+    mainCaseId: '34A-1151006',
     techUrl: '',
     abstract: ''
   }
@@ -145,7 +155,7 @@ const SNAPSHOT_APPLICATIONS = [
   {"家族編號":"PF-007","院內案件編號":"02A-1110615-PCT-JP","單位":"去碳燃氫","專利名稱":"PLASMA APPARATUS AND METHODS FOR CRACKING A GAS","國家／地區":"PCT-JP","申請類型":"","備註":"已獲證","案件關係":"","申請日":"2025-01-21","申請號":"2025-503128","公開日":"","公開號":"","專利號":"7838178","最新官方來文日":"","下一期限":"","剩餘天數":"","期限燈號":"","是否Final OA":"","Final OA日期":"","最終處分":"","核准通知日":"","領證／公告日":"","專利權屆期日":"","紙本文件編號":"","電子檔連結":""},
   {"家族編號":"PF-007","院內案件編號":"02A-1110615-PCT-CA","單位":"去碳燃氫","專利名稱":"PLASMA APPARATUS AND METHODS FOR CRACKING A GAS","國家／地區":"PCT-CA","申請類型":"","備註":"已申請","案件關係":"","申請日":"2025-01-21","申請號":"3262887","公開日":"","公開號":"","專利號":"","最新官方來文日":"","下一期限":"","剩餘天數":"","期限燈號":"","是否Final OA":"","Final OA日期":"","最終處分":"","核准通知日":"","領證／公告日":"","專利權屆期日":"","紙本文件編號":"","電子檔連結":""},
   {"家族編號":"PF-008","院內案件編號":"34A-1150903","單位":"去碳燃氫","專利名稱":"具分離式點火電漿源與反應電漿源之氣體裂解系統","國家／地區":"","申請類型":"","備註":"智財處審閱中","案件關係":"","申請日":"","申請號":"","公開日":"","公開號":"","專利號":"","最新官方來文日":"","下一期限":"","剩餘天數":"","期限燈號":"","是否Final OA":"","Final OA日期":"","最終處分":"","核准通知日":"","領證／公告日":"","專利權屆期日":"","紙本文件編號":"","電子檔連結":""},
-  {"家族編號":"PF-009","院內案件編號":"處理中","單位":"去碳燃氫","專利名稱":"多組分可調式墨水及其製備方法","國家／地區":"","申請類型":"","備註":"智財處審閱中","案件關係":"","申請日":"","申請號":"","公開日":"","公開號":"","專利號":"","最新官方來文日":"","下一期限":"","剩餘天數":"","期限燈號":"","是否Final OA":"","Final OA日期":"","最終處分":"","核准通知日":"","領證／公告日":"","專利權屆期日":"","紙本文件編號":"","電子檔連結":""}
+  {"家族編號":"PF-009","院內案件編號":"34A-1151006","單位":"去碳燃氫","專利名稱":"多組分可調式墨水及其製備方法","國家／地區":"","申請類型":"","備註":"智財處審閱中","案件關係":"","申請日":"","申請號":"","公開日":"","公開號":"","專利號":"","最新官方來文日":"","下一期限":"","剩餘天數":"","期限燈號":"","是否Final OA":"","Final OA日期":"","最終處分":"","核准通知日":"","領證／公告日":"","專利權屆期日":"","紙本文件編號":"","電子檔連結":""}
 ];
 
 const SNAPSHOT_FAMILIES = [
