@@ -209,10 +209,12 @@
     // 背景發動即時連線同步
     state.syncEngine.sync();
 
-    // 週期性檢查
-    setInterval(() => {
-      state.syncEngine.sync();
-    }, APP_CONFIG.autoSyncIntervalMs);
+    // 週期性檢查（若 autoSyncIntervalMs 為 0 則不啟動週期同步）
+    if (APP_CONFIG.autoSyncIntervalMs && APP_CONFIG.autoSyncIntervalMs > 0) {
+      setInterval(() => {
+        state.syncEngine.sync();
+      }, APP_CONFIG.autoSyncIntervalMs);
+    }
   }
 
   // 事件綁定

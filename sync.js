@@ -133,7 +133,7 @@ class GoogleSheetSync {
     // 策略 2: 讀取專案 assets/RCCI-IP.csv 檔案（支援本機同步與 GitHub Pages 靜態快顯）
     try {
       const fetchCsv = async (path) => {
-        const r = await fetch(path + '?_t=' + Date.now(), { cache: 'no-cache' });
+        const r = await fetch(path);
         if (!r.ok) throw new Error('HTTP ' + r.status);
         return await r.text();
       };
