@@ -179,8 +179,6 @@
       });
     }
 
-    }
-
     // 手機版側邊選單折疊開關
     if (elements.sidebarToggleBtn && elements.sidebarMenuWrapper) {
       elements.sidebarToggleBtn.addEventListener('click', () => {
@@ -256,16 +254,6 @@
         renderCurrentView();
         if (elements.searchInput) elements.searchInput.focus();
       });
-    }
-
-    // 視圖切換：卡片成果
-    if (elements.btnViewGrid) {
-      elements.btnViewGrid.addEventListener('click', () => {
-        window.location.hash = '#patents';
-      });
-    }
-
-    // 視圖切換：明細總表
     }
 
     // 麵包屑／返回按鈕回到列表
