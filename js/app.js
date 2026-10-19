@@ -440,8 +440,13 @@
           <p class="card-abstract">${cleanAbstract || '—'}</p>
         </div>
         <div class="card-footer">
-          <span class="card-inventor"><i class="fas fa-user-circle"></i> ${item.inventors || '—'}</span>
-          <span class="card-status-tag">${item.legalStatus || '專利申請中'}</span>
+          <div class="card-inventor" title="發明人：${item.inventors || '—'}">
+            <i class="fas fa-user-circle"></i>
+            <span class="inventor-name-text">${item.inventors || '—'}</span>
+          </div>
+          <div class="card-footer-extra">
+            <span class="card-status-tag">${item.legalStatus || '專利申請中'}</span>
+          </div>
         </div>
       `;
 
