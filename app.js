@@ -554,9 +554,6 @@
     if (elements.detailPublishDate) elements.detailPublishDate.textContent = outcome.publishDate || '—';
     if (elements.detailInventors) elements.detailInventors.textContent = outcome.inventors || '—';
     if (elements.detailLegalStatus) elements.detailLegalStatus.textContent = outcome.legalStatus || '—';
-    if (elements.detailFamilyId) elements.detailFamilyId.textContent = outcome.familyId || outcome.caseId || '—';
-    if (elements.detailProject) elements.detailProject.textContent = outcome.project || '—';
-    if (elements.detailLicenseStatus) elements.detailLicenseStatus.textContent = outcome.licenseStatus || '—';
 
     // 智財技轉處官方技術資料超連結
     if (elements.btnTechLink) {
