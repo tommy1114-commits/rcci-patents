@@ -179,11 +179,6 @@
       });
     }
 
-    if (elements.sidebarLinkTable) {
-      elements.sidebarLinkTable.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.location.hash = '#patents-table';
-      });
     }
 
     // 手機版側邊選單折疊開關
@@ -271,10 +266,6 @@
     }
 
     // 視圖切換：明細總表
-    if (elements.btnViewTable) {
-      elements.btnViewTable.addEventListener('click', () => {
-        window.location.hash = '#patents-table';
-      });
     }
 
     // 麵包屑／返回按鈕回到列表
@@ -310,39 +301,25 @@
     }
 
     if (hash === 'patents-table') {
-      setViewMode('table');
-      if (state.selectedOutcomeId) {
-        closeDetail(false);
-      }
+      window.location.hash = '#patents';
       return;
     }
 
-    // 預設為卡片檢視
+    // 預設為技術成果卡片檢視
     setViewMode('grid');
     if (state.selectedOutcomeId) {
       closeDetail(false);
     }
   }
 
-  // 切換檢視模式 (grid / table) 同步側邊選單與按鈕狀態
+  // 檢視模式設為成果卡片檢視
   function setViewMode(mode) {
-    state.viewMode = mode;
+    state.viewMode = 'grid';
 
-    if (mode === 'grid') {
-      if (elements.btnViewGrid) elements.btnViewGrid.classList.add('active');
-      if (elements.btnViewTable) elements.btnViewTable.classList.remove('active');
-      if (elements.sidebarItemGrid) elements.sidebarItemGrid.classList.add('active');
-      if (elements.sidebarItemTable) elements.sidebarItemTable.classList.remove('active');
-      if (elements.pageTitleDisplay) elements.pageTitleDisplay.textContent = '智財與技術成果';
-      if (elements.pageSubtitleDisplay) elements.pageSubtitleDisplay.textContent = '從技術領域或關鍵字快速找到可合作的研發成果';
-    } else {
-      if (elements.btnViewTable) elements.btnViewTable.classList.add('active');
-      if (elements.btnViewGrid) elements.btnViewGrid.classList.remove('active');
-      if (elements.sidebarItemTable) elements.sidebarItemTable.classList.add('active');
-      if (elements.sidebarItemGrid) elements.sidebarItemGrid.classList.remove('active');
-      if (elements.pageTitleDisplay) elements.pageTitleDisplay.textContent = '專利申請案明細';
-      if (elements.pageSubtitleDisplay) elements.pageSubtitleDisplay.textContent = '檢視本中心所有專利申請案之各國提申編號與法律狀態';
-    }
+    if (elements.btnViewGrid) elements.btnViewGrid.classList.add('active');
+    if (elements.sidebarItemGrid) elements.sidebarItemGrid.classList.add('active');
+    if (elements.pageTitleDisplay) elements.pageTitleDisplay.textContent = '智財與技術成果';
+    if (elements.pageSubtitleDisplay) elements.pageSubtitleDisplay.textContent = '從技術領域或關鍵字快速找到可合作的研發成果';
 
     renderCurrentView();
   }
@@ -665,10 +642,10 @@
     }
 
     if (updateHash) {
-      window.location.hash = state.viewMode === 'table' ? '#patents-table' : '#patents';
+      window.location.hash = '#patents';
     }
 
-    setViewMode(state.viewMode);
+    setViewMode('grid');
   }
 
   // DOM 載入後執行初始化

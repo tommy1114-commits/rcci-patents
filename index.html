@@ -252,13 +252,6 @@
                     </a>
                   </label>
                 </section>
-                <section class="toggle sidebar-second-floor-leaf" id="sidebar-item-table">
-                  <label class="no-arrow css-style-sidebar-label">
-                    <a class="d-block" id="sidebar-link-table" href="#patents-table" title="專利申請案明細">
-                      專利申請案明細
-                    </a>
-                  </label>
-                </section>
               </div>
             </aside>
           </div>
@@ -310,56 +303,12 @@
                   <!-- JS 生成 -->
                 </div>
 
-                <!-- 視圖切換 (卡片成果 / 申請案明細) -->
-                <div class="view-switchers">
-                  <button id="btn-view-grid" class="view-btn active" type="button" title="技術成果卡片檢視">
-                    <i class="fas fa-th-large"></i>
-                    <span>卡片成果</span>
-                  </button>
-                  <button id="btn-view-table" class="view-btn" type="button" title="專利申請案件明細總表">
-                    <i class="fas fa-list-ul"></i>
-                    <span>申請案明細</span>
-                  </button>
-                </div>
               </div>
 
               <!-- 成果卡片網格 (動態渲染) -->
               <div id="card-grid" class="card-grid">
                 <!-- 由 JS 動態渲染 -->
               </div>
-
-              <!-- 各國申請案件明細總表視圖 -->
-              <div id="all-table-view" class="all-table-view">
-                <div class="content-box">
-                  <div class="content-box-header">
-                    <h2 class="content-box-title">專利申請案完整明細表</h2>
-                    <span class="table-count-badge" id="table-total-count">共 26 筆申請紀錄</span>
-                  </div>
-                  <p class="table-hint">
-                    點擊任一案件列可檢視該項研發成果的完整專利家族佈局與技術摘要。
-                  </p>
-                  <div class="table-responsive">
-                    <table class="data-table">
-                      <thead>
-                        <tr>
-                          <th>家族編號</th>
-                          <th>院內案件編號</th>
-                          <th>國家／地區</th>
-                          <th>申請類型</th>
-                          <th>專利名稱</th>
-                          <th>申請號</th>
-                          <th>專利號</th>
-                          <th>狀態</th>
-                        </tr>
-                      </thead>
-                      <tbody id="all-apps-tbody">
-                        <!-- 由 JS 動態渲染 -->
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-
             </div>
 
             <!-- ====================================================
@@ -545,7 +494,6 @@
             </div>
             <div class="toggle_content">
               <p><a class="css-style-footer-page-second-level" title="技術成果" href="#patents">技術成果</a></p>
-              <p><a class="css-style-footer-page-second-level" title="專利申請案明細" href="#patents-table">專利申請案明細</a></p>
             </div>
           </div>
 
