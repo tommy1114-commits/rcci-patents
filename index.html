@@ -10,167 +10,19 @@
 </head>
 <body>
 
-  <!-- 頂部資料狀態列（已改為靜態模式，隱藏同步狀態列） -->
-  <aside class="sync-banner" id="sync-banner" style="display:none;" aria-label="資料狀態">
-    <div class="sync-status-indicator" id="sync-status-wrapper" style="cursor: pointer;" title="點擊可重新整理最新資料">
-      <span class="status-dot synced" id="sync-dot"></span>
-      <span id="sync-text">資料已更新</span>
-    </div>
-    <!-- 隱藏相容元件（防止舊版 JS 快取拋出 null 錯誤） -->
-    <button id="btn-refresh" style="display:none;" aria-hidden="true"></button>
-    <input type="file" id="csv-file-input" style="display:none;" aria-hidden="true">
-  </aside>
+  <!-- 隱藏相容元件（確保 JS 快取不拋錯） -->
+  <div style="display:none;" aria-hidden="true">
+    <span id="sync-dot"></span>
+    <span id="sync-text"></span>
+    <button id="btn-refresh"></button>
+    <input type="file" id="csv-file-input">
+  </div>
 
-  <!-- 主導覽列 (Navbar - 支援多裝置響應式 RWD) -->
-  <header class="main-header">
-    <div class="nav-container">
-      <a href="#patents" class="logo-link">
-        <img src="assets/rcci-logo.svg" alt="中央研究院 關鍵議題研究中心 Research Center for Critical Issues | Academia Sinica" class="logo-img">
-      </a>
-      <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="切換導覽選單" aria-expanded="false">
-        <span class="hamburger-bar"></span>
-        <span class="hamburger-bar"></span>
-        <span class="hamburger-bar"></span>
-      </button>
-      <nav id="main-nav" aria-label="主選單">
-        <ul class="nav-menu" id="nav-menu">
-          <li class="nav-item" id="nav-news"><a href="#news">最新消息</a></li>
-          <li class="nav-item" id="nav-about"><a href="#about">關於中心</a></li>
-          <li class="nav-item" id="nav-projects"><a href="#projects">研究計畫</a></li>
-          <li class="nav-item active" id="nav-patents"><a href="#patents">智財與技術成果</a></li>
-          <li class="nav-item" id="nav-facilities"><a href="#facilities">設施服務</a></li>
-          <li class="nav-item" id="nav-careers"><a href="#careers">人才招募</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <!-- 主內容容器 -->
+  <!-- 主內容容器：僅保留智財與技術成果專區 -->
   <main class="page-container">
 
     <!-- ========================================================
-         1. 最新消息專區 (#news)
-         ======================================================== -->
-    <section id="section-news" class="page-section">
-      <div class="hero-header">
-        <h1 class="hero-title">最新消息與活動</h1>
-        <p class="hero-subtitle">關鍵議題研究中心最新學術進展、尖端設施公告、活動報導與研究突破</p>
-      </div>
-
-      <!-- 新聞分類標籤 -->
-      <div class="controls-bar" style="margin-bottom: 24px;">
-        <div class="filter-group" id="news-filter-group">
-          <!-- 由 JS 動態生成 -->
-        </div>
-      </div>
-
-      <!-- 新聞卡片網格 -->
-      <div class="news-grid" id="news-container">
-        <!-- 由 JS 動態生成 -->
-      </div>
-    </section>
-
-    <!-- ========================================================
-         2. 關於中心專區 (#about)
-         ======================================================== -->
-    <section id="section-about" class="page-section">
-      <div class="hero-header">
-        <h1 class="hero-title">關於關鍵議題研究中心</h1>
-        <p class="hero-subtitle">以世界級競爭力研發成果，提出國家社會關鍵問題解方</p>
-      </div>
-
-      <!-- 次分頁導航 -->
-      <div class="subtabs-bar">
-        <button class="subtab-btn active" data-subtab="about-intro">成立宗旨與使命</button>
-        <button class="subtab-btn" data-subtab="about-history">南部院區發展沿革</button>
-        <button class="subtab-btn" data-subtab="about-team">首長與組織架構</button>
-        <button class="subtab-btn" data-subtab="about-committee">學術諮詢委員會</button>
-      </div>
-
-      <!-- 子面板 1: 成立宗旨與使命 -->
-      <div id="about-intro" class="subpage-panel active">
-        <div class="content-box" style="margin-bottom: 24px;">
-          <h2 class="content-box-title">中心創立背景</h2>
-          <p class="abstract-text">
-            中央研究院為協助國家社會因應重大挑戰，以具世界級競爭力之研發成果提出關鍵問題解方，於 <strong>2024 年 1 月</strong> 正式成立「關鍵議題研究中心」（Research Center for Critical Issues, RCCI）。
-            身為中研院最新的實體研究單位，關鍵中心期許打造為中研院的大型「前瞻實驗室」，以全新思維與作法，著重於創新力、實踐力與社會影響力，協助國家跨領域突破。
-          </p>
-        </div>
-
-        <h3 style="font-size: 18px; font-weight: 700; margin-bottom: 14px;">四大核心任務</h3>
-        <div class="mission-grid" id="about-tasks-grid">
-          <!-- 由 JS 動態渲染四大任務 -->
-        </div>
-
-        <div class="content-box" style="margin-top: 24px;">
-          <h2 class="content-box-title">關鍵議題選題原則與運作模式</h2>
-          <ul class="milestone-list" style="color: #334155; font-size: 14.5px; line-height: 1.8; margin-top: 10px;">
-            <li><strong>解決關鍵問題：</strong> 協助解決科學及社會重大挑戰，立足於深厚基礎研究。</li>
-            <li><strong>階段性里程碑：</strong> 已有初步解題方向，且在 3 至 5 年內可達成實證驗證與階段性里程碑。</li>
-            <li><strong>垂直整合團隊：</strong> 合聘院內外專家跨領域組成團隊，推動自上而下的垂直整合研發。</li>
-            <li><strong>新思維實踐：</strong> 結合人文社會科學學者參與，探究新科技對社會、法規與環境之深遠影響。</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- 子面板 2: 南部院區發展沿革 -->
-      <div id="about-history" class="subpage-panel">
-        <div class="content-box">
-          <h2 class="content-box-title">南部院區發展歷程 (台南沙崙智慧綠能科學城)</h2>
-          <p class="abstract-text" style="margin-bottom: 20px;">
-            中央研究院南部院區座落於台南高鐵特定區，是中研院開創「關鍵前瞻研究」與「國家級科研實證場域」的重要基地。
-          </p>
-          <div class="timeline" id="about-timeline">
-            <!-- 由 JS 動態渲染歷史時間軸 -->
-          </div>
-        </div>
-      </div>
-
-      <!-- 子面板 3: 首長與組織架構 -->
-      <div id="about-team" class="subpage-panel">
-        <div id="about-leadership-container">
-          <!-- 由 JS 動態渲染首長簡歷與智財窗口資訊 -->
-        </div>
-      </div>
-
-      <!-- 子面板 4: 學術諮詢委員會 -->
-      <div id="about-committee" class="subpage-panel">
-        <div class="content-box">
-          <h2 class="content-box-title">學術諮詢委員會委員名單</h2>
-          <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">
-            由中央研究院各研究所特聘研究員與學術領袖組成，指導本中心關鍵議題前瞻規劃與科研發展策略。
-          </p>
-          <div class="committee-grid" id="about-committee-grid">
-            <!-- 由 JS 動態渲染委員名單 -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================================
-         3. 研究計畫專區 (#projects)
-         ======================================================== -->
-    <section id="section-projects" class="page-section">
-      <div class="hero-header">
-        <h1 class="hero-title">專題中心與關鍵研究計畫</h1>
-        <p class="hero-subtitle">聚焦淨零科技、量子運算、海洋科技與數位人文前瞻領域（點選卡片可直達關聯智財成果）</p>
-      </div>
-
-      <!-- 計畫分類控制列 -->
-      <div class="controls-bar" style="margin-bottom: 24px;">
-        <div class="filter-group" id="project-filter-group">
-          <!-- 由 JS 動態生成 -->
-        </div>
-      </div>
-
-      <!-- 計畫卡片網格 -->
-      <div class="project-grid" id="projects-container">
-        <!-- 由 JS 動態生成 -->
-      </div>
-    </section>
-
-    <!-- ========================================================
-         4. 智財與技術成果專區 (#patents - 忠實實現 PDF Pages 2-8)
+         智財與技術成果專區 (#patents)
          ======================================================== -->
     <section id="section-patents" class="page-section active">
       <!-- 列表檢視 (PDF Page 2 架構) -->
@@ -362,75 +214,6 @@
           </aside>
         </div>
       </article>
-    </section>
-
-    <!-- ========================================================
-         5. 設施服務專區 (#facilities)
-         ======================================================== -->
-    <section id="section-facilities" class="page-section">
-      <div class="hero-header">
-        <h1 class="hero-title">尖端科研設施與共用服務</h1>
-        <p class="hero-subtitle">支援先進太陽能量測、超導量子晶片微奈米製程 (QC-Fab) 與高階分析平台</p>
-      </div>
-
-      <!-- 6 大設施卡片網格 -->
-      <div class="facilities-grid" id="facilities-container">
-        <!-- 由 JS 動態生成 -->
-      </div>
-
-      <!-- 設施服務收費與預約指引 (對齊官網 charge.php) -->
-      <div class="charge-box">
-        <h2 style="font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 12px;">設施服務收費與繳款指引</h2>
-        <p style="font-size: 14.5px; color: #475569; line-height: 1.7; margin-bottom: 16px;">
-          本中心各項共用設施依中研院法規採非現金金融繳款機制，款項核對入帳後統一開立中研院收據/發票。
-        </p>
-
-        <div class="bank-info-grid">
-          <div>
-            <div style="font-size: 12px; color: var(--text-muted);">匯款銀行</div>
-            <div style="font-weight: 700; color: var(--text-main); font-size: 14.5px;">0050049 台灣土地銀行 南港分行</div>
-          </div>
-          <div>
-            <div style="font-size: 12px; color: var(--text-muted);">匯款戶名</div>
-            <div style="font-weight: 700; color: var(--text-main); font-size: 14.5px;">中央研究院科學研究基金 401 專戶</div>
-          </div>
-          <div>
-            <div style="font-size: 12px; color: var(--text-muted);">繳款專屬帳號</div>
-            <div style="font-weight: 700; color: var(--primary); font-family: ui-monospace, monospace; font-size: 15px;">004-056-030-625</div>
-          </div>
-        </div>
-
-        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
-          <a href="https://reservation.iis.sinica.edu.tw/servlet/SignInHandler" target="_blank" rel="noopener noreferrer" class="btn-primary-action" style="display: inline-flex; width: auto; padding: 0 24px;">
-            <span>前往中央研究院儀器預約系統 ↗</span>
-          </a>
-          <a href="mailto:rcci@gate.sinica.edu.tw" class="btn-sync" style="background: #ffffff; color: var(--text-main); padding: 0 20px; height: 44px; font-size: 14px;">
-            ✉ 設施委託與收費洽詢窗口
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ========================================================
-         6. 人才招募專區 (#careers)
-         ======================================================== -->
-    <section id="section-careers" class="page-section">
-      <div class="hero-header">
-        <h1 class="hero-title">加入關鍵議題研究中心</h1>
-        <p class="hero-subtitle">誠徵優秀科研與工程技術人才，共同開創前瞻科學新紀元</p>
-      </div>
-
-      <!-- 徵才篩選標籤 -->
-      <div class="controls-bar" style="margin-bottom: 24px;">
-        <div class="filter-group" id="career-filter-group">
-          <!-- 由 JS 動態生成 -->
-        </div>
-      </div>
-
-      <!-- 職缺列表網格 -->
-      <div class="career-grid" id="careers-container">
-        <!-- 由 JS 動態生成 -->
-      </div>
     </section>
 
   </main>

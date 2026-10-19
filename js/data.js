@@ -4,23 +4,23 @@
  */
 
 const APP_CONFIG = {
-  // Google Drive 資料夾配置與 API 代理端點 (GAS)
-  driveFolderId: '1DmEhARSr0kUhi4fKTfSaDpFVitdk39-t',
-  driveFolderUrl: 'https://drive.google.com/drive/folders/1DmEhARSr0kUhi4fKTfSaDpFVitdk39-t',
-  driveApiUrl: 'https://script.google.com/macros/s/AKfycbykHkLyKkmuug5PGTFXSgMlTTBScbIjgMzoxbUMsvFwp3tefBF3hqEsvvv0U2NooHyuww/exec?action=getCsv',
+  // 模式設定：已關閉自動雲端同步，採用本機 / GitHub 靜態資料模式
+  enableDriveSync: false,
+  autoSyncIntervalMs: 0, // 設為 0，停止週期性自動更新
 
-  // 靜態 CSV 檔案路徑（GitHub Pages / 本機專案路徑）
-  localCsvApplications: 'data/sheet_data.csv',
+  // 靜態 / 本機 CSV 檔案路徑（GitHub Pages / 本機雲端硬碟 assets 目錄下的 RCCI-IP.csv）
+  localCsvApplications: 'assets/RCCI-IP.csv',
   localCsvFamilies: 'data/patent_families.csv',
 
-  // 備援配置
-  spreadsheetId: '1EwYvwygeiKB5Z9qsaTFrA-WWA62p2qarsDBZUhbppuA',
-  gidApplications: '427151405',
-  gidFamilies: '2147396292',
+  // 雲端硬碟備用配置（若日後需重新啟用時可保留參考）
+  driveFolderId: '1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j',
+  driveFolderUrl: 'https://drive.google.com/drive/folders/1HpQXZPQeb-KTMQWGT3gU8u6ucDyGqM-j',
+  targetFileName: 'RCCI-IP',
+  driveApiUrl: '',
 
-  autoSyncIntervalMs: 120000,
-  localCacheKey: 'rcci_patent_csv_cache_v1',
-  lastSyncKey: 'rcci_last_csv_sync_time'
+  // 快取鍵值
+  localCacheKey: 'rcci_patent_csv_cache_v4',
+  lastSyncKey: 'rcci_last_csv_sync_time_v4'
 };
 
 // 來自 PDF 規範文件（Pages 3-8）的詳細技術摘要與規格資料（包含智財技轉處官方超連結）
@@ -88,32 +88,44 @@ const PRESET_ABSTRACTS = {
   '02A-1110615': {
     title: '以電漿裂解碳氫化合物氣體同時產生碳和氫氣的方法',
     category: '去碳燃氫',
-    publishDate: '2023-07-21',
-    inventors: '去碳燃氫研發團隊',
-    legalStatus: '已獲證（多國）',
+    publishDate: '2022-06-11',
+    inventors: '廖俊智、陳洋元、歐敏男、吳杉洛',
+    legalStatus: '部分已獲證（多國）',
     familyId: 'PF-007',
     techUrl: 'https://ticket.apps.sinica.edu.tw/tech/02A-1110615',
-    abstract: '利用高溫電漿裂解甲烷等碳氫化合物氣體，在無氧環境下將氣體直接裂解為固態碳黑與潔淨氫氣，達成零直接二氧化碳排放之產氫技術，兼具固碳與能源轉型之關鍵工業應用價值。'
+    abstract: '全球氣候變遷造成的氣候暖化已成為人類發展之一迫切問題，因此國際社會訂定了到2050年實現碳零排放的共同目標。台灣天然能源缺乏，因此多以煤炭與石化燃料來發電，由於空氣污染問題，逐漸改以天然氣發電。目前天然氣發電比重已達40-50%，惟天然氣(CH4)燃燒雖可減少如PM2.5的污染，但不可避免地仍釋放出大量的二氧化碳溫室氣體。中央研究院啟動了Alpha去碳計畫，以達成二氧化碳零排放的目標。本發明係一種可同時產碳和氫氣的方法。'
   },
   '34A-1150903': {
     title: '具分離式點火電漿源與反應電漿源之氣體裂解系統',
     category: '去碳燃氫',
-    publishDate: '2026-09-03',
-    inventors: '去碳燃氫研發團隊',
-    legalStatus: '智財處審閱中',
+    publishDate: '',
+    inventors: '',
+    legalStatus: '',
     familyId: 'PF-008',
-    techUrl: 'https://ticket.apps.sinica.edu.tw/tech/34A-1150903',
-    abstract: '設計分離式點火與反應電漿雙源結構，提升氣體裂解電漿之穩定度與能量利用效率，降低電極損耗並顯著延長反應器之連續運轉壽命。'
+    techUrl: '',
+    abstract: ''
+  },
+  '34A-1151006': {
+    title: '多組分可調式墨水及其製備方法',
+    category: '去碳燃氫',
+    publishDate: '',
+    inventors: '',
+    legalStatus: '',
+    familyId: 'PF-009',
+    mainCaseId: '34A-1151006',
+    techUrl: '',
+    abstract: ''
   },
   'PF-009': {
     title: '多組分可調式墨水及其製備方法',
     category: '去碳燃氫',
-    publishDate: '2026-09-10',
-    inventors: '去碳燃氫研發團隊',
-    legalStatus: '智財處審閱中',
+    publishDate: '',
+    inventors: '',
+    legalStatus: '',
     familyId: 'PF-009',
-    techUrl: 'https://ticket.apps.sinica.edu.tw/tech/',
-    abstract: '針對電漿固碳副產物開發之功能性碳材料分散配方，具備多組分可調性，可用於導電油墨、電極材料與機能性複合塗層材料。'
+    mainCaseId: '34A-1151006',
+    techUrl: '',
+    abstract: ''
   }
 };
 
@@ -143,7 +155,7 @@ const SNAPSHOT_APPLICATIONS = [
   {"家族編號":"PF-007","院內案件編號":"02A-1110615-PCT-JP","單位":"去碳燃氫","專利名稱":"PLASMA APPARATUS AND METHODS FOR CRACKING A GAS","國家／地區":"PCT-JP","申請類型":"","備註":"已獲證","案件關係":"","申請日":"2025-01-21","申請號":"2025-503128","公開日":"","公開號":"","專利號":"7838178","最新官方來文日":"","下一期限":"","剩餘天數":"","期限燈號":"","是否Final OA":"","Final OA日期":"","最終處分":"","核准通知日":"","領證／公告日":"","專利權屆期日":"","紙本文件編號":"","電子檔連結":""},
   {"家族編號":"PF-007","院內案件編號":"02A-1110615-PCT-CA","單位":"去碳燃氫","專利名稱":"PLASMA APPARATUS AND METHODS FOR CRACKING A GAS","國家／地區":"PCT-CA","申請類型":"","備註":"已申請","案件關係":"","申請日":"2025-01-21","申請號":"3262887","公開日":"","公開號":"","專利號":"","最新官方來文日":"","下一期限":"","剩餘天數":"","期限燈號":"","是否Final OA":"","Final OA日期":"","最終處分":"","核准通知日":"","領證／公告日":"","專利權屆期日":"","紙本文件編號":"","電子檔連結":""},
   {"家族編號":"PF-008","院內案件編號":"34A-1150903","單位":"去碳燃氫","專利名稱":"具分離式點火電漿源與反應電漿源之氣體裂解系統","國家／地區":"","申請類型":"","備註":"智財處審閱中","案件關係":"","申請日":"","申請號":"","公開日":"","公開號":"","專利號":"","最新官方來文日":"","下一期限":"","剩餘天數":"","期限燈號":"","是否Final OA":"","Final OA日期":"","最終處分":"","核准通知日":"","領證／公告日":"","專利權屆期日":"","紙本文件編號":"","電子檔連結":""},
-  {"家族編號":"PF-009","院內案件編號":"?","單位":"去碳燃氫","專利名稱":"多組分可調式墨水及其製備方法","國家／地區":"","申請類型":"","備註":"智財處審閱中","案件關係":"","申請日":"","申請號":"","公開日":"","公開號":"","專利號":"","最新官方來文日":"","下一期限":"","剩餘天數":"","期限燈號":"","是否Final OA":"","Final OA日期":"","最終處分":"","核准通知日":"","領證／公告日":"","專利權屆期日":"","紙本文件編號":"","電子檔連結":""}
+  {"家族編號":"PF-009","院內案件編號":"34A-1151006","單位":"去碳燃氫","專利名稱":"多組分可調式墨水及其製備方法","國家／地區":"","申請類型":"","備註":"智財處審閱中","案件關係":"","申請日":"","申請號":"","公開日":"","公開號":"","專利號":"","最新官方來文日":"","下一期限":"","剩餘天數":"","期限燈號":"","是否Final OA":"","Final OA日期":"","最終處分":"","核准通知日":"","領證／公告日":"","專利權屆期日":"","紙本文件編號":"","電子檔連結":""}
 ];
 
 const SNAPSHOT_FAMILIES = [

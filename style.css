@@ -154,14 +154,9 @@ body {
   text-decoration: underline;
 }
 
-/* 主導覽列 (Navbar) */
+/* 主導覽列 (Navbar) - 依需求已隱藏最上方導覽列 */
 .main-header {
-  background: #ffffff;
-  border-bottom: 1px solid var(--border-color);
-  position: sticky;
-  top: 0;
-  z-index: 40;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  display: none !important;
 }
 
 .nav-container {

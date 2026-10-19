@@ -355,7 +355,7 @@
     window.addEventListener('hashchange', handleHashRouting);
   }
 
-  // 處理 URL Hash 路由切換
+  // 處理 URL Hash 路由切換（以智財專區為核心）
   function handleHashRouting() {
     const rawHash = window.location.hash || '#patents';
     const hash = rawHash.replace(/^#/, '');
@@ -368,36 +368,31 @@
       return;
     }
 
-    // 主專區路由切換
-    if (['news', 'about', 'projects', 'patents', 'facilities', 'careers'].includes(hash)) {
-      switchSection(hash);
-      if (hash === 'patents' && state.selectedOutcomeId) {
-        closeDetail(false);
-      }
-    } else {
-      switchSection('patents');
+    // 預設智財成果專區列表
+    switchSection('patents');
+    if (state.selectedOutcomeId) {
+      closeDetail(false);
     }
   }
 
   // 切換大導覽專區
   function switchSection(sectionKey) {
-    state.activeSection = sectionKey;
+    state.activeSection = 'patents';
 
-    // 更新導覽列焦點
+    // 更新導覽列焦點（若有）
     Object.keys(elements.navItems).forEach(key => {
       if (elements.navItems[key]) {
-        elements.navItems[key].classList.toggle('active', key === sectionKey);
+        elements.navItems[key].classList.toggle('active', key === 'patents');
       }
     });
 
     // 切換頁面專區顯示
     Object.keys(elements.sections).forEach(key => {
       if (elements.sections[key]) {
-        elements.sections[key].classList.toggle('active', key === sectionKey);
+        elements.sections[key].classList.toggle('active', key === 'patents');
       }
     });
 
-    // 切換專區時收合手機版導覽選單
     if (elements.mobileToggle && elements.navMenu) {
       elements.navMenu.classList.remove('open');
       elements.mobileToggle.classList.remove('active');
@@ -408,15 +403,15 @@
   }
 
   // ========================================================
-  // 渲染官網完整內容（最新消息、關於、計畫、設施、人才）
+  // 渲染官網完整內容（僅在 DOM 存在時安全執行）
   // ========================================================
   function renderAllRcciSections() {
     if (typeof RCCI_WEBSITE_DATA === 'undefined') return;
-    renderNews();
-    renderAbout();
-    renderProjects();
-    renderFacilities();
-    renderCareers();
+    if (elements.newsContainer) renderNews();
+    if (elements.aboutTasksGrid) renderAbout();
+    if (elements.projectsContainer) renderProjects();
+    if (elements.facilitiesContainer) renderFacilities();
+    if (elements.careersContainer) renderCareers();
   }
 
   // 1. 最新消息渲染

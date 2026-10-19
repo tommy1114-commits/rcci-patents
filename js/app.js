@@ -68,6 +68,10 @@
       careers: document.getElementById('section-careers')
     },
 
+    // 手機導覽元件
+    mobileToggle: document.getElementById('mobile-nav-toggle'),
+    navMenu: document.getElementById('nav-menu'),
+
     // 同步與通知
     syncDot: document.getElementById('sync-dot'),
     syncText: document.getElementById('sync-text'),
@@ -128,10 +132,29 @@
 
   // 初始化程式
   function init() {
-    setupEventListeners();
-    setupSyncEngine();
-    renderAllRcciSections();
-    handleHashRouting();
+    try {
+      setupEventListeners();
+    } catch (err) {
+      console.error('setupEventListeners error:', err);
+    }
+
+    try {
+      setupSyncEngine();
+    } catch (err) {
+      console.error('setupSyncEngine error:', err);
+    }
+
+    try {
+      renderAllRcciSections();
+    } catch (err) {
+      console.error('renderAllRcciSections error:', err);
+    }
+
+    try {
+      handleHashRouting();
+    } catch (err) {
+      console.error('handleHashRouting error:', err);
+    }
   }
 
   // 設定同步引擎與立即初始渲染
@@ -139,8 +162,8 @@
     state.syncEngine = new GoogleSheetSync(APP_CONFIG);
 
     state.syncEngine.onStatusChange = (status, message) => {
-      elements.syncDot.className = `status-dot ${status}`;
-      elements.syncText.textContent = message;
+      if (elements.syncDot) elements.syncDot.className = `status-dot ${status}`;
+      if (elements.syncText) elements.syncText.textContent = message;
       if (elements.btnRefresh) {
         if (status === 'syncing') elements.btnRefresh.classList.add('spinning');
         else elements.btnRefresh.classList.remove('spinning');
@@ -159,18 +182,25 @@
     };
 
     // 立即初始渲染（優先使用 LocalStorage 快取，其次使用內建快照）
-    const cached = state.syncEngine.loadFromStorage();
-    if (cached && cached.data && cached.data.outcomes) {
-      state.outcomes = cached.data.outcomes;
-      state.allApplications = cached.data.allApplications || [];
-      elements.syncDot.className = 'status-dot fallback';
-      elements.syncText.textContent = '資料已更新 (' + state.syncEngine.formatTime(new Date(cached.syncTime)) + ')';
-    } else {
+    try {
+      const cached = state.syncEngine.loadFromStorage();
+      if (cached && cached.data && cached.data.outcomes && cached.data.outcomes.length > 0) {
+        state.outcomes = cached.data.outcomes;
+        state.allApplications = cached.data.allApplications || [];
+        if (elements.syncDot) elements.syncDot.className = 'status-dot fallback';
+        if (elements.syncText) elements.syncText.textContent = '資料已更新 (' + state.syncEngine.formatTime(new Date(cached.syncTime)) + ')';
+      } else {
+        const initialSnapshot = state.syncEngine.processAndMergeData(SNAPSHOT_APPLICATIONS, SNAPSHOT_FAMILIES);
+        state.outcomes = initialSnapshot.outcomes;
+        state.allApplications = initialSnapshot.allApplications;
+        if (elements.syncDot) elements.syncDot.className = 'status-dot fallback';
+        if (elements.syncText) elements.syncText.textContent = '資料已更新 (' + state.syncEngine.formatTime(new Date()) + ')';
+      }
+    } catch (e) {
+      console.warn('初始快顯渲染例外:', e);
       const initialSnapshot = state.syncEngine.processAndMergeData(SNAPSHOT_APPLICATIONS, SNAPSHOT_FAMILIES);
       state.outcomes = initialSnapshot.outcomes;
       state.allApplications = initialSnapshot.allApplications;
-      elements.syncDot.className = 'status-dot fallback';
-      elements.syncText.textContent = '資料已更新 (' + state.syncEngine.formatTime(new Date()) + ')';
     }
 
     renderCategories();
@@ -179,23 +209,64 @@
     // 背景發動即時連線同步
     state.syncEngine.sync();
 
-    // 週期性檢查
-    setInterval(() => {
-      state.syncEngine.sync();
-    }, APP_CONFIG.autoSyncIntervalMs);
+    // 週期性檢查（若 autoSyncIntervalMs 為 0 則不啟動週期同步）
+    if (APP_CONFIG.autoSyncIntervalMs && APP_CONFIG.autoSyncIntervalMs > 0) {
+      setInterval(() => {
+        state.syncEngine.sync();
+      }, APP_CONFIG.autoSyncIntervalMs);
+    }
   }
 
   // 事件綁定
   function setupEventListeners() {
+    // 頂部導覽列點擊切換（主動綁定確保立即響應）
+    Object.keys(elements.navItems).forEach(key => {
+      const navEl = elements.navItems[key];
+      if (navEl) {
+        navEl.addEventListener('click', (e) => {
+          // 若點擊內部 a 標籤由 hashchange 處理，此處做補充保險
+          switchSection(key);
+        });
+      }
+    });
+
+    // 手機版導覽選單開關互動
+    if (elements.mobileToggle && elements.navMenu) {
+      elements.mobileToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = elements.navMenu.classList.toggle('open');
+        elements.mobileToggle.classList.toggle('active', isOpen);
+        elements.mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+
+      // 點選任意選單連結後自動關閉手機選單
+      elements.navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          elements.navMenu.classList.remove('open');
+          elements.mobileToggle.classList.remove('active');
+          elements.mobileToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      // 點選選單外任意區域自動收合
+      document.addEventListener('click', (e) => {
+        if (!elements.navMenu.contains(e.target) && !elements.mobileToggle.contains(e.target)) {
+          elements.navMenu.classList.remove('open');
+          elements.mobileToggle.classList.remove('active');
+          elements.mobileToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
     // 點擊頂部狀態列或刷新按鈕手動更新
     if (elements.syncStatusWrapper) {
       elements.syncStatusWrapper.addEventListener('click', () => {
-        state.syncEngine.sync();
+        if (state.syncEngine) state.syncEngine.sync();
       });
     }
     if (elements.btnRefresh) {
       elements.btnRefresh.addEventListener('click', () => {
-        state.syncEngine.sync();
+        if (state.syncEngine) state.syncEngine.sync();
       });
     }
 
@@ -215,47 +286,58 @@
 
     // 智財搜尋輸入（防抖）
     let debounceTimer = null;
-    elements.searchInput.addEventListener('input', (e) => {
-      clearTimeout(debounceTimer);
-      const query = e.target.value.trim();
-      elements.searchClear.classList.toggle('visible', query.length > 0);
-      debounceTimer = setTimeout(() => {
-        state.searchQuery = query;
-        renderCurrentView();
-      }, 200);
-    });
+    if (elements.searchInput) {
+      elements.searchInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        const query = e.target.value.trim();
+        if (elements.searchClear) {
+          elements.searchClear.classList.toggle('visible', query.length > 0);
+        }
+        debounceTimer = setTimeout(() => {
+          state.searchQuery = query;
+          renderCurrentView();
+        }, 200);
+      });
+    }
 
     // 清除搜尋
-    elements.searchClear.addEventListener('click', () => {
-      elements.searchInput.value = '';
-      elements.searchClear.classList.remove('visible');
-      state.searchQuery = '';
-      renderCurrentView();
-      elements.searchInput.focus();
-    });
+    if (elements.searchClear) {
+      elements.searchClear.addEventListener('click', () => {
+        if (elements.searchInput) elements.searchInput.value = '';
+        elements.searchClear.classList.remove('visible');
+        state.searchQuery = '';
+        renderCurrentView();
+        if (elements.searchInput) elements.searchInput.focus();
+      });
+    }
 
     // 智財檢視模式切換：卡片
-    elements.btnViewGrid.addEventListener('click', () => {
-      state.viewMode = 'grid';
-      elements.btnViewGrid.classList.add('active');
-      elements.btnViewTable.classList.remove('active');
-      renderCurrentView();
-    });
+    if (elements.btnViewGrid) {
+      elements.btnViewGrid.addEventListener('click', () => {
+        state.viewMode = 'grid';
+        elements.btnViewGrid.classList.add('active');
+        if (elements.btnViewTable) elements.btnViewTable.classList.remove('active');
+        renderCurrentView();
+      });
+    }
 
     // 智財檢視模式切換：明細總表
-    elements.btnViewTable.addEventListener('click', () => {
-      state.viewMode = 'table';
-      elements.btnViewTable.classList.add('active');
-      elements.btnViewGrid.classList.remove('active');
-      renderCurrentView();
-    });
+    if (elements.btnViewTable) {
+      elements.btnViewTable.addEventListener('click', () => {
+        state.viewMode = 'table';
+        elements.btnViewTable.classList.add('active');
+        if (elements.btnViewGrid) elements.btnViewGrid.classList.remove('active');
+        renderCurrentView();
+      });
+    }
 
     // 麵包屑回到成果列表
-    elements.breadcrumbBack.addEventListener('click', (e) => {
-      e.preventDefault();
-      closeDetail();
-    });
-
+    if (elements.breadcrumbBack) {
+      elements.breadcrumbBack.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeDetail();
+      });
+    }
 
     // 關於中心子分頁點擊切換
     document.querySelectorAll('.subtab-btn').forEach(btn => {
@@ -273,7 +355,7 @@
     window.addEventListener('hashchange', handleHashRouting);
   }
 
-  // 處理 URL Hash 路由切換
+  // 處理 URL Hash 路由切換（以智財專區為核心）
   function handleHashRouting() {
     const rawHash = window.location.hash || '#patents';
     const hash = rawHash.replace(/^#/, '');
@@ -286,48 +368,50 @@
       return;
     }
 
-    // 主專區路由切換
-    if (['news', 'about', 'projects', 'patents', 'facilities', 'careers'].includes(hash)) {
-      switchSection(hash);
-      if (hash === 'patents' && state.selectedOutcomeId) {
-        closeDetail(false);
-      }
-    } else {
-      switchSection('patents');
+    // 預設智財成果專區列表
+    switchSection('patents');
+    if (state.selectedOutcomeId) {
+      closeDetail(false);
     }
   }
 
   // 切換大導覽專區
   function switchSection(sectionKey) {
-    state.activeSection = sectionKey;
+    state.activeSection = 'patents';
 
-    // 更新導覽列焦點
+    // 更新導覽列焦點（若有）
     Object.keys(elements.navItems).forEach(key => {
       if (elements.navItems[key]) {
-        elements.navItems[key].classList.toggle('active', key === sectionKey);
+        elements.navItems[key].classList.toggle('active', key === 'patents');
       }
     });
 
     // 切換頁面專區顯示
     Object.keys(elements.sections).forEach(key => {
       if (elements.sections[key]) {
-        elements.sections[key].classList.toggle('active', key === sectionKey);
+        elements.sections[key].classList.toggle('active', key === 'patents');
       }
     });
+
+    if (elements.mobileToggle && elements.navMenu) {
+      elements.navMenu.classList.remove('open');
+      elements.mobileToggle.classList.remove('active');
+      elements.mobileToggle.setAttribute('aria-expanded', 'false');
+    }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // ========================================================
-  // 渲染官網完整內容（最新消息、關於、計畫、設施、人才）
+  // 渲染官網完整內容（僅在 DOM 存在時安全執行）
   // ========================================================
   function renderAllRcciSections() {
     if (typeof RCCI_WEBSITE_DATA === 'undefined') return;
-    renderNews();
-    renderAbout();
-    renderProjects();
-    renderFacilities();
-    renderCareers();
+    if (elements.newsContainer) renderNews();
+    if (elements.aboutTasksGrid) renderAbout();
+    if (elements.projectsContainer) renderProjects();
+    if (elements.facilitiesContainer) renderFacilities();
+    if (elements.careersContainer) renderCareers();
   }
 
   // 1. 最新消息渲染
@@ -617,19 +701,26 @@
     filtered.forEach(r => {
       const card = document.createElement('div');
       card.className = 'career-card';
+      const detailUrl = r.url || `https://rcci.sinica.edu.tw/recruitment.php?id=${r.id}`;
 
       card.innerHTML = `
         <div>
           <div class="career-unit">${r.campus} ｜ ${r.unit}</div>
-          <h3 class="career-title">${r.position}</h3>
+          <h3 class="career-title">
+            <a href="${detailUrl}" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;" title="前往官方網站查看詳細內容">
+              ${r.position}
+            </a>
+          </h3>
           <div class="career-period">📅 徵才期間：${r.period}</div>
           <p class="career-desc">${r.description}</p>
           <div class="career-req"><strong>資格條件：</strong>${r.requirements}</div>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 14px;">
-          <span style="font-size: 13px; color: var(--text-muted);">聯絡信箱：${r.contact}</span>
-          <a href="mailto:${r.contact}?subject=應徵關鍵中心職缺：${encodeURIComponent(r.position)}" class="btn-apply">
-            ✉ 立即應徵
+          <span style="font-size: 13px; color: var(--text-muted);">
+            聯絡信箱：<a href="mailto:${r.contact}?subject=應徵關鍵中心職缺：${encodeURIComponent(r.position)}" style="color: inherit; text-decoration: underline;">${r.contact}</a>
+          </span>
+          <a href="${detailUrl}" target="_blank" rel="noopener noreferrer" class="btn-apply" title="前往官方網站查看詳細內容">
+            詳細內容 ➔
           </a>
         </div>
       `;
@@ -849,21 +940,25 @@
     elements.detailCategoryBadge.className = `badge ${badgeClass}`;
     elements.detailCategoryBadge.textContent = outcome.domain;
 
-    elements.detailTitle.textContent = outcome.title;
-    elements.detailAbstract.textContent = outcome.abstract;
+    elements.detailTitle.textContent = outcome.title || '—';
+    elements.detailAbstract.textContent = outcome.abstract || '—';
 
-    elements.detailCaseId.textContent = outcome.caseId;
-    elements.detailPublishDate.textContent = outcome.publishDate || '審理進行中';
-    elements.detailInventors.textContent = outcome.inventors || '研究計畫主持人及團隊成員';
-    elements.detailLegalStatus.textContent = outcome.legalStatus;
-    elements.detailFamilyId.textContent = outcome.familyId || outcome.caseId;
-    elements.detailProject.textContent = outcome.project || '關鍵前瞻研發計畫';
-    elements.detailLicenseStatus.textContent = outcome.licenseStatus || '可授權合作';
+    elements.detailCaseId.textContent = outcome.caseId || '—';
+    elements.detailPublishDate.textContent = outcome.publishDate || '—';
+    elements.detailInventors.textContent = outcome.inventors || '—';
+    elements.detailLegalStatus.textContent = outcome.legalStatus || '—';
+    elements.detailFamilyId.textContent = outcome.familyId || outcome.caseId || '—';
+    elements.detailProject.textContent = outcome.project || '—';
+    elements.detailLicenseStatus.textContent = outcome.licenseStatus || '—';
 
     // 設定智財技轉處官方技術資料超連結 (各案件專屬)
     if (elements.btnTechLink) {
-      const techDocUrl = outcome.techUrl || ('https://ticket.apps.sinica.edu.tw/tech/' + outcome.caseId);
-      elements.btnTechLink.href = techDocUrl;
+      if (outcome.techUrl) {
+        elements.btnTechLink.href = outcome.techUrl;
+        elements.btnTechLink.style.display = 'inline-flex';
+      } else {
+        elements.btnTechLink.style.display = 'none';
+      }
     }
 
     renderDetailApplications(outcome.applications);
@@ -925,7 +1020,11 @@
   }
 
 
-  // 程式啟動
-  document.addEventListener('DOMContentLoaded', init);
+  // 程式啟動（支援 DOMContentLoaded 及非同步載入情境）
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 
 })();
