@@ -9,7 +9,7 @@
 
   const VIEW_MODE_STORAGE_KEY = 'rcci_outcome_view_mode';
 
-  // 讀取最後儲存的檢視模式（預設為 list 條列式）
+  // 讀取最後儲存的檢視模式（預設為 card 卡片式）
   let initialViewMode = 'list';
   try {
     const saved = localStorage.getItem(VIEW_MODE_STORAGE_KEY);
@@ -25,7 +25,7 @@
     allApplications: [],
     currentCategory: '全部',
     searchQuery: '',
-    viewMode: initialViewMode, // 'list' (條列式) | 'card' (3D 弧線滑動卡片)
+    viewMode: initialViewMode, // 'card' (俯視環形卡片牆) | 'list' (條列式)
     card3dIndex: 0,
     savedScrollPos: 0,
     selectedOutcomeId: null,
@@ -337,11 +337,11 @@
 
   // 領域標準標籤與代表色
   function getDomainMeta(domain = '') {
-    if (domain.includes('量子')) return { label: '量子科技', color: '#6B46C1', bgTint: 'rgba(107, 70, 193, 0.045)' };
-    if (domain.includes('太陽能')) return { label: '太陽能', color: '#B45309', bgTint: 'rgba(180, 83, 9, 0.045)' };
-    if (domain.includes('去碳') || domain.includes('燃氫')) return { label: '去碳燃氫', color: '#276749', bgTint: 'rgba(39, 103, 73, 0.045)' };
-    if (domain.includes('海藻') || domain.includes('藍碳')) return { label: '海藻藍碳', color: '#0F766E', bgTint: 'rgba(15, 118, 110, 0.045)' };
-    return { label: domain || '其他', color: '#496B56', bgTint: 'rgba(73, 107, 86, 0.045)' };
+    if (domain.includes('量子')) return { label: '量子科技', color: '#6B46C1', icon: 'fas fa-atom', bgTint: 'rgba(107, 70, 193, 0.045)' };
+    if (domain.includes('太陽能')) return { label: '太陽能', color: '#B45309', icon: 'fas fa-solar-panel', bgTint: 'rgba(180, 83, 9, 0.045)' };
+    if (domain.includes('去碳') || domain.includes('燃氫')) return { label: '去碳燃氫', color: '#276749', icon: 'fas fa-fire-alt', bgTint: 'rgba(39, 103, 73, 0.045)' };
+    if (domain.includes('海藻') || domain.includes('藍碳')) return { label: '海藻藍碳', color: '#0F766E', icon: 'fas fa-water', bgTint: 'rgba(15, 118, 110, 0.045)' };
+    return { label: domain || '其他', color: '#496B56', icon: 'fas fa-lightbulb', bgTint: 'rgba(73, 107, 86, 0.045)' };
   }
 
   // 領域類別對應優先層級（量子科技 → 太陽能 → 去碳燃氫 → 海藻藍碳 → 其他）
@@ -479,7 +479,7 @@
     });
   }
 
-  // 渲染目前檢視（條列式 vs 3D 弧線滑動卡片式）
+  // 渲染目前檢視（條列式 vs 斜上方俯視環形玻璃卡片牆）
   function renderCurrentView() {
     if (state.selectedOutcomeId) return;
 
@@ -502,7 +502,7 @@
       container.className = 'outcomes-container view-list';
       renderListView(filtered, container);
     } else {
-      container.className = 'outcomes-container view-card3d';
+      container.className = 'outcomes-container view-card';
       render3DCardView(filtered, container);
     }
   }

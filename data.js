@@ -19,8 +19,8 @@ const APP_CONFIG = {
   driveApiUrl: '',
 
   // 快取鍵值
-  localCacheKey: 'rcci_patent_csv_cache_v10',
-  lastSyncKey: 'rcci_last_csv_sync_time_v10'
+  localCacheKey: 'rcci_patent_csv_cache_v11',
+  lastSyncKey: 'rcci_last_csv_sync_time_v11'
 };
 
 // 來自 PDF 規範文件（Pages 3-8）的詳細技術摘要與規格資料（包含智財技轉處官方超連結）
