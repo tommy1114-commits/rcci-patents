@@ -7,6 +7,17 @@
 (function () {
   'use strict';
 
+  const VIEW_MODE_STORAGE_KEY = 'rcci_outcome_view_mode';
+
+  // 讀取最後儲存的檢視模式（預設為 list 條列式）
+  let initialViewMode = 'list';
+  try {
+    const saved = localStorage.getItem(VIEW_MODE_STORAGE_KEY);
+    if (saved === 'card' || saved === 'list') {
+      initialViewMode = saved;
+    }
+  } catch (e) {}
+
   // 應用程式核心狀態
   const state = {
     activeSection: 'patents',
@@ -14,7 +25,9 @@
     allApplications: [],
     currentCategory: '全部',
     searchQuery: '',
-    viewMode: 'grid', // 'grid' | 'table'
+    viewMode: initialViewMode, // 'list' (條列式) | 'card' (3D 弧線滑動卡片)
+    card3dIndex: 0,
+    savedScrollPos: 0,
     selectedOutcomeId: null,
     syncEngine: null
   };
@@ -70,12 +83,15 @@
 
     // 智財成果 - 列表視圖
     listView: document.getElementById('list-view'),
-    cardGrid: document.getElementById('card-grid'),
+    outcomesContainer: document.getElementById('outcomes-container') || document.getElementById('card-grid'),
+    cardGrid: document.getElementById('outcomes-container') || document.getElementById('card-grid'),
     filterContainer: document.getElementById('filter-container'),
     searchInput: document.getElementById('search-input'),
     searchClear: document.getElementById('search-clear'),
-    btnViewGrid: document.getElementById('btn-view-grid'),
-    btnViewTable: document.getElementById('btn-view-table'),
+    btnViewList: document.getElementById('btn-view-list'),
+    btnViewCard: document.getElementById('btn-view-card'),
+    btnViewGrid: document.getElementById('btn-view-card'),
+    btnViewTable: document.getElementById('btn-view-list'),
     tableContainer: document.getElementById('all-table-view'),
     allAppsTableBody: document.getElementById('all-apps-tbody'),
     tableTotalCount: document.getElementById('table-total-count'),
@@ -240,6 +256,7 @@
         }
         debounceTimer = setTimeout(() => {
           state.searchQuery = query;
+          state.card3dIndex = 0;
           renderCurrentView();
         }, 180);
       });
@@ -251,9 +268,18 @@
         if (elements.searchInput) elements.searchInput.value = '';
         elements.searchClear.classList.remove('visible');
         state.searchQuery = '';
+        state.card3dIndex = 0;
         renderCurrentView();
         if (elements.searchInput) elements.searchInput.focus();
       });
+    }
+
+    // 檢視模式切換（條列式 vs 薄霧玻璃卡片式）
+    if (elements.btnViewList) {
+      elements.btnViewList.addEventListener('click', () => setViewMode('list'));
+    }
+    if (elements.btnViewCard) {
+      elements.btnViewCard.addEventListener('click', () => setViewMode('card'));
     }
 
     // 麵包屑／返回按鈕回到列表
@@ -293,28 +319,105 @@
       return;
     }
 
-    // 預設為技術成果卡片檢視
-    setViewMode('grid');
     if (state.selectedOutcomeId) {
       closeDetail(false);
+    } else {
+      renderCurrentView();
     }
   }
 
-  // 檢視模式設為成果卡片檢視
-  function setViewMode(mode) {
-    state.viewMode = 'grid';
+  // 領域類別對應 CSS Class 與主題變數
+  function getDomainClass(domain = '') {
+    if (domain.includes('量子')) return 'domain-quantum';
+    if (domain.includes('太陽能')) return 'domain-solar';
+    if (domain.includes('去碳') || domain.includes('燃氫')) return 'domain-hydrogen';
+    if (domain.includes('海藻') || domain.includes('藍碳')) return 'domain-bluecarbon';
+    return 'domain-default';
+  }
 
-    if (elements.btnViewGrid) elements.btnViewGrid.classList.add('active');
-    if (elements.sidebarItemGrid) elements.sidebarItemGrid.classList.add('active');
-    if (elements.pageTitleDisplay) elements.pageTitleDisplay.textContent = '智財與技術成果';
-    if (elements.pageSubtitleDisplay) elements.pageSubtitleDisplay.textContent = '從技術領域或關鍵字快速找到可合作的研發成果';
+  // 領域標準標籤與代表色
+  function getDomainMeta(domain = '') {
+    if (domain.includes('量子')) return { label: '量子科技', color: '#6B46C1', bgTint: 'rgba(107, 70, 193, 0.045)' };
+    if (domain.includes('太陽能')) return { label: '太陽能', color: '#B45309', bgTint: 'rgba(180, 83, 9, 0.045)' };
+    if (domain.includes('去碳') || domain.includes('燃氫')) return { label: '去碳燃氫', color: '#276749', bgTint: 'rgba(39, 103, 73, 0.045)' };
+    if (domain.includes('海藻') || domain.includes('藍碳')) return { label: '海藻藍碳', color: '#0F766E', bgTint: 'rgba(15, 118, 110, 0.045)' };
+    return { label: domain || '其他', color: '#496B56', bgTint: 'rgba(73, 107, 86, 0.045)' };
+  }
+
+  // 領域類別對應優先層級（量子科技 → 太陽能 → 去碳燃氫 → 海藻藍碳 → 其他）
+  function getDomainPriority(domain = '') {
+    if (domain.includes('量子')) return 1;
+    if (domain.includes('太陽能')) return 2;
+    if (domain.includes('去碳') || domain.includes('燃氫')) return 3;
+    if (domain.includes('海藻') || domain.includes('藍碳')) return 4;
+    if (!domain || domain.trim() === '') return 999;
+    return 100;
+  }
+
+  // 成果公告日期解析
+  function parsePublishDate(dateStr) {
+    if (!dateStr) return null;
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? null : d.getTime();
+  }
+
+  // 成果連續分組與同領域日期排序（條列式與 3D 卡片使用同一份排序結果）
+  function sortOutcomes(items) {
+    return [...items].sort((a, b) => {
+      // 1. 固定分組順序：量子科技 → 太陽能 → 去碳燃氫 → 海藻藍碳
+      const pA = getDomainPriority(a.domain);
+      const pB = getDomainPriority(b.domain);
+      if (pA !== pB) return pA - pB;
+
+      // 若非四大領域，確保同領域連續
+      if (pA === 100 && pB === 100) {
+        const dCompare = (a.domain || '').localeCompare(b.domain || '', 'zh-Hant');
+        if (dCompare !== 0) return dCompare;
+      }
+
+      // 2. 同領域內，依成果公告日期 (publishDate) 由新到舊排序
+      const dateA = parsePublishDate(a.publishDate);
+      const dateB = parsePublishDate(b.publishDate);
+      if (dateA !== null && dateB !== null) {
+        if (dateA !== dateB) return dateB - dateA;
+      } else if (dateA !== null && dateB === null) {
+        return -1;
+      } else if (dateA === null && dateB !== null) {
+        return 1;
+      }
+
+      // 3. 日期缺漏或相同時，依案件編號穩定排序
+      const caseA = a.caseId || a.id || '';
+      const caseB = b.caseId || b.id || '';
+      return caseA.localeCompare(caseB, 'zh-Hant');
+    });
+  }
+
+  // 切換檢視模式 (list 條列式 / card 3D 卡片式)
+  function setViewMode(mode) {
+    if (mode !== 'list' && mode !== 'card') {
+      mode = 'list';
+    }
+    state.viewMode = mode;
+    try {
+      localStorage.setItem(VIEW_MODE_STORAGE_KEY, mode);
+    } catch (e) {}
+
+    if (elements.btnViewList) {
+      elements.btnViewList.classList.toggle('active', mode === 'list');
+      elements.btnViewList.setAttribute('aria-pressed', mode === 'list' ? 'true' : 'false');
+    }
+    if (elements.btnViewCard) {
+      elements.btnViewCard.classList.toggle('active', mode === 'card');
+      elements.btnViewCard.setAttribute('aria-pressed', mode === 'card' ? 'true' : 'false');
+    }
 
     renderCurrentView();
   }
 
-  // 篩選成果
+  // 篩選成果（支援關鍵字、分類標籤，兩種檢視通用，且保證同領域連續排序）
   function getFilteredOutcomes() {
-    return state.outcomes.filter(item => {
+    const rawFiltered = state.outcomes.filter(item => {
       const matchesCategory = state.currentCategory === '全部' || 
         (item.domain === state.currentCategory) ||
         (item.domain.includes(state.currentCategory)) ||
@@ -338,9 +441,11 @@
 
       return inTitle || inCaseId || inFamilyId || inInventors || inAbstract || inApps;
     });
+
+    return sortOutcomes(rawFiltered);
   }
 
-  // 渲染分類標籤按鈕
+  // 渲染分類標籤按鈕（維持固定領域順序）
   function renderCategories() {
     const counts = { '全部': state.outcomes.length };
     
@@ -348,7 +453,7 @@
       counts[item.domain] = (counts[item.domain] || 0) + 1;
     });
 
-    const domainOrder = ['太陽能', '量子電腦', '去碳燃氫', '海藻藍碳'];
+    const domainOrder = ['量子電腦', '太陽能', '去碳燃氫', '海藻藍碳'];
     const otherDomains = Object.keys(counts).filter(k => k !== '全部' && !domainOrder.includes(k));
     const allCategories = ['全部', ...domainOrder.filter(d => counts[d] > 0), ...otherDomains];
 
@@ -366,6 +471,7 @@
       btn.innerHTML = `<span>${displayLabel}</span> <span class="filter-count">${counts[cat] || 0}</span>`;
       btn.addEventListener('click', () => {
         state.currentCategory = cat;
+        state.card3dIndex = 0;
         renderCategories();
         renderCurrentView();
       });
@@ -373,144 +479,503 @@
     });
   }
 
-  // 渲染目前檢視
+  // 渲染目前檢視（條列式 vs 3D 弧線滑動卡片式）
   function renderCurrentView() {
     if (state.selectedOutcomeId) return;
 
-    if (state.viewMode === 'grid') {
-      if (elements.cardGrid) elements.cardGrid.style.display = 'grid';
-      if (elements.tableContainer) elements.tableContainer.classList.remove('active');
-      renderCardGrid();
+    const container = elements.outcomesContainer || elements.cardGrid;
+    if (!container) return;
+
+    // 同步更新切換按鈕狀態
+    if (elements.btnViewList) {
+      elements.btnViewList.classList.toggle('active', state.viewMode === 'list');
+      elements.btnViewList.setAttribute('aria-pressed', state.viewMode === 'list' ? 'true' : 'false');
+    }
+    if (elements.btnViewCard) {
+      elements.btnViewCard.classList.toggle('active', state.viewMode === 'card');
+      elements.btnViewCard.setAttribute('aria-pressed', state.viewMode === 'card' ? 'true' : 'false');
+    }
+
+    const filtered = getFilteredOutcomes();
+
+    if (state.viewMode === 'list') {
+      container.className = 'outcomes-container view-list';
+      renderListView(filtered, container);
     } else {
-      if (elements.cardGrid) elements.cardGrid.style.display = 'none';
-      if (elements.tableContainer) elements.tableContainer.classList.add('active');
-      renderAllApplicationsTable();
+      container.className = 'outcomes-container view-card3d';
+      render3DCardView(filtered, container);
     }
   }
 
-  // 渲染成果卡片網格
-  function renderCardGrid() {
-    if (!elements.cardGrid) return;
-    const filtered = getFilteredOutcomes();
-    elements.cardGrid.innerHTML = '';
+  // 1. 渲染彩色領域條列式 (List View)
+  function renderListView(filtered, container) {
+    container.innerHTML = '';
 
     if (filtered.length === 0) {
-      elements.cardGrid.innerHTML = `
-        <div style="grid-column: 1 / -1; text-align: center; padding: 48px 20px; background: var(--rcci-bg); border-radius: 8px; border: 1px dashed var(--border-color);">
-          <i class="fas fa-search" style="font-size: 2rem; color: var(--text-light); margin-bottom: 12px; display: block;"></i>
-          <h3 style="font-size: 1.15rem; color: var(--text-main); font-weight: 600;">查無符合條件的研發成果</h3>
-          <p style="margin-top: 6px; font-size: 0.925rem; color: var(--text-muted);">請嘗試更換關鍵字或點選「全部」分類標籤。</p>
-        </div>
-      `;
+      renderEmptyState(container);
       return;
     }
 
+    const listWrap = document.createElement('div');
+    listWrap.className = 'outcome-list-wrap';
+
     filtered.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'patent-card';
-      
-      let badgeClass = 'badge-default';
-      if (item.domain.includes('太陽能')) badgeClass = 'badge-solar';
-      else if (item.domain.includes('量子')) badgeClass = 'badge-quantum';
-      else if (item.domain.includes('去碳') || item.domain.includes('燃氫')) badgeClass = 'badge-hydrogen';
-      else if (item.domain.includes('海藻') || item.domain.includes('藍碳')) badgeClass = 'badge-bluecarbon';
+      const itemEl = document.createElement('div');
+      const domainClass = getDomainClass(item.domain);
+      itemEl.className = `outcome-list-item ${domainClass}`;
+      itemEl.setAttribute('role', 'button');
+      itemEl.setAttribute('tabindex', '0');
+      itemEl.setAttribute('aria-label', `${item.domain}：${item.title}`);
 
-      const cleanAbstract = (item.abstract || '')
-        .replace(/\r?\n|\r/g, ' ')
-        .trim();
+      let domainLabel = item.domain || '';
+      if (domainLabel === '量子電腦') domainLabel = '量子科技';
 
-      card.innerHTML = `
-        <div class="card-top">
-          <div class="card-header-tags">
-            <span class="card-badge ${badgeClass}">${item.domain}</span>
-            <span class="card-case-id">${item.caseId}</span>
-          </div>
-          <h3 class="card-title">${item.title}</h3>
-          <p class="card-abstract">${cleanAbstract || '—'}</p>
+      const cleanAbstract = (item.abstract || '').replace(/\r?\n|\r/g, ' ').trim();
+      const abstractHtml = cleanAbstract
+        ? `<p class="list-item-abstract">${cleanAbstract}</p>`
+        : '';
+
+      itemEl.innerHTML = `
+        <div class="list-item-content">
+          <span class="list-item-domain">${domainLabel}</span>
+          <h3 class="list-item-title">${item.title}</h3>
+          ${abstractHtml}
         </div>
-        <div class="card-footer">
-          <div class="card-inventor" title="發明人：${item.inventors || '—'}">
-            <i class="fas fa-user-circle"></i>
-            <span class="inventor-name-text">${item.inventors || '—'}</span>
-          </div>
-          <div class="card-footer-extra">
-            <span class="card-status-tag">${item.legalStatus || '專利申請中'}</span>
-          </div>
+        <div class="list-item-action" aria-hidden="true">
+          <i class="fas fa-chevron-right"></i>
         </div>
       `;
 
-      card.addEventListener('click', () => {
+      itemEl.addEventListener('click', () => {
         window.location.hash = `#patent/${encodeURIComponent(item.id)}`;
       });
 
-      elements.cardGrid.appendChild(card);
-    });
-  }
-
-  // 渲染申請案總表
-  function renderAllApplicationsTable() {
-    if (!elements.allAppsTableBody) return;
-    elements.allAppsTableBody.innerHTML = '';
-    const query = (state.searchQuery || '').toLowerCase();
-
-    const filtered = state.allApplications.filter(app => {
-      const domainMatches = state.currentCategory === '全部' || 
-        (app['單位'] || '').includes(state.currentCategory) ||
-        (state.currentCategory === '量子科技' && (app['單位'] || '').includes('量子'));
-      if (!domainMatches) return false;
-
-      if (!query) return true;
-      return Object.values(app).some(val => (val || '').toLowerCase().includes(query));
-    });
-
-    if (elements.tableTotalCount) {
-      elements.tableTotalCount.textContent = `共 ${filtered.length} 筆申請紀錄`;
-    }
-
-    if (filtered.length === 0) {
-      elements.allAppsTableBody.innerHTML = `
-        <tr>
-          <td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">
-            查無符合的申請案資料
-          </td>
-        </tr>
-      `;
-      return;
-    }
-
-    filtered.forEach(app => {
-      const tr = document.createElement('tr');
-      const countryCode = (app['國家／地區'] || '').toUpperCase();
-      const countryInfo = COUNTRY_NAMES[countryCode] || { name: countryCode, flag: '🌐' };
-
-      let statusBadge = '<span class="badge-status pending">申請中</span>';
-      if (app['專利號'] || (app['備註'] && app['備註'].includes('已獲證'))) {
-        statusBadge = '<span class="badge-status granted">已獲證</span>';
-      } else if (app['備註'] && app['備註'].includes('審閱中')) {
-        statusBadge = '<span class="badge-status">審閱中</span>';
-      }
-
-      tr.innerHTML = `
-        <td style="font-family: var(--font-mono); font-weight: 600; color: var(--rcci-green);">${app['家族編號'] || '-'}</td>
-        <td style="font-family: var(--font-mono);">${app['院內案件編號'] || '-'}</td>
-        <td><span class="country-name">${countryInfo.name || countryCode || '-'}</span></td>
-        <td>${app['申請類型'] || '-'}</td>
-        <td style="font-weight: 600; max-width: 280px; overflow-wrap: anywhere;">${app['專利名稱'] || '-'}</td>
-        <td style="font-family: var(--font-mono);">${app['申請號'] || '-'}</td>
-        <td style="font-family: var(--font-mono);">${app['專利號'] || '-'}</td>
-        <td>${statusBadge}</td>
-      `;
-
-      tr.addEventListener('click', () => {
-        const familyId = app['家族編號'];
-        const outcome = state.outcomes.find(o => o.familyId === familyId || o.caseId === app['院內案件編號']);
-        if (outcome) {
-          window.location.hash = `#patent/${encodeURIComponent(outcome.id)}`;
+      itemEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          window.location.hash = `#patent/${encodeURIComponent(item.id)}`;
         }
       });
 
-      elements.allAppsTableBody.appendChild(tr);
+      listWrap.appendChild(itemEl);
     });
+
+    container.appendChild(listWrap);
+  }
+
+  // 2. 渲染 3D 弧線滑動式玻璃卡片 (3D Curved Glass Cards Carousel)
+  function render3DCardView(filtered, container) {
+    container.innerHTML = '';
+
+    if (filtered.length === 0) {
+      renderEmptyState(container);
+      return;
+    }
+
+    const total = filtered.length;
+    if (state.card3dIndex >= total) {
+      state.card3dIndex = Math.max(0, total - 1);
+    } else if (state.card3dIndex < 0) {
+      state.card3dIndex = 0;
+    }
+
+    const stage = document.createElement('div');
+    stage.className = 'card3d-stage';
+
+    const carousel = document.createElement('div');
+    carousel.className = 'card3d-carousel';
+    carousel.setAttribute('role', 'region');
+    carousel.setAttribute('aria-roledescription', 'carousel');
+    carousel.setAttribute('tabindex', '0');
+    carousel.setAttribute('aria-label', '3D 卡片技術成果輪播');
+
+    const track = document.createElement('div');
+    track.className = 'card3d-track';
+
+    const cardElements = [];
+
+    filtered.forEach((item, index) => {
+      const card = document.createElement('div');
+      const domainClass = getDomainClass(item.domain);
+      card.className = `card3d-item ${domainClass}`;
+      card.setAttribute('data-index', String(index));
+      card.setAttribute('role', 'group');
+      card.setAttribute('aria-roledescription', 'slide');
+      card.setAttribute('aria-label', `${index + 1} of ${total}：${item.domain} - ${item.title}`);
+      card.setAttribute('tabindex', '0');
+
+      const domainMeta = getDomainMeta(item.domain);
+
+      const cleanAbstract = (item.abstract || '').replace(/\r?\n|\r/g, ' ').trim();
+      const abstractHtml = cleanAbstract
+        ? `<p class="card3d-abstract">${cleanAbstract}</p>`
+        : '';
+
+      const caseNumber = item.caseId || item.id || '';
+
+      card.innerHTML = `
+        <div class="card3d-inner">
+          <div class="card3d-body">
+            <span class="card3d-domain">${domainMeta.label}</span>
+            <span class="card3d-sub">RCCI TECHNOLOGY</span>
+            <h3 class="card3d-title">${item.title}</h3>
+            <div class="card3d-line"></div>
+            ${abstractHtml}
+          </div>
+          <div class="card3d-footer">
+            <span class="card3d-case-id">${caseNumber}</span>
+            <span class="card3d-action" role="button" tabindex="-1">
+              查看技術 <i class="fas fa-arrow-right" aria-hidden="true"></i>
+            </span>
+          </div>
+        </div>
+      `;
+
+      // 光暈跟隨滑鼠位置互動（僅在中央卡片時生效）
+      card.addEventListener('mousemove', (e) => {
+        if (index !== state.card3dIndex) return;
+        const inner = card.querySelector('.card3d-inner');
+        if (!inner) return;
+        const rect = inner.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        inner.style.setProperty('--mouse-x', `${x.toFixed(1)}%`);
+        inner.style.setProperty('--mouse-y', `${y.toFixed(1)}%`);
+      });
+
+      card.addEventListener('mouseleave', () => {
+        const inner = card.querySelector('.card3d-inner');
+        if (inner) {
+          inner.style.removeProperty('--mouse-x');
+          inner.style.removeProperty('--mouse-y');
+        }
+      });
+
+      track.appendChild(card);
+      cardElements.push(card);
+    });
+
+    carousel.appendChild(track);
+    stage.appendChild(carousel);
+
+    // 建立下方控制列
+    const controls = document.createElement('div');
+    controls.className = 'card3d-controls';
+    controls.innerHTML = `
+      <div class="card3d-nav-row">
+        <button type="button" class="card3d-arrow-btn prev" aria-label="上一項技術成果" title="上一項">
+          <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        </button>
+        <div class="card3d-counter">
+          <span class="card3d-counter-current">01</span>
+          <span class="card3d-counter-sep">/</span>
+          <span class="card3d-counter-total">${String(total).padStart(2, '0')}</span>
+        </div>
+        <button type="button" class="card3d-arrow-btn next" aria-label="下一項技術成果" title="下一項">
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div class="card3d-info-row">
+        <div class="card3d-current-domain">
+          <span class="card3d-domain-dot"></span>
+          <span class="card3d-domain-name">領域名稱</span>
+        </div>
+        <div class="card3d-hint">左右拖曳瀏覽技術，點擊查看詳情</div>
+      </div>
+    `;
+
+    stage.appendChild(controls);
+    container.appendChild(stage);
+
+    const prevBtn = controls.querySelector('.card3d-arrow-btn.prev');
+    const nextBtn = controls.querySelector('.card3d-arrow-btn.next');
+    const counterCurrent = controls.querySelector('.card3d-counter-current');
+    const domainDot = controls.querySelector('.card3d-domain-dot');
+    const domainName = controls.querySelector('.card3d-domain-name');
+
+    // 計算各卡片 3D 弧線位置
+    function updateCardTransforms() {
+      const w = window.innerWidth;
+      const isMobile = w <= 768;
+      const isTablet = w > 768 && w <= 1024;
+
+      cardElements.forEach((card, idx) => {
+        const delta = idx - state.card3dIndex;
+        const abs = Math.abs(delta);
+        const sign = delta > 0 ? 1 : (delta < 0 ? -1 : 0);
+
+        if (delta === 0) {
+          card.classList.add('is-active');
+          card.setAttribute('aria-hidden', 'false');
+          card.style.transform = 'translateX(0px) translateZ(0px) rotateY(0deg) scale(1)';
+          card.style.opacity = '1';
+          card.style.zIndex = '50';
+          card.style.filter = 'blur(0px)';
+          card.style.pointerEvents = 'auto';
+        } else {
+          card.classList.remove('is-active');
+          card.setAttribute('aria-hidden', 'true');
+
+          let tx, tz, ry, sc, op, zi, fl;
+
+          if (isMobile) {
+            if (abs === 1) {
+              tx = sign * 125;
+              tz = -65;
+              ry = -sign * 22;
+              sc = 0.82;
+              op = 0.42;
+              zi = 40;
+              fl = 'blur(0.5px)';
+            } else {
+              tx = sign * (125 + (abs - 1) * 60);
+              tz = -150;
+              ry = -sign * 35;
+              sc = 0.65;
+              op = 0;
+              zi = Math.max(1, 20 - abs);
+              fl = 'blur(2px)';
+            }
+          } else if (isTablet) {
+            if (abs === 1) {
+              tx = sign * 185;
+              tz = -80;
+              ry = -sign * 22;
+              sc = 0.86;
+              op = 0.88;
+              zi = 40;
+              fl = 'blur(0px)';
+            } else if (abs === 2) {
+              tx = sign * 320;
+              tz = -160;
+              ry = -sign * 32;
+              sc = 0.72;
+              op = 0.55;
+              zi = 30;
+              fl = 'blur(0.5px)';
+            } else {
+              tx = sign * (320 + (abs - 2) * 60);
+              tz = -240;
+              ry = -sign * 38;
+              sc = 0.6;
+              op = 0;
+              zi = Math.max(1, 20 - abs);
+              fl = 'blur(2px)';
+            }
+          } else {
+            // 桌機 (3～5 張清楚辨識，外側部分露出提示)
+            if (abs === 1) {
+              tx = sign * 225;
+              tz = -85;
+              ry = -sign * 22;
+              sc = 0.88;
+              op = 0.92;
+              zi = 40;
+              fl = 'blur(0px)';
+            } else if (abs === 2) {
+              tx = sign * 395;
+              tz = -170;
+              ry = -sign * 32;
+              sc = 0.76;
+              op = 0.72;
+              zi = 30;
+              fl = 'blur(0px)';
+            } else if (abs === 3) {
+              tx = sign * 525;
+              tz = -250;
+              ry = -sign * 38;
+              sc = 0.66;
+              op = 0.45;
+              zi = 20;
+              fl = 'blur(0.5px)';
+            } else {
+              tx = sign * (525 + (abs - 3) * 65);
+              tz = -320;
+              ry = -sign * 42;
+              sc = 0.58;
+              op = 0;
+              zi = Math.max(1, 15 - abs);
+              fl = 'blur(2px)';
+            }
+          }
+
+          card.style.transform = `translateX(${tx}px) translateZ(${tz}px) rotateY(${ry}deg) scale(${sc})`;
+          card.style.opacity = String(op);
+          card.style.zIndex = String(zi);
+          card.style.filter = fl;
+          card.style.pointerEvents = op > 0.1 ? 'auto' : 'none';
+        }
+      });
+
+      // 更新計數器與按鈕狀態
+      if (counterCurrent) {
+        counterCurrent.textContent = String(state.card3dIndex + 1).padStart(2, '0');
+      }
+      if (prevBtn) {
+        prevBtn.disabled = (state.card3dIndex <= 0);
+      }
+      if (nextBtn) {
+        nextBtn.disabled = (state.card3dIndex >= total - 1);
+      }
+
+      // 更新目前領域名稱與顏色圓點
+      const currentItem = filtered[state.card3dIndex];
+      if (currentItem && domainDot && domainName) {
+        const meta = getDomainMeta(currentItem.domain);
+        domainDot.style.backgroundColor = meta.color;
+        domainName.textContent = meta.label;
+      }
+    }
+
+    // 初次定位
+    updateCardTransforms();
+
+    // 視窗大小改變時重算卡片弧線
+    let resizeTimer = null;
+    const onResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateCardTransforms, 100);
+    };
+    window.addEventListener('resize', onResize);
+
+    // 切換至指定索引
+    function goToIndex(idx) {
+      if (idx < 0) idx = 0;
+      if (idx >= total) idx = total - 1;
+      if (idx === state.card3dIndex) return;
+      state.card3dIndex = idx;
+      updateCardTransforms();
+    }
+
+    // 箭頭按鈕監聽
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToIndex(state.card3dIndex - 1);
+      });
+    }
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToIndex(state.card3dIndex + 1);
+      });
+    }
+
+    // 卡片點擊互動
+    let justDragged = false;
+    let dragSuppressTimeout = null;
+
+    cardElements.forEach((card, idx) => {
+      card.addEventListener('click', (e) => {
+        if (justDragged) {
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
+
+        if (idx !== state.card3dIndex) {
+          // 點擊側邊卡片：移至中央
+          e.preventDefault();
+          e.stopPropagation();
+          goToIndex(idx);
+        } else {
+          // 點擊中央卡片或其查看技術：進入詳情頁
+          const item = filtered[idx];
+          if (item) {
+            window.location.hash = `#patent/${encodeURIComponent(item.id)}`;
+          }
+        }
+      });
+
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          if (idx !== state.card3dIndex) {
+            goToIndex(idx);
+          } else {
+            const item = filtered[idx];
+            if (item) {
+              window.location.hash = `#patent/${encodeURIComponent(item.id)}`;
+            }
+          }
+        }
+      });
+    });
+
+    // 鍵盤左右箭頭操作輪播
+    carousel.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goToIndex(state.card3dIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goToIndex(state.card3dIndex + 1);
+      }
+    });
+
+    // 滑鼠拖曳與手機觸控滑動 (Pointer Events 統一處理)
+    let isPointerDown = false;
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let hasMoved = false;
+
+    carousel.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0 && e.pointerType === 'mouse') return;
+      isPointerDown = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      currentX = e.clientX;
+      hasMoved = false;
+      carousel.classList.add('is-dragging');
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!isPointerDown) return;
+      currentX = e.clientX;
+      const dx = currentX - startX;
+      const dy = e.clientY - startY;
+
+      if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
+        hasMoved = true;
+      }
+    });
+
+    const onPointerEnd = (e) => {
+      if (!isPointerDown) return;
+      isPointerDown = false;
+      carousel.classList.remove('is-dragging');
+
+      const dx = currentX - startX;
+      if (hasMoved && Math.abs(dx) > 40) {
+        justDragged = true;
+        clearTimeout(dragSuppressTimeout);
+        dragSuppressTimeout = setTimeout(() => {
+          justDragged = false;
+        }, 150);
+
+        if (dx < -40 && state.card3dIndex < total - 1) {
+          goToIndex(state.card3dIndex + 1);
+        } else if (dx > 40 && state.card3dIndex > 0) {
+          goToIndex(state.card3dIndex - 1);
+        }
+      }
+      hasMoved = false;
+    };
+
+    window.addEventListener('pointerup', onPointerEnd);
+    window.addEventListener('pointercancel', onPointerEnd);
+  }
+
+  // 3. 渲染查無結果空狀態
+  function renderEmptyState(container) {
+    container.innerHTML = `
+      <div class="empty-search-state">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <h3>查無符合條件的研發成果</h3>
+        <p>請嘗試其他關鍵字或切換技術領域分類</p>
+      </div>
+    `;
   }
 
   // 成果詳情檢視
@@ -518,7 +983,15 @@
     const outcome = state.outcomes.find(o => o.id === outcomeId || o.caseId === outcomeId);
     if (!outcome) return;
 
+    // 記錄清單捲動位置與卡片索引
+    state.savedScrollPos = window.scrollY || window.pageYOffset || 0;
     state.selectedOutcomeId = outcome.id;
+
+    const filtered = getFilteredOutcomes();
+    const fIndex = filtered.findIndex(o => o.id === outcome.id || o.caseId === outcome.id);
+    if (fIndex >= 0) {
+      state.card3dIndex = fIndex;
+    }
 
     if (updateHash) {
       window.location.hash = `#patent/${encodeURIComponent(outcome.id)}`;
@@ -637,11 +1110,19 @@
       elements.listView.style.display = 'block';
     }
 
+    if (elements.pageTitleDisplay) elements.pageTitleDisplay.textContent = '智財與技術成果';
+    if (elements.pageSubtitleDisplay) elements.pageSubtitleDisplay.textContent = '從技術領域或關鍵字快速找到可合作的研發成果';
+
     if (updateHash) {
       window.location.hash = '#patents';
     }
 
-    setViewMode('grid');
+    renderCurrentView();
+
+    // 恢復列表捲動位置
+    if (typeof state.savedScrollPos === 'number') {
+      window.scrollTo({ top: state.savedScrollPos, behavior: 'auto' });
+    }
   }
 
   // DOM 載入後執行初始化

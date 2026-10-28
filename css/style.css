@@ -22,22 +22,39 @@
   --border-subtle: #edf2f7;
   --bg-white: #ffffff;
   
-  /* 領域專屬色彩（柔和官網調性） */
-  --domain-solar-bg: #fef7ed;
-  --domain-solar-text: #8c4e09;
-  --domain-solar-border: #fed7aa;
-  
+  /* 領域專屬色彩（柔和官網調性與高對比辨識） */
+  --domain-quantum-color: #6B46C1;
+  --domain-quantum-tint: rgba(107, 70, 193, 0.045);
+  --domain-quantum-border: rgba(107, 70, 193, 0.4);
+  --domain-quantum-glow: rgba(107, 70, 193, 0.12);
   --domain-quantum-bg: #f3f0f7;
   --domain-quantum-text: #533e6b;
-  --domain-quantum-border: #ddd6fe;
-  
+
+  --domain-solar-color: #B45309;
+  --domain-solar-tint: rgba(180, 83, 9, 0.045);
+  --domain-solar-border: rgba(180, 83, 9, 0.4);
+  --domain-solar-glow: rgba(180, 83, 9, 0.12);
+  --domain-solar-bg: #fef7ed;
+  --domain-solar-text: #8c4e09;
+
+  --domain-hydrogen-color: #276749;
+  --domain-hydrogen-tint: rgba(39, 103, 73, 0.045);
+  --domain-hydrogen-border: rgba(39, 103, 73, 0.4);
+  --domain-hydrogen-glow: rgba(39, 103, 73, 0.12);
   --domain-hydrogen-bg: #f0f7f4;
   --domain-hydrogen-text: #275646;
-  --domain-hydrogen-border: #bbf7d0;
 
+  --domain-bluecarbon-color: #0F766E;
+  --domain-bluecarbon-tint: rgba(15, 118, 110, 0.045);
+  --domain-bluecarbon-border: rgba(15, 118, 110, 0.4);
+  --domain-bluecarbon-glow: rgba(15, 118, 110, 0.12);
   --domain-bluecarbon-bg: #e0f2fe;
   --domain-bluecarbon-text: #0369a1;
-  --domain-bluecarbon-border: #bae6fd;
+
+  --domain-default-color: #496B56;
+  --domain-default-tint: rgba(73, 107, 86, 0.045);
+  --domain-default-border: rgba(73, 107, 86, 0.4);
+  --domain-default-glow: rgba(73, 107, 86, 0.12);
 
   /* 字型定義 */
   --font-family: 'Noto Sans TC', Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
@@ -673,6 +690,15 @@ button:focus-visible, a:focus-visible {
   margin-bottom: 24px;
 }
 
+.controls-filter-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  flex: 1;
+  min-width: 280px;
+}
+
 /* 搜尋框 */
 .search-wrapper {
   position: relative;
@@ -779,7 +805,7 @@ button:focus-visible, a:focus-visible {
   color: #ffffff;
 }
 
-/* 視圖切換按鈕 (卡片 / 明細總表) */
+/* 檢視模式切換按鈕 (條列 / 卡片) */
 .view-switchers {
   display: inline-flex;
   align-items: center;
@@ -787,18 +813,25 @@ button:focus-visible, a:focus-visible {
   border-radius: var(--radius-sm);
   overflow: hidden;
   background: #ffffff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .view-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 7px 14px;
-  font-size: 0.9rem;
+  padding: 7px 15px;
+  font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-muted);
-  background: transparent;
+  background: #ffffff;
+  border: none;
+  cursor: pointer;
   transition: var(--transition);
+}
+
+.view-btn i {
+  font-size: 0.85rem;
 }
 
 .view-btn:hover {
@@ -811,172 +844,831 @@ button:focus-visible, a:focus-visible {
   color: #ffffff;
 }
 
+.view-btn:focus-visible {
+  outline: 2px solid var(--rcci-green);
+  outline-offset: -2px;
+  z-index: 1;
+}
+
 /* ==============================================================================
-   成果卡片網格 (Card Grid)
+   領域色彩與主題變數綁定 (Domain Theme Classes)
    ============================================================================== */
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+.domain-quantum {
+  --domain-color: var(--domain-quantum-color);
+  --domain-bg-tint: var(--domain-quantum-tint);
+  --domain-border-glow: var(--domain-quantum-border);
+  --domain-glow: var(--domain-quantum-glow);
+}
+
+.domain-solar {
+  --domain-color: var(--domain-solar-color);
+  --domain-bg-tint: var(--domain-solar-tint);
+  --domain-border-glow: var(--domain-solar-border);
+  --domain-glow: var(--domain-solar-glow);
+}
+
+.domain-hydrogen {
+  --domain-color: var(--domain-hydrogen-color);
+  --domain-bg-tint: var(--domain-hydrogen-tint);
+  --domain-border-glow: var(--domain-hydrogen-border);
+  --domain-glow: var(--domain-hydrogen-glow);
+}
+
+.domain-bluecarbon {
+  --domain-color: var(--domain-bluecarbon-color);
+  --domain-bg-tint: var(--domain-bluecarbon-tint);
+  --domain-border-glow: var(--domain-bluecarbon-border);
+  --domain-glow: var(--domain-bluecarbon-glow);
+}
+
+.domain-default {
+  --domain-color: var(--domain-default-color);
+  --domain-bg-tint: var(--domain-default-tint);
+  --domain-border-glow: var(--domain-default-border);
+  --domain-glow: var(--domain-default-glow);
+}
+
+/* 成果清單容器主區塊 */
+.outcomes-container {
+  width: 100%;
   margin-bottom: 30px;
 }
 
-.patent-card {
-  background: #ffffff;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 20px;
+/* ==============================================================================
+   彩色領域條列式 (List View)
+   ============================================================================== */
+.outcome-list-wrap {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  transition: var(--transition);
-  position: relative;
+  background: #ffffff;
 }
 
-.patent-card:hover {
-  border-color: var(--rcci-green);
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-2px);
-}
-
-.card-top {
-  margin-bottom: 12px;
-}
-
-.card-header-tags {
+.outcome-list-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
-  gap: 8px;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--border-color);
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+  position: relative;
+  text-align: left;
+  border-radius: 6px;
 }
 
-.card-badge {
-  display: inline-block;
-  font-size: 0.8rem;
+.outcome-list-item:hover {
+  background-color: var(--domain-bg-tint);
+}
+
+.outcome-list-item:focus-visible {
+  outline: 2px solid var(--domain-color);
+  outline-offset: 2px;
+  background-color: var(--domain-bg-tint);
+}
+
+.list-item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* 1. 小型彩色領域文字 */
+.list-item-domain {
+  display: block;
+  font-size: 0.8125rem;
   font-weight: 600;
-  padding: 3px 8px;
-  border-radius: var(--radius-sm);
+  letter-spacing: 0.03em;
+  color: var(--domain-color);
+  margin-bottom: 4px;
 }
 
-.badge-solar {
-  background: var(--domain-solar-bg);
-  color: var(--domain-solar-text);
-  border: 1px solid var(--domain-solar-border);
-}
-
-.badge-quantum {
-  background: var(--domain-quantum-bg);
-  color: var(--domain-quantum-text);
-  border: 1px solid var(--domain-quantum-border);
-}
-
-.badge-hydrogen {
-  background: var(--domain-hydrogen-bg);
-  color: var(--domain-hydrogen-text);
-  border: 1px solid var(--domain-hydrogen-border);
-}
-
-.badge-bluecarbon {
-  background: var(--domain-bluecarbon-bg);
-  color: var(--domain-bluecarbon-text);
-  border: 1px solid var(--domain-bluecarbon-border);
-}
-
-.badge-default {
-  background: var(--rcci-bg);
-  color: var(--rcci-gray);
-  border: 1px solid var(--border-color);
-}
-
-.card-case-id {
-  font-family: var(--font-mono);
-  font-size: 0.825rem;
-  color: var(--text-light);
-}
-
-.card-title {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--text-main);
+/* 2. 黑色粗體技術名稱 */
+.list-item-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #1a202c;
   line-height: 1.45;
-  margin-bottom: 8px;
-  overflow-wrap: anywhere;
+  margin-bottom: 0;
   word-break: break-word;
-  transition: var(--transition);
+  overflow-wrap: anywhere;
+  transition: color 0.18s ease;
 }
 
-.patent-card:hover .card-title {
-  color: var(--rcci-accent);
+.outcome-list-item:hover .list-item-title {
+  color: var(--domain-color);
 }
 
-.card-abstract {
-  font-size: 0.925rem;
-  color: var(--text-muted);
+/* 3. 深灰色技術摘要 (最多兩行，超出省略號) */
+.list-item-abstract {
+  font-size: 0.9rem;
+  color: #4a5568;
+  line-height: 1.6;
+  margin-top: 6px;
+  margin-bottom: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+/* 右側簡潔箭頭 */
+.list-item-action {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a0aec0;
+  font-size: 0.95rem;
+  width: 28px;
+  height: 28px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+}
+
+.outcome-list-item:hover .list-item-action {
+  transform: translateX(4px);
+  color: var(--domain-color);
+}
+
+/* ==============================================================================
+   無圖片薄霧玻璃卡片 (Glass Cards View)
+   ============================================================================== */
+.glass-grid-wrap {
+  position: relative;
+  border-radius: 20px;
+  padding: 10px 6px 20px;
+  background:
+    radial-gradient(circle at 12% 15%, rgba(73, 107, 86, 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 88% 85%, rgba(107, 70, 193, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(247, 246, 244, 0.4) 0%, transparent 70%);
+}
+
+.glass-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.glass-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px 22px 20px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 6px -1px rgba(0, 0, 0, 0.03);
+  cursor: pointer;
+  text-align: left;
+  overflow: hidden;
+  transition:
+    transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    background-color 0.22s ease;
+}
+
+/* 玻璃卡片內部光暈（跟隨滑鼠） */
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: radial-gradient(circle 240px at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--domain-glow), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+
+.glass-card-body,
+.glass-card-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.glass-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* 1. 彩色領域文字 */
+.glass-card-domain {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--domain-color);
+  margin-bottom: 6px;
+}
+
+/* 2. 深色粗體技術名稱 */
+.glass-card-title {
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: #1a202c;
+  line-height: 1.45;
+  margin-bottom: 0;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  transition: color 0.2s ease;
+}
+
+/* 3. 深灰色摘要 (最多三行，超出省略號) */
+.glass-card-abstract {
+  font-size: 0.8875rem;
+  color: #4a5568;
+  line-height: 1.6;
+  margin-top: 8px;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+
+/* 4. 底部「查看技術 →」 */
+.glass-card-footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.glass-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--rcci-gray);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.glass-card-action i {
+  font-size: 0.8rem;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover 狀態 */
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 28px -4px rgba(0, 0, 0, 0.08), 0 6px 12px -2px rgba(0, 0, 0, 0.04);
+  border-color: var(--domain-border-glow);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.glass-card:hover .glass-card-action {
+  color: var(--domain-color);
+}
+
+.glass-card:hover .glass-card-action i {
+  transform: translateX(4px);
+}
+
+.glass-card:focus-visible {
+  outline: 2px solid var(--domain-color);
+  outline-offset: 2px;
+  border-color: var(--domain-border-glow);
+}
+
+/* 不支援 backdrop-filter 的降級替代方案 */
+@supports not ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+  .glass-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+  }
+}
+
+/* 尊重 prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .glass-card,
+  .outcome-list-item,
+  .glass-card-action i,
+  .list-item-action {
+    transition: none !important;
+    transform: none !important;
+  }
+  .glass-card::before {
+    display: none !important;
+  }
+}
+
+/* ==============================================================================
+   3D 弧線滑動式玻璃卡片 (3D Curved Glass Cards Carousel)
+   ============================================================================== */
+.card3d-stage {
+  position: relative;
+  width: 100%;
+  padding: 16px 0 26px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse 75% 60% at 50% 42%, rgba(240, 246, 255, 0.8) 0%, rgba(248, 250, 252, 0.4) 65%, transparent 100%);
+  margin-bottom: 25px;
+  box-sizing: border-box;
+}
+
+.card3d-carousel {
+  position: relative;
+  width: 100%;
+  height: 395px;
+  perspective: 1100px;
+  perspective-origin: 50% 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.card3d-carousel.is-dragging {
+  cursor: grabbing;
+}
+
+.card3d-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* 3D 卡片外層容器 (負責 3D 弧線位移、旋轉、縮放與層級) */
+.card3d-item {
+  position: absolute;
+  width: 270px;
+  height: 375px;
+  top: 10px;
+  left: 50%;
+  margin-left: -135px;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  pointer-events: auto;
+  cursor: pointer;
+  transition:
+    transform 0.38s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+    opacity 0.35s ease,
+    filter 0.35s ease;
+  outline: none;
+}
+
+.card3d-item.is-active {
+  cursor: default;
+  z-index: 50 !important;
+}
+
+/* 3D 卡片內層本體 (高質感薄霧玻璃感，文字高對比不透背景文字) */
+.card3d-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  padding: 22px 20px 18px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  overflow: hidden;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.02);
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease,
+    border-color 0.22s ease;
+}
+
+/* 領域專屬微色調與柔光邊框 (採用高飽和微漸層，維持薄霧玻璃通透但遮蔽後方文字) */
+.domain-quantum .card3d-inner {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(243, 235, 255, 0.93) 100%);
+  border-color: rgba(139, 92, 246, 0.4);
+  --card3d-accent: #6B46C1;
+  --card3d-shadow: rgba(107, 70, 193, 0.18);
+}
+
+.domain-solar .card3d-inner {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 247, 230, 0.93) 100%);
+  border-color: rgba(245, 158, 11, 0.4);
+  --card3d-accent: #B45309;
+  --card3d-shadow: rgba(180, 83, 9, 0.18);
+}
+
+.domain-hydrogen .card3d-inner {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(235, 252, 242, 0.93) 100%);
+  border-color: rgba(16, 185, 129, 0.4);
+  --card3d-accent: #276749;
+  --card3d-shadow: rgba(39, 103, 73, 0.18);
+}
+
+.domain-bluecarbon .card3d-inner {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(232, 252, 250, 0.93) 100%);
+  border-color: rgba(20, 184, 166, 0.4);
+  --card3d-accent: #0F766E;
+  --card3d-shadow: rgba(15, 118, 110, 0.18);
+}
+
+.domain-default .card3d-inner {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(245, 247, 250, 0.93) 100%);
+  border-color: rgba(100, 116, 139, 0.4);
+  --card3d-accent: #496B56;
+  --card3d-shadow: rgba(73, 107, 86, 0.18);
+}
+
+/* 中央作用中卡片高亮邊框與柔和立體陰影 */
+.card3d-item.is-active .card3d-inner {
+  border-width: 2px;
+  border-color: var(--card3d-accent);
+  box-shadow: 0 18px 45px var(--card3d-shadow), 0 3px 10px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(255, 255, 255, 1);
+}
+
+/* 內部光暈跟隨滑鼠（低強度微光） */
+.card3d-inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle 240px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.55),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card3d-item.is-active:hover .card3d-inner::before {
+  opacity: 1;
+}
+
+/* 滑鼠移入中央卡片微幅上浮 4~6px */
+.card3d-item.is-active:hover .card3d-inner {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 50px var(--card3d-shadow), 0 4px 14px rgba(0, 0, 0, 0.06), inset 0 1px 2px rgba(255, 255, 255, 1);
+}
+
+.card3d-item.is-active:hover .card3d-action i {
+  transform: translateX(4px);
+}
+
+/* 側邊卡片 hover 微反饋 */
+.card3d-item:not(.is-active):hover .card3d-inner {
+  border-color: var(--card3d-accent);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08);
+}
+
+.card3d-item:focus-visible {
+  outline: none;
+}
+
+.card3d-item:focus-visible .card3d-inner {
+  outline: 2px solid var(--card3d-accent);
+  outline-offset: 2px;
+}
+
+/* 卡片內部文字排版 */
+.card3d-body,
+.card3d-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.card3d-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* 1. 彩色領域文字 */
+.card3d-domain {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--card3d-accent);
+  letter-spacing: 0.03em;
+  margin-bottom: 2px;
+}
+
+.card3d-sub {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--card3d-accent);
+  opacity: 0.72;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+/* 2. 深色粗體完整技術名稱 */
+.card3d-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.4;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  margin-top: 2px;
+  margin-bottom: 8px;
+}
+
+/* 裝飾細線 */
+.card3d-line {
+  width: 28px;
+  height: 2px;
+  background: var(--card3d-accent);
+  opacity: 0.45;
+  border-radius: 1px;
+  margin-bottom: 10px;
+}
+
+/* 3. 簡短技術摘要 (最多三行，超出省略號) */
+.card3d-abstract {
+  font-size: 0.86rem;
+  color: #475569;
   line-height: 1.55;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-bottom: 14px;
-}
-
-.card-footer {
-  border-top: 1px solid var(--border-subtle);
-  padding-top: 10px;
-  margin-top: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-
-.card-inventor {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  width: 100%;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  line-height: 1.45;
-}
-
-.card-inventor i {
-  color: var(--rcci-gray);
-  margin-top: 3px;
-  flex-shrink: 0;
-}
-
-.inventor-name-text {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
   word-break: break-word;
+  margin-bottom: 12px;
 }
 
-.card-footer-extra {
+/* 4. 底部案件編號及「查看技術 →」 */
+.card3d-footer {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  width: 100%;
+  justify-content: space-between;
+  gap: 8px;
 }
 
-.card-status-tag {
+.card3d-case-id {
+  font-size: 0.78rem;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  color: #64748b;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.card3d-action {
   display: inline-flex;
   align-items: center;
-  white-space: nowrap;
-  flex-shrink: 0;
-  padding: 3px 8px;
-  border-radius: var(--radius-sm);
-  font-size: 0.775rem;
-  font-weight: 500;
-  background: var(--rcci-green-light);
+  gap: 5px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--card3d-accent);
+  cursor: pointer;
+  text-decoration: none;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background-color 0.18s ease;
+}
+
+.card3d-action i {
+  font-size: 0.8rem;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 3D 卡片下方控制區塊 (按鈕、計數、領域提示) */
+.card3d-controls {
+  position: relative;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+  width: 100%;
+}
+
+.card3d-nav-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.card3d-arrow-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #334155;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card3d-arrow-btn:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: scale(1.06);
   color: var(--rcci-green);
-  border: 1px solid rgba(73, 107, 86, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.card3d-arrow-btn:focus-visible {
+  outline: 2px solid var(--rcci-green);
+  outline-offset: 2px;
+}
+
+.card3d-arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.card3d-counter {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: 0.05em;
+  min-width: 76px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.card3d-counter-current {
+  color: #0f172a;
+}
+
+.card3d-counter-sep {
+  color: #94a3b8;
+  font-weight: 400;
+  margin: 0 4px;
+}
+
+.card3d-counter-total {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.card3d-info-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.card3d-current-domain {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1e293b;
+  padding: 3px 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.card3d-domain-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.card3d-hint {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  letter-spacing: 0.02em;
+}
+
+/* 響應式微調 */
+@media (max-width: 1024px) {
+  .card3d-carousel {
+    height: 385px;
+  }
+  .card3d-item {
+    width: 255px;
+    height: 365px;
+    margin-left: -127.5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .card3d-stage {
+    padding: 12px 0 20px;
+    border-radius: 16px;
+  }
+  .card3d-carousel {
+    height: 360px;
+  }
+  .card3d-item {
+    width: 240px;
+    height: 345px;
+    margin-left: -120px;
+  }
+  .card3d-inner {
+    padding: 18px 16px 14px;
+    border-radius: 16px;
+  }
+  .card3d-title {
+    font-size: 1rem;
+  }
+  .card3d-abstract {
+    font-size: 0.82rem;
+    -webkit-line-clamp: 2;
+    margin-bottom: 8px;
+  }
+  .card3d-arrow-btn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* prefers-reduced-motion 與降級支援 */
+@media (prefers-reduced-motion: reduce) {
+  .card3d-item,
+  .card3d-inner,
+  .card3d-action i,
+  .card3d-arrow-btn {
+    transition: none !important;
+  }
+  .card3d-inner::before {
+    display: none !important;
+  }
+}
+
+@supports not ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+  .card3d-inner {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+  }
+}
+
+}
+
+/* 查無結果空狀態 */
+.empty-search-state {
+  width: 100%;
+  text-align: center;
+  padding: 56px 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  border: 1px dashed var(--border-color);
+  margin: 12px 0 30px;
+}
+
+.empty-search-state i {
+  font-size: 2.2rem;
+  color: #a0aec0;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.empty-search-state h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 6px;
+}
+
+.empty-search-state p {
+  font-size: 0.925rem;
+  color: #718096;
 }
 
 /* ==============================================================================
@@ -1382,7 +2074,8 @@ button:focus-visible, a:focus-visible {
 
 /* 1024px 螢幕（平板橫向 / 小型筆電） */
 @media (max-width: 1024px) {
-  .card-grid {
+  .card-grid,
+  .glass-card-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   
@@ -1614,7 +2307,8 @@ button:focus-visible, a:focus-visible {
     gap: 8px;
   }
 
-  .card-grid {
+  .card-grid,
+  .glass-card-grid {
     grid-template-columns: 1fr;
   }
 

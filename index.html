@@ -291,22 +291,35 @@
               
               <!-- 控制列：搜尋與分類篩選與檢視切換 -->
               <div class="controls-bar">
-                <!-- 搜尋輸入框 -->
-                <div class="search-wrapper">
-                  <i class="fas fa-search search-icon"></i>
-                  <input type="text" id="search-input" class="search-input" placeholder="搜尋技術名稱、摘要或案件編號…" autocomplete="off">
-                  <button id="search-clear" class="search-clear" title="清除搜尋" type="button">✕</button>
+                <div class="controls-filter-wrap">
+                  <!-- 搜尋輸入框 -->
+                  <div class="search-wrapper">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="search-input" class="search-input" placeholder="搜尋技術名稱、摘要或案件編號…" autocomplete="off">
+                    <button id="search-clear" class="search-clear" title="清除搜尋" type="button">✕</button>
+                  </div>
+
+                  <!-- 分類標籤鈕 (由 JS 動態生成：全部、太陽能、量子科技、去碳燃氫...) -->
+                  <div class="filter-group" id="filter-container">
+                    <!-- JS 生成 -->
+                  </div>
                 </div>
 
-                <!-- 分類標籤鈕 (由 JS 動態生成：全部、太陽能、量子科技、去碳燃氫...) -->
-                <div class="filter-group" id="filter-container">
-                  <!-- JS 生成 -->
+                <!-- 檢視模式切換按鈕 (條列 / 3D 卡片) -->
+                <div class="view-switchers" id="view-mode-toggle" role="group" aria-label="檢視模式切換">
+                  <button type="button" class="view-btn active" id="btn-view-list" data-mode="list" title="條列式檢視" aria-pressed="true">
+                    <i class="fas fa-list-ul"></i>
+                    <span>條列</span>
+                  </button>
+                  <button type="button" class="view-btn" id="btn-view-card" data-mode="card" title="3D 卡片式檢視" aria-pressed="false">
+                    <i class="fas fa-layer-group"></i>
+                    <span>3D 卡片</span>
+                  </button>
                 </div>
-
               </div>
 
-              <!-- 成果卡片網格 (動態渲染) -->
-              <div id="card-grid" class="card-grid">
+              <!-- 技術成果清單容器 (支援彩色領域條列式與薄霧玻璃卡片式，由 JS 動態渲染) -->
+              <div id="outcomes-container" class="outcomes-container view-list">
                 <!-- 由 JS 動態渲染 -->
               </div>
             </div>
