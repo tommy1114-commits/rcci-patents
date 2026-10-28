@@ -348,7 +348,7 @@
       counts[item.domain] = (counts[item.domain] || 0) + 1;
     });
 
-    const domainOrder = ['太陽能', '量子電腦', '去碳燃氫'];
+    const domainOrder = ['太陽能', '量子電腦', '去碳燃氫', '海藻藍碳'];
     const otherDomains = Object.keys(counts).filter(k => k !== '全部' && !domainOrder.includes(k));
     const allCategories = ['全部', ...domainOrder.filter(d => counts[d] > 0), ...otherDomains];
 
@@ -413,6 +413,7 @@
       if (item.domain.includes('太陽能')) badgeClass = 'badge-solar';
       else if (item.domain.includes('量子')) badgeClass = 'badge-quantum';
       else if (item.domain.includes('去碳') || item.domain.includes('燃氫')) badgeClass = 'badge-hydrogen';
+      else if (item.domain.includes('海藻') || item.domain.includes('藍碳')) badgeClass = 'badge-bluecarbon';
 
       const cleanAbstract = (item.abstract || '')
         .replace(/\r?\n|\r/g, ' ')
@@ -541,6 +542,7 @@
     if (outcome.domain.includes('太陽能')) badgeClass = 'badge-solar';
     else if (outcome.domain.includes('量子')) badgeClass = 'badge-quantum';
     else if (outcome.domain.includes('去碳') || outcome.domain.includes('燃氫')) badgeClass = 'badge-hydrogen';
+    else if (outcome.domain.includes('海藻') || outcome.domain.includes('藍碳')) badgeClass = 'badge-bluecarbon';
 
     if (elements.detailCategoryBadge) {
       elements.detailCategoryBadge.className = `badge ${badgeClass}`;

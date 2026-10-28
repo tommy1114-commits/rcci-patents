@@ -35,6 +35,10 @@
   --domain-hydrogen-text: #275646;
   --domain-hydrogen-border: #bbf7d0;
 
+  --domain-bluecarbon-bg: #e0f2fe;
+  --domain-bluecarbon-text: #0369a1;
+  --domain-bluecarbon-border: #bae6fd;
+
   /* 字型定義 */
   --font-family: 'Noto Sans TC', Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
@@ -872,6 +876,12 @@ button:focus-visible, a:focus-visible {
   background: var(--domain-hydrogen-bg);
   color: var(--domain-hydrogen-text);
   border: 1px solid var(--domain-hydrogen-border);
+}
+
+.badge-bluecarbon {
+  background: var(--domain-bluecarbon-bg);
+  color: var(--domain-bluecarbon-text);
+  border: 1px solid var(--domain-bluecarbon-border);
 }
 
 .badge-default {
