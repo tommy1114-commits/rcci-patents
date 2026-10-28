@@ -306,6 +306,7 @@ class GoogleSheetSync {
         domain: app['單位'] || record.domain,
         title: app['專利名稱'] || record.title,
         country: (app['國家／地區'] || '').toUpperCase().trim(),
+        type: (app['申請類型'] || '').trim(),
         appType: (app['申請類型'] || '').trim(),
         appDate: (app['申請日'] || '').trim(),
         appNo: (app['申請號'] || '').trim(),

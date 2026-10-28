@@ -579,18 +579,20 @@
     if (!elements.detailApplicationsTbody) return;
     elements.detailApplicationsTbody.innerHTML = '';
 
-    if (!applications || applications.length === 0) {
+    const validApps = (applications || []).filter(a => (a.country || a.appNo || a.patentNo || a.type));
+
+    if (validApps.length === 0) {
       elements.detailApplicationsTbody.innerHTML = `
         <tr>
           <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">
-            本項技術尚無各國提申明細紀錄
+            本項技術為技術秘密／Know-how，無個別專利申請案
           </td>
         </tr>
       `;
       return;
     }
 
-    applications.forEach(app => {
+    validApps.forEach(app => {
       const tr = document.createElement('tr');
       const countryCode = (app.country || '').toUpperCase();
       const countryInfo = COUNTRY_NAMES[countryCode] || { name: app.country, flag: '🌐' };
@@ -602,9 +604,11 @@
         statusBadge = '<span class="badge-status granted">已獲證</span>';
       }
 
+      const patentType = app.type || app.appType || '發明專利';
+
       tr.innerHTML = `
         <td><span class="country-name">${countryInfo.name || app.country}</span></td>
-        <td>${app.type || '發明專利'}</td>
+        <td>${patentType}</td>
         <td style="font-family: var(--font-mono);">${app.appNo || '—'}</td>
         <td>${app.appDate || '—'}</td>
         <td style="font-family: var(--font-mono);">${app.patentNo || '—'}</td>
