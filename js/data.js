@@ -19,8 +19,8 @@ const APP_CONFIG = {
   driveApiUrl: '',
 
   // 快取鍵值
-  localCacheKey: 'rcci_patent_csv_cache_v7',
-  lastSyncKey: 'rcci_last_csv_sync_time_v7'
+  localCacheKey: 'rcci_patent_csv_cache_v8',
+  lastSyncKey: 'rcci_last_csv_sync_time_v8'
 };
 
 // 來自 PDF 規範文件（Pages 3-8）的詳細技術摘要與規格資料（包含智財技轉處官方超連結）
@@ -90,7 +90,7 @@ const PRESET_ABSTRACTS = {
     category: '去碳燃氫',
     publishDate: '2022-06-11',
     inventors: '廖俊智、陳洋元、歐敏男、吳杉洛',
-    legalStatus: '部分已獲證（多國）',
+    legalStatus: '專利申請中',
     familyId: 'PF-007',
     techUrl: 'https://ticket.apps.sinica.edu.tw/tech/02A-1110615',
     abstract: '全球氣候變遷造成的氣候暖化已成為人類發展之一迫切問題，因此國際社會訂定了到2050年實現碳零排放的共同目標。台灣天然能源缺乏，因此多以煤炭與石化燃料來發電，由於空氣污染問題，逐漸改以天然氣發電。目前天然氣發電比重已達40-50%，惟天然氣(CH4)燃燒雖可減少如PM2.5的污染，但不可避免地仍釋放出大量的二氧化碳溫室氣體。中央研究院啟動了Alpha去碳計畫，以達成二氧化碳零排放的目標。本發明係一種可同時產碳和氫氣的方法。'
@@ -100,7 +100,7 @@ const PRESET_ABSTRACTS = {
     category: '去碳燃氫',
     publishDate: '2022-06-11',
     inventors: '廖俊智、陳洋元、歐敏男、吳杉洛',
-    legalStatus: '部分已獲證（多國）',
+    legalStatus: '專利申請中',
     familyId: 'PF-007',
     techUrl: 'https://ticket.apps.sinica.edu.tw/tech/02A-1110615',
     abstract: '全球氣候變遷造成的氣候暖化已成為人類發展之一迫切問題，因此國際社會訂定了到2050年實現碳零排放的共同目標。台灣天然能源缺乏，因此多以煤炭與石化燃料來發電，由於空氣污染問題，逐漸改以天然氣發電。目前天然氣發電比重已達40-50%，惟天然氣(CH4)燃燒雖可減少如PM2.5的污染，但不可避免地仍釋放出大量的二氧化碳溫室氣體。中央研究院啟動了Alpha去碳計畫，以達成二氧化碳零排放的目標。本發明係一種可同時產碳和氫氣的方法。'

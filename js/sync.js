@@ -336,10 +336,10 @@ class GoogleSheetSync {
       const hasGranted = item.applications.some(a => Boolean(a.patentNo) || (a.remarks && a.remarks.includes('已獲證')));
       const isReviewing = item.applications.some(a => a.remarks && a.remarks.includes('審閱中'));
 
-      if (hasGranted) {
-        legalStatus = countries.length > 1 ? '已獲證（多國）' : '已獲證';
-      } else if (preset.legalStatus !== undefined) {
+      if (preset.legalStatus !== undefined && preset.legalStatus !== '') {
         legalStatus = preset.legalStatus;
+      } else if (hasGranted) {
+        legalStatus = countries.length > 1 ? '已獲證（多國）' : '已獲證';
       } else if (isReviewing && item.applications.every(a => !a.appNo)) {
         legalStatus = '智財處審閱中';
       } else if (item.applications.length > 0) {
