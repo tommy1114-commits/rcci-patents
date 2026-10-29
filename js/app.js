@@ -1,4 +1,4 @@
-/**
+﻿/**
  * RCCI 智財與技術成果專區 - 前端核心應用控制器
  * 整合官方網站 (https://rcci.test.sinica.edu.tw/) 內頁共用版型標準
  * Research Center for Critical Issues | Academia Sinica
@@ -10,7 +10,7 @@
   const VIEW_MODE_STORAGE_KEY = 'rcci_outcome_view_mode';
 
   // 讀取最後儲存的檢視模式（預設為 card 卡片式）
-  let initialViewMode = 'list';
+  let initialViewMode = 'card';
   try {
     const saved = localStorage.getItem(VIEW_MODE_STORAGE_KEY);
     if (saved === 'card' || saved === 'list') {
@@ -111,6 +111,27 @@
     detailLicenseStatus: document.getElementById('detail-license-status'),
     detailApplicationsTbody: document.getElementById('detail-applications-tbody'),
     btnTechLink: document.getElementById('btn-tech-link'),
+
+    // Phase 2: 錄音帶播放器元素
+    playerChassis: document.getElementById('cassette-player'),
+    playerTrackNum: document.getElementById('player-track-num'),
+    playerModeText: document.getElementById('player-mode-text'),
+    playerMarqueeTitle: document.getElementById('player-marquee-title'),
+    playerDeckWindow: document.getElementById('player-deck-window'),
+    deckLoadedCassette: document.getElementById('deck-loaded-cassette'),
+    deckCassetteShell: document.getElementById('deck-cassette-shell'),
+    deckCassetteId: document.getElementById('deck-cassette-id'),
+    deckWheelLeft: document.getElementById('deck-wheel-left'),
+    deckWheelRight: document.getElementById('deck-wheel-right'),
+    deckPillText: document.getElementById('deck-pill-text'),
+    playerStatusLed: document.getElementById('player-status-led'),
+    playerLedLabel: document.getElementById('player-led-label'),
+    btnPlayerPrev: document.getElementById('btn-player-prev'),
+    btnPlayerToggle: document.getElementById('btn-player-toggle'),
+    playerToggleIcon: document.getElementById('player-toggle-icon'),
+    btnPlayerNext: document.getElementById('btn-player-next'),
+    btnPlayerEject: document.getElementById('btn-player-eject'),
+    detailInfoColumn: document.querySelector('.detail-info-column'),
 
     // 隱藏相容元件
     syncDot: document.getElementById('sync-dot'),
@@ -301,6 +322,9 @@
 
     // 監聽 URL Hash 變更
     window.addEventListener('hashchange', handleHashRouting);
+
+    // Phase 2: ????曉?批??
+    initPlayerControls();
   }
 
   // 處理 URL Hash 路由切換
@@ -508,6 +532,7 @@
   }
 
   // 1. 渲染彩色領域條列式 (List View)
+    // 1. 渲染彩色領域條列式 (List View)
   function renderListView(filtered, container) {
     container.innerHTML = '';
 
@@ -530,6 +555,18 @@
       let domainLabel = item.domain || '';
       if (domainLabel === '量子電腦') domainLabel = '量子科技';
 
+      // 取得院內技術覽號
+      let caseNumber = item.caseId || '';
+      if (!caseNumber || caseNumber.startsWith('PF-')) {
+        if (item.applications && item.applications.length > 0) {
+          const appWithCase = item.applications.find(a => a.caseId && !a.caseId.startsWith('PF-'));
+          if (appWithCase) caseNumber = appWithCase.caseId;
+        }
+      }
+      if (!caseNumber && item.id && !item.id.startsWith('PF-')) {
+        caseNumber = item.id;
+      }
+
       const cleanAbstract = (item.abstract || '').replace(/\r?\n|\r/g, ' ').trim();
       const abstractHtml = cleanAbstract
         ? `<p class="list-item-abstract">${cleanAbstract}</p>`
@@ -537,7 +574,10 @@
 
       itemEl.innerHTML = `
         <div class="list-item-content">
-          <span class="list-item-domain">${domainLabel}</span>
+          <div class="list-item-header">
+            <span class="list-item-domain">${domainLabel}</span>
+            <span class="list-item-case-id">${caseNumber}</span>
+          </div>
           <h3 class="list-item-title">${item.title}</h3>
           ${abstractHtml}
         </div>
@@ -563,7 +603,9 @@
     container.appendChild(listWrap);
   }
 
+
   // 2. 渲染 3D 弧線滑動式玻璃卡片 (3D Curved Glass Cards Carousel)
+  // 專利成果 3D 景深展示系統 · 小標題旁清晰標註技術覽號
   function render3DCardView(filtered, container) {
     container.innerHTML = '';
 
@@ -587,7 +629,7 @@
     carousel.setAttribute('role', 'region');
     carousel.setAttribute('aria-roledescription', 'carousel');
     carousel.setAttribute('tabindex', '0');
-    carousel.setAttribute('aria-label', '3D 卡片技術成果輪播');
+    carousel.setAttribute('aria-label', '3D 弧線卡片技術成果輪播');
 
     const track = document.createElement('div');
     track.className = 'card3d-track';
@@ -597,26 +639,38 @@
     filtered.forEach((item, index) => {
       const card = document.createElement('div');
       const domainClass = getDomainClass(item.domain);
+      const domainMeta = getDomainMeta(item.domain);
       card.className = `card3d-item ${domainClass}`;
       card.setAttribute('data-index', String(index));
       card.setAttribute('role', 'group');
       card.setAttribute('aria-roledescription', 'slide');
-      card.setAttribute('aria-label', `${index + 1} of ${total}：${item.domain} - ${item.title}`);
+      card.setAttribute('aria-label', `${index + 1} of ${total}：${domainMeta.label} - ${item.title}`);
       card.setAttribute('tabindex', '0');
-
-      const domainMeta = getDomainMeta(item.domain);
 
       const cleanAbstract = (item.abstract || '').replace(/\r?\n|\r/g, ' ').trim();
       const abstractHtml = cleanAbstract
         ? `<p class="card3d-abstract">${cleanAbstract}</p>`
         : '';
 
-      const caseNumber = item.caseId || item.id || '';
+      // 取得院內技術覽號
+      let caseNumber = item.caseId || '';
+      if (!caseNumber || caseNumber.startsWith('PF-')) {
+        if (item.applications && item.applications.length > 0) {
+          const appWithCase = item.applications.find(a => a.caseId && !a.caseId.startsWith('PF-'));
+          if (appWithCase) caseNumber = appWithCase.caseId;
+        }
+      }
+      if (!caseNumber && item.id && !item.id.startsWith('PF-')) {
+        caseNumber = item.id;
+      }
 
       card.innerHTML = `
         <div class="card3d-inner">
           <div class="card3d-body">
-            <span class="card3d-domain">${domainMeta.label}</span>
+            <div class="card3d-header-row">
+              <span class="card3d-domain">${domainMeta.label}</span>
+              <span class="card3d-case-badge">${caseNumber}</span>
+            </div>
             <span class="card3d-sub">RCCI TECHNOLOGY</span>
             <h3 class="card3d-title">${item.title}</h3>
             <div class="card3d-line"></div>
@@ -658,7 +712,7 @@
     carousel.appendChild(track);
     stage.appendChild(carousel);
 
-    // 建立下方控制列
+    // 建立下方控制列與領域圖例
     const controls = document.createElement('div');
     controls.className = 'card3d-controls';
     controls.innerHTML = `
@@ -682,6 +736,12 @@
         </div>
         <div class="card3d-hint">左右拖曳瀏覽技術，點擊查看詳情</div>
       </div>
+      <div class="card3d-legend-row" aria-hidden="true">
+        <span class="card3d-legend-item"><span class="card3d-legend-dot legend-quantum"></span> 量子科技</span>
+        <span class="card3d-legend-item"><span class="card3d-legend-dot legend-solar"></span> 太陽能</span>
+        <span class="card3d-legend-item"><span class="card3d-legend-dot legend-hydrogen"></span> 去碳燃氫</span>
+        <span class="card3d-legend-item"><span class="card3d-legend-dot legend-bluecarbon"></span> 海藻藍碳</span>
+      </div>
     `;
 
     stage.appendChild(controls);
@@ -693,11 +753,11 @@
     const domainDot = controls.querySelector('.card3d-domain-dot');
     const domainName = controls.querySelector('.card3d-domain-name');
 
-    // 計算各卡片 3D 弧線位置
+    // 計算各卡片 3D 弧線景深位置（確保足夠間距、零文字重疊）
     function updateCardTransforms() {
       const w = window.innerWidth;
-      const isMobile = w <= 768;
-      const isTablet = w > 768 && w <= 1024;
+      const isMobile = w <= 640;
+      const isTablet = w > 640 && w <= 1024;
 
       cardElements.forEach((card, idx) => {
         const delta = idx - state.card3dIndex;
@@ -719,135 +779,80 @@
           let tx, tz, ry, sc, op, zi, fl;
 
           if (isMobile) {
-            if (abs === 1) {
-              tx = sign * 125;
-              tz = -65;
-              ry = -sign * 22;
-              sc = 0.82;
-              op = 0.42;
-              zi = 40;
-              fl = 'blur(0.5px)';
-            } else {
-              tx = sign * (125 + (abs - 1) * 60);
-              tz = -150;
-              ry = -sign * 35;
-              sc = 0.65;
-              op = 0;
-              zi = Math.max(1, 20 - abs);
-              fl = 'blur(2px)';
-            }
+            // 手機版 (寬度 <= 640px)
+            const gap = 160;
+            tx = sign * (190 + (abs - 1) * gap);
+            tz = -120 - (abs - 1) * 90;
+            ry = -sign * 18;
+            sc = Math.max(0.72, 0.88 - (abs - 1) * 0.1);
+            op = abs === 1 ? 0.75 : (abs === 2 ? 0.35 : 0);
+            zi = 40 - abs * 5;
+            fl = abs > 1 ? 'blur(1.5px)' : 'blur(0px)';
           } else if (isTablet) {
-            if (abs === 1) {
-              tx = sign * 185;
-              tz = -80;
-              ry = -sign * 22;
-              sc = 0.86;
-              op = 0.88;
-              zi = 40;
-              fl = 'blur(0px)';
-            } else if (abs === 2) {
-              tx = sign * 320;
-              tz = -160;
-              ry = -sign * 32;
-              sc = 0.72;
-              op = 0.55;
-              zi = 30;
-              fl = 'blur(0.5px)';
-            } else {
-              tx = sign * (320 + (abs - 2) * 60);
-              tz = -240;
-              ry = -sign * 38;
-              sc = 0.6;
-              op = 0;
-              zi = Math.max(1, 20 - abs);
-              fl = 'blur(2px)';
-            }
+            // 平板版 (640px ~ 1024px)
+            const gap = 190;
+            tx = sign * (230 + (abs - 1) * gap);
+            tz = -110 - (abs - 1) * 85;
+            ry = -sign * 22;
+            sc = Math.max(0.75, 0.88 - (abs - 1) * 0.08);
+            op = abs === 1 ? 0.85 : (abs === 2 ? 0.5 : (abs === 3 ? 0.2 : 0));
+            zi = 40 - abs * 5;
+            fl = abs > 2 ? 'blur(1.5px)' : 'blur(0px)';
           } else {
-            // 桌機 (3～5 張清楚辨識，外側部分露出提示)
-            if (abs === 1) {
-              tx = sign * 225;
-              tz = -85;
-              ry = -sign * 22;
-              sc = 0.88;
-              op = 0.92;
-              zi = 40;
-              fl = 'blur(0px)';
-            } else if (abs === 2) {
-              tx = sign * 395;
-              tz = -170;
-              ry = -sign * 32;
-              sc = 0.76;
-              op = 0.72;
-              zi = 30;
-              fl = 'blur(0px)';
-            } else if (abs === 3) {
-              tx = sign * 525;
-              tz = -250;
-              ry = -sign * 38;
-              sc = 0.66;
-              op = 0.45;
-              zi = 20;
-              fl = 'blur(0.5px)';
-            } else {
-              tx = sign * (525 + (abs - 3) * 65);
-              tz = -320;
-              ry = -sign * 42;
-              sc = 0.58;
-              op = 0;
-              zi = Math.max(1, 15 - abs);
-              fl = 'blur(2px)';
-            }
+            // 桌面版 (> 1024px)
+            const gap = 205;
+            tx = sign * (255 + (abs - 1) * gap);
+            tz = -90 - (abs - 1) * 75;
+            ry = -sign * 24;
+            sc = Math.max(0.78, 0.90 - (abs - 1) * 0.06);
+            op = abs === 1 ? 0.92 : (abs === 2 ? 0.65 : (abs === 3 ? 0.35 : 0));
+            zi = 45 - abs * 5;
+            fl = abs > 2 ? 'blur(1.5px)' : 'blur(0px)';
           }
 
           card.style.transform = `translateX(${tx}px) translateZ(${tz}px) rotateY(${ry}deg) scale(${sc})`;
           card.style.opacity = String(op);
           card.style.zIndex = String(zi);
           card.style.filter = fl;
-          card.style.pointerEvents = op > 0.1 ? 'auto' : 'none';
+          card.style.pointerEvents = abs <= 2 ? 'auto' : 'none';
         }
       });
 
-      // 更新計數器與按鈕狀態
-      if (counterCurrent) {
-        counterCurrent.textContent = String(state.card3dIndex + 1).padStart(2, '0');
-      }
-      if (prevBtn) {
-        prevBtn.disabled = (state.card3dIndex <= 0);
-      }
-      if (nextBtn) {
-        nextBtn.disabled = (state.card3dIndex >= total - 1);
+      // 更新進度與領域指示
+      const currentItem = filtered[state.card3dIndex];
+      if (currentItem) {
+        if (counterCurrent) {
+          counterCurrent.textContent = String(state.card3dIndex + 1).padStart(2, '0');
+        }
+        if (domainName) {
+          const meta = getDomainMeta(currentItem.domain);
+          domainName.textContent = meta.label;
+        }
+        if (domainDot) {
+          domainDot.className = 'card3d-domain-dot';
+          const dClass = getDomainClass(currentItem.domain);
+          domainDot.classList.add(`legend-${dClass.replace('domain-', '')}`);
+        }
       }
 
-      // 更新目前領域名稱與顏色圓點
-      const currentItem = filtered[state.card3dIndex];
-      if (currentItem && domainDot && domainName) {
-        const meta = getDomainMeta(currentItem.domain);
-        domainDot.style.backgroundColor = meta.color;
-        domainName.textContent = meta.label;
+      if (prevBtn) {
+        prevBtn.disabled = state.card3dIndex === 0;
+        prevBtn.classList.toggle('disabled', state.card3dIndex === 0);
+      }
+      if (nextBtn) {
+        nextBtn.disabled = state.card3dIndex === total - 1;
+        nextBtn.classList.toggle('disabled', state.card3dIndex === total - 1);
       }
     }
 
-    // 初次定位
-    updateCardTransforms();
-
-    // 視窗大小改變時重算卡片弧線
-    let resizeTimer = null;
-    const onResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(updateCardTransforms, 100);
-    };
-    window.addEventListener('resize', onResize);
-
     // 切換至指定索引
-    function goToIndex(idx) {
-      if (idx < 0) idx = 0;
-      if (idx >= total) idx = total - 1;
-      if (idx === state.card3dIndex) return;
-      state.card3dIndex = idx;
+    function goToIndex(newIndex) {
+      if (newIndex < 0 || newIndex >= total) return;
+      state.card3dIndex = newIndex;
       updateCardTransforms();
     }
 
-    // 箭頭按鈕監聽
+    // 箭頭按鈕事件
     if (prevBtn) {
       prevBtn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -861,48 +866,31 @@
       });
     }
 
-    // 卡片點擊互動
-    let justDragged = false;
-    let dragSuppressTimeout = null;
-
+    // 鍵盤左右鍵與卡片點擊切換/詳情
     cardElements.forEach((card, idx) => {
       card.addEventListener('click', (e) => {
-        if (justDragged) {
-          e.preventDefault();
-          e.stopPropagation();
-          return;
-        }
-
-        if (idx !== state.card3dIndex) {
-          // 點擊側邊卡片：移至中央
-          e.preventDefault();
-          e.stopPropagation();
-          goToIndex(idx);
-        } else {
-          // 點擊中央卡片或其查看技術：進入詳情頁
+        if (idx === state.card3dIndex) {
           const item = filtered[idx];
-          if (item) {
-            window.location.hash = `#patent/${encodeURIComponent(item.id)}`;
-          }
+          window.location.hash = `#patent/${encodeURIComponent(item.id)}`;
+        } else {
+          e.preventDefault();
+          goToIndex(idx);
         }
       });
 
       card.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          if (idx !== state.card3dIndex) {
-            goToIndex(idx);
-          } else {
+          if (idx === state.card3dIndex) {
             const item = filtered[idx];
-            if (item) {
-              window.location.hash = `#patent/${encodeURIComponent(item.id)}`;
-            }
+            window.location.hash = `#patent/${encodeURIComponent(item.id)}`;
+          } else {
+            goToIndex(idx);
           }
         }
       });
     });
 
-    // 鍵盤左右箭頭操作輪播
     carousel.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') {
         e.preventDefault();
@@ -913,72 +901,61 @@
       }
     });
 
-    // 滑鼠拖曳與手機觸控滑動 (Pointer Events 統一處理)
-    let isPointerDown = false;
+    // 支援平滑觸控與滑鼠拖曳切換
     let startX = 0;
-    let startY = 0;
-    let currentX = 0;
-    let hasMoved = false;
+    let isDragging = false;
+    let dragThreshold = 45;
 
-    carousel.addEventListener('pointerdown', (e) => {
-      if (e.button !== 0 && e.pointerType === 'mouse') return;
-      isPointerDown = true;
-      startX = e.clientX;
-      startY = e.clientY;
-      currentX = e.clientX;
-      hasMoved = false;
+    function onDragStart(clientX) {
+      startX = clientX;
+      isDragging = true;
       carousel.classList.add('is-dragging');
-    });
+    }
 
-    window.addEventListener('pointermove', (e) => {
-      if (!isPointerDown) return;
-      currentX = e.clientX;
-      const dx = currentX - startX;
-      const dy = e.clientY - startY;
-
-      if (Math.abs(dx) > 8 && Math.abs(dx) > Math.abs(dy)) {
-        hasMoved = true;
-      }
-    });
-
-    const onPointerEnd = (e) => {
-      if (!isPointerDown) return;
-      isPointerDown = false;
+    function onDragEnd(clientX) {
+      if (!isDragging) return;
+      isDragging = false;
       carousel.classList.remove('is-dragging');
-
-      const dx = currentX - startX;
-      if (hasMoved && Math.abs(dx) > 40) {
-        justDragged = true;
-        clearTimeout(dragSuppressTimeout);
-        dragSuppressTimeout = setTimeout(() => {
-          justDragged = false;
-        }, 150);
-
-        if (dx < -40 && state.card3dIndex < total - 1) {
-          goToIndex(state.card3dIndex + 1);
-        } else if (dx > 40 && state.card3dIndex > 0) {
-          goToIndex(state.card3dIndex - 1);
-        }
+      const diff = clientX - startX;
+      if (diff > dragThreshold) {
+        goToIndex(state.card3dIndex - 1);
+      } else if (diff < -dragThreshold) {
+        goToIndex(state.card3dIndex + 1);
       }
-      hasMoved = false;
-    };
+    }
 
-    window.addEventListener('pointerup', onPointerEnd);
-    window.addEventListener('pointercancel', onPointerEnd);
+    carousel.addEventListener('mousedown', (e) => {
+      onDragStart(e.clientX);
+    });
+
+    window.addEventListener('mouseup', (e) => {
+      if (isDragging) onDragEnd(e.clientX);
+    });
+
+    carousel.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches.length > 0) {
+        onDragStart(e.touches[0].clientX);
+      }
+    }, { passive: true });
+
+    carousel.addEventListener('touchend', (e) => {
+      if (e.changedTouches && e.changedTouches.length > 0) {
+        onDragEnd(e.changedTouches[0].clientX);
+      }
+    });
+
+    // 響應式視窗縮放重新計算
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateCardTransforms, 60);
+    });
+
+    // 初始化排列
+    updateCardTransforms();
   }
 
-  // 3. 渲染查無結果空狀態
-  function renderEmptyState(container) {
-    container.innerHTML = `
-      <div class="empty-search-state">
-        <i class="fas fa-search" aria-hidden="true"></i>
-        <h3>查無符合條件的研發成果</h3>
-        <p>請嘗試其他關鍵字或切換技術領域分類</p>
-      </div>
-    `;
-  }
 
-  // 成果詳情檢視
   function showDetail(outcomeId, updateHash = true) {
     const outcome = state.outcomes.find(o => o.id === outcomeId || o.caseId === outcomeId);
     if (!outcome) return;
@@ -1044,6 +1021,14 @@
 
     if (elements.listView) elements.listView.style.display = 'none';
     if (elements.detailView) elements.detailView.classList.add('active');
+
+    // Phase 2: 更新播放器狀態與右側面板淡入
+    // updatePlayerView(outcome);
+    if (elements.detailInfoColumn) {
+      elements.detailInfoColumn.classList.remove('fade-in');
+      void elements.detailInfoColumn.offsetWidth;
+      elements.detailInfoColumn.classList.add('fade-in');
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -1131,4 +1116,38 @@
   } else {
     init();
   }
+
+
+  // Phase 2: Cassette Player Control & Insertion Animation
+  const playerState = {
+    isPlaying: true,
+    isAnimating: false
+  };
+
+  function setPlayerPlaying(isPlaying) {
+    playerState.isPlaying = isPlaying;
+    if (elements.playerStatusLed) {
+      elements.playerStatusLed.className = isPlaying ? 'player-led active' : 'player-led paused';
+    }
+    if (elements.playerLedLabel) {
+      elements.playerLedLabel.textContent = isPlaying ? 'PLAYING' : 'PAUSED';
+    }
+    if (elements.deckWheelLeft && elements.deckWheelRight) {
+      elements.deckWheelLeft.className = isPlaying ? 'deck-sprocket left playing' : 'deck-sprocket left paused';
+      elements.deckWheelRight.className = isPlaying ? 'deck-sprocket right playing' : 'deck-sprocket right paused';
+    }
+    if (elements.btnPlayerToggle) {
+      elements.btnPlayerToggle.className = isPlaying ? 'player-btn btn-play-pause playing' : 'player-btn btn-play-pause paused';
+      if (elements.playerToggleIcon) {
+        elements.playerToggleIcon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+      }
+    }
+    if (elements.playerModeText) {
+      elements.playerModeText.textContent = isPlaying ? 'PLAYING' : 'PAUSED';
+      elements.playerModeText.className = isPlaying ? 'oled-mode' : 'oled-mode paused';
+    }
+  }
+
+  
+
 })();

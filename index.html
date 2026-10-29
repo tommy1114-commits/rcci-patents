@@ -305,27 +305,27 @@
                   </div>
                 </div>
 
-                <!-- 檢視模式切換按鈕 (條列 / 卡片) -->
+                <!-- 檢視模式切換按鈕 (卡片在左邊，條列在右邊) -->
                 <div class="view-switchers" id="view-mode-toggle" role="group" aria-label="檢視模式切換">
-                  <button type="button" class="view-btn active" id="btn-view-list" data-mode="list" title="條列式檢視" aria-pressed="true">
-                    <i class="fas fa-list-ul"></i>
-                    <span>條列</span>
-                  </button>
-                  <button type="button" class="view-btn" id="btn-view-card" data-mode="card" title="卡片式檢視" aria-pressed="false">
+                  <button type="button" class="view-btn active" id="btn-view-card" data-mode="card" title="卡片檢視" aria-pressed="true">
                     <i class="fas fa-clone"></i>
                     <span>卡片</span>
+                  </button>
+                  <button type="button" class="view-btn" id="btn-view-list" data-mode="list" title="彩色領域條列檢視" aria-pressed="false">
+                    <i class="fas fa-list-ul"></i>
+                    <span>條列</span>
                   </button>
                 </div>
               </div>
 
-              <!-- 技術成果清單容器 (支援彩色領域條列式與 3D 弧線滑動式玻璃卡片，由 JS 動態渲染) -->
-              <div id="outcomes-container" class="outcomes-container view-list">
+              <!-- 技術成果清單容器 (支援 3D 玻璃卡片輪播與彩色領域條列式) -->
+              <div id="outcomes-container" class="outcomes-container view-card">
                 <!-- 由 JS 動態渲染 -->
               </div>
             </div>
 
             <!-- ====================================================
-                 智財成果詳情檢視 (Detail View)
+                 智財成果詳情檢視 (Detail View - 恢復標準無播放器版本)
                  ==================================================== -->
             <article id="detail-view" class="detail-view">
               

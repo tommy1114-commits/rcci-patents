@@ -1169,29 +1169,58 @@ button:focus-visible, a:focus-visible {
   }
 }
 
+
+
+
 /* ==============================================================================
    3D 弧線滑動式玻璃卡片 (3D Curved Glass Cards Carousel)
+   專利成果 3D 景深展示系統 · 徹底解決重疊與文字穿透透光問題
    ============================================================================== */
+
+/* 領域專用顏色與 RGB 變數 */
+.domain-quantum {
+  --card3d-accent: #6B46C1;
+  --card3d-rgb: 107, 70, 193;
+}
+.domain-solar {
+  --card3d-accent: #B45309;
+  --card3d-rgb: 180, 83, 9;
+}
+.domain-hydrogen {
+  --card3d-accent: #276749;
+  --card3d-rgb: 39, 103, 73;
+}
+.domain-bluecarbon {
+  --card3d-accent: #0F766E;
+  --card3d-rgb: 15, 118, 110;
+}
+.domain-default {
+  --card3d-accent: #496B56;
+  --card3d-rgb: 73, 107, 86;
+}
+
+/* 3D 舞台容器 */
 .card3d-stage {
   position: relative;
   width: 100%;
-  padding: 16px 0 26px;
+  min-height: 470px;
+  padding: 16px 0 20px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 24px;
-  background:
-    radial-gradient(ellipse 75% 60% at 50% 42%, rgba(240, 246, 255, 0.8) 0%, rgba(248, 250, 252, 0.4) 65%, transparent 100%);
+  border-radius: 20px;
+  background: radial-gradient(ellipse 75% 65% at 50% 45%, rgba(240, 246, 255, 0.85) 0%, rgba(248, 250, 252, 0.45) 65%, transparent 100%);
   margin-bottom: 25px;
   box-sizing: border-box;
 }
 
+/* 3D 輪播可視區 */
 .card3d-carousel {
   position: relative;
   width: 100%;
-  height: 395px;
+  height: 385px;
   perspective: 1100px;
   perspective-origin: 50% 50%;
   display: flex;
@@ -1218,21 +1247,21 @@ button:focus-visible, a:focus-visible {
   pointer-events: none;
 }
 
-/* 3D 卡片外層容器 (負責 3D 弧線位移、旋轉、縮放與層級) */
+/* 3D 卡片外層（定位於軌道中央，靠 transform X/Z/rotateY 實現弧線排布） */
 .card3d-item {
   position: absolute;
   width: 270px;
   height: 375px;
-  top: 10px;
+  top: 5px;
   left: 50%;
   margin-left: -135px;
   transform-origin: center center;
   transform-style: preserve-3d;
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
   pointer-events: auto;
   cursor: pointer;
   transition:
-    transform 0.38s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+    transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1),
     opacity 0.35s ease,
     filter 0.35s ease;
   outline: none;
@@ -1243,177 +1272,121 @@ button:focus-visible, a:focus-visible {
   z-index: 50 !important;
 }
 
-/* 3D 卡片內層本體 (高質感薄霧玻璃感，文字高對比不透背景文字) */
+/* 3D 卡片內層：實心 100% 不透明防穿透底色 + 頂級薄霧玻璃高光 */
 .card3d-inner {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 20px;
-  padding: 22px 20px 18px;
+  border-radius: 18px;
+  padding: 22px 20px 16px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  text-align: left;
+  /* 徹底杜絕後方文字穿透透光：採用 100% 實心純白底盾牌 */
+  background-color: #ffffff !important;
+  border: 1.5px solid rgba(226, 232, 240, 0.95);
+  box-shadow:
+    0 10px 26px -6px rgba(0, 0, 0, 0.08),
+    0 2px 6px rgba(0, 0, 0, 0.03);
   overflow: hidden;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1.5px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05), 0 2px 6px rgba(0, 0, 0, 0.02);
-  transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease,
-    border-color 0.22s ease;
+  transition: box-shadow 0.28s ease, border-color 0.28s ease, transform 0.28s ease;
 }
 
-/* 領域專屬微色調與柔光邊框 (採用高飽和微漸層，維持薄霧玻璃通透但遮蔽後方文字) */
-.domain-quantum .card3d-inner {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(243, 235, 255, 0.93) 100%);
-  border-color: rgba(139, 92, 246, 0.4);
-  --card3d-accent: #6B46C1;
-  --card3d-shadow: rgba(107, 70, 193, 0.18);
+/* 領域專用實心柔和底色（100% 不透明，杜絕文字透光） */
+.card3d-item.domain-quantum .card3d-inner {
+  background: linear-gradient(160deg, #faf7ff 0%, #ffffff 45%, #ffffff 100%) !important;
+}
+.card3d-item.domain-solar .card3d-inner {
+  background: linear-gradient(160deg, #fffdf8 0%, #ffffff 45%, #ffffff 100%) !important;
+}
+.card3d-item.domain-hydrogen .card3d-inner {
+  background: linear-gradient(160deg, #f7fbf8 0%, #ffffff 45%, #ffffff 100%) !important;
+}
+.card3d-item.domain-bluecarbon .card3d-inner {
+  background: linear-gradient(160deg, #f5faf9 0%, #ffffff 45%, #ffffff 100%) !important;
 }
 
-.domain-solar .card3d-inner {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 247, 230, 0.93) 100%);
-  border-color: rgba(245, 158, 11, 0.4);
-  --card3d-accent: #B45309;
-  --card3d-shadow: rgba(180, 83, 9, 0.18);
-}
-
-.domain-hydrogen .card3d-inner {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(235, 252, 242, 0.93) 100%);
-  border-color: rgba(16, 185, 129, 0.4);
-  --card3d-accent: #276749;
-  --card3d-shadow: rgba(39, 103, 73, 0.18);
-}
-
-.domain-bluecarbon .card3d-inner {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(232, 252, 250, 0.93) 100%);
-  border-color: rgba(20, 184, 166, 0.4);
-  --card3d-accent: #0F766E;
-  --card3d-shadow: rgba(15, 118, 110, 0.18);
-}
-
-.domain-default .card3d-inner {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.96) 0%, rgba(245, 247, 250, 0.93) 100%);
-  border-color: rgba(100, 116, 139, 0.4);
-  --card3d-accent: #496B56;
-  --card3d-shadow: rgba(73, 107, 86, 0.18);
-}
-
-/* 中央作用中卡片高亮邊框與柔和立體陰影 */
-.card3d-item.is-active .card3d-inner {
-  border-width: 2px;
-  border-color: var(--card3d-accent);
-  box-shadow: 0 18px 45px var(--card3d-shadow), 0 3px 10px rgba(0, 0, 0, 0.04), inset 0 1px 2px rgba(255, 255, 255, 1);
-}
-
-/* 內部光暈跟隨滑鼠（低強度微光） */
+/* 頂部柔和領域微光漸層 */
 .card3d-inner::before {
   content: '';
   position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    circle 240px at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(255, 255, 255, 0.55),
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity 0.25s ease;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: radial-gradient(ellipse 90% 80% at 50% 0%, rgba(var(--card3d-rgb), 0.12) 0%, transparent 80%);
   pointer-events: none;
   z-index: 0;
 }
 
-.card3d-item.is-active:hover .card3d-inner::before {
-  opacity: 1;
+/* 中央選中卡片高亮樣式：純白底色 + 領域主題發光光暈 */
+.card3d-item.is-active .card3d-inner {
+  border: 2px solid var(--card3d-accent);
+  box-shadow:
+    0 18px 44px -8px rgba(0, 0, 0, 0.13),
+    0 0 22px rgba(var(--card3d-rgb), 0.2);
 }
 
-/* 滑鼠移入中央卡片微幅上浮 4~6px */
-.card3d-item.is-active:hover .card3d-inner {
-  transform: translateY(-5px);
-  box-shadow: 0 24px 50px var(--card3d-shadow), 0 4px 14px rgba(0, 0, 0, 0.06), inset 0 1px 2px rgba(255, 255, 255, 1);
-}
-
-.card3d-item.is-active:hover .card3d-action i {
-  transform: translateX(4px);
-}
-
-/* 側邊卡片 hover 微反饋 */
-.card3d-item:not(.is-active):hover .card3d-inner {
-  border-color: var(--card3d-accent);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08);
-}
-
-.card3d-item:focus-visible {
-  outline: none;
-}
-
-.card3d-item:focus-visible .card3d-inner {
-  outline: 2px solid var(--card3d-accent);
-  outline-offset: 2px;
-}
-
-/* 卡片內部文字排版 */
-.card3d-body,
-.card3d-footer {
-  position: relative;
-  z-index: 1;
+/* 滑鼠懸停互動（微上浮 + 光暈） */
+.card3d-item:hover:not(.is-active) .card3d-inner {
+  transform: translateY(-4px);
+  border-color: rgba(var(--card3d-rgb), 0.5);
+  box-shadow: 0 14px 30px -6px rgba(0, 0, 0, 0.11);
 }
 
 .card3d-body {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  flex: 1;
 }
 
-/* 1. 彩色領域文字 */
+/* 1. 小型彩色領域文字 */
 .card3d-domain {
-  display: block;
   font-size: 0.85rem;
   font-weight: 700;
   color: var(--card3d-accent);
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   margin-bottom: 2px;
-}
-
-.card3d-sub {
   display: block;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  color: var(--card3d-accent);
-  opacity: 0.72;
-  margin-bottom: 8px;
-  text-transform: uppercase;
 }
 
-/* 2. 深色粗體完整技術名稱 */
+/* RCCI TECHNOLOGY 副標 */
+.card3d-sub {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* 2. 深色粗體完整技術名稱 (允許換行，高對比易讀) */
 .card3d-title {
-  font-size: 1.125rem;
-  font-weight: 700;
+  font-size: 1.18rem;
+  font-weight: 800;
   color: #0f172a;
   line-height: 1.4;
+  margin: 0 0 10px 0;
   word-break: break-word;
-  overflow-wrap: anywhere;
-  margin-top: 2px;
-  margin-bottom: 8px;
+  letter-spacing: -0.01em;
 }
 
-/* 裝飾細線 */
+/* 裝飾線 */
 .card3d-line {
-  width: 28px;
+  width: 30px;
   height: 2px;
   background: var(--card3d-accent);
-  opacity: 0.45;
+  opacity: 0.55;
   border-radius: 1px;
   margin-bottom: 10px;
 }
 
-/* 3. 簡短技術摘要 (最多三行，超出省略號) */
+/* 3. 深灰技術摘要 (最多三行，超出省略) */
 .card3d-abstract {
-  font-size: 0.86rem;
+  font-size: 0.85rem;
   color: #475569;
   line-height: 1.55;
   display: -webkit-box;
@@ -1422,14 +1395,16 @@ button:focus-visible, a:focus-visible {
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
-  margin-bottom: 12px;
+  margin: 0 0 10px 0;
 }
 
 /* 4. 底部案件編號及「查看技術 →」 */
 .card3d-footer {
+  position: relative;
+  z-index: 1;
   margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  padding-top: 10px;
+  border-top: 1px solid rgba(226, 232, 240, 0.85);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1448,14 +1423,14 @@ button:focus-visible, a:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 0.88rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 700;
   color: var(--card3d-accent);
   cursor: pointer;
   text-decoration: none;
-  padding: 4px 6px;
+  padding: 3px 6px;
   border-radius: 6px;
-  transition: background-color 0.18s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .card3d-action i {
@@ -1463,15 +1438,17 @@ button:focus-visible, a:focus-visible {
   transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 3D 卡片下方控制區塊 (按鈕、計數、領域提示) */
+.card3d-item.is-active:hover .card3d-action i {
+  transform: translateX(4px);
+}
+
+/* 3D 卡片下方控制區 */
 .card3d-controls {
-  position: relative;
-  z-index: 60;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   margin-top: 14px;
   width: 100%;
 }
@@ -1483,8 +1460,8 @@ button:focus-visible, a:focus-visible {
 }
 
 .card3d-arrow-btn {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   border: 1px solid #e2e8f0;
   background: #ffffff;
@@ -1501,7 +1478,7 @@ button:focus-visible, a:focus-visible {
 .card3d-arrow-btn:hover:not(:disabled) {
   background: #f8fafc;
   border-color: #cbd5e1;
-  transform: scale(1.06);
+  transform: scale(1.08);
   color: var(--rcci-green);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
 }
@@ -1546,21 +1523,21 @@ button:focus-visible, a:focus-visible {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .card3d-current-domain {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
   font-size: 0.85rem;
   font-weight: 600;
   color: #1e293b;
   padding: 3px 12px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .card3d-domain-dot {
@@ -1576,46 +1553,83 @@ button:focus-visible, a:focus-visible {
   letter-spacing: 0.02em;
 }
 
-/* 響應式微調 */
+/* 底部領域色圖例標記 (對照圖一) */
+.card3d-legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.card3d-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card3d-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.legend-quantum { background-color: #6B46C1; }
+.legend-solar { background-color: #B45309; }
+.legend-hydrogen { background-color: #276749; }
+.legend-bluecarbon { background-color: #0F766E; }
+
+/* 響應式排版調整 */
 @media (max-width: 1024px) {
+  .card3d-stage {
+    min-height: 450px;
+  }
   .card3d-carousel {
-    height: 385px;
+    height: 370px;
   }
   .card3d-item {
     width: 255px;
-    height: 365px;
+    height: 360px;
     margin-left: -127.5px;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 640px) {
   .card3d-stage {
-    padding: 12px 0 20px;
+    min-height: 440px;
+    padding: 12px 0 18px;
     border-radius: 16px;
   }
   .card3d-carousel {
     height: 360px;
   }
   .card3d-item {
-    width: 240px;
-    height: 345px;
-    margin-left: -120px;
+    width: 260px;
+    max-width: 82vw;
+    height: 350px;
+    margin-left: -130px;
   }
   .card3d-inner {
     padding: 18px 16px 14px;
     border-radius: 16px;
   }
   .card3d-title {
-    font-size: 1rem;
+    font-size: 1.05rem;
+    line-height: 1.36;
+    margin-bottom: 8px;
   }
   .card3d-abstract {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
+    line-height: 1.48;
     -webkit-line-clamp: 2;
     margin-bottom: 8px;
   }
   .card3d-arrow-btn {
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
   }
 }
 
@@ -1632,14 +1646,50 @@ button:focus-visible, a:focus-visible {
   }
 }
 
-@supports not ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
-  .card3d-inner {
-    background: #ffffff !important;
-    border: 1px solid #e2e8f0 !important;
-  }
+
+
+/* ==============================================================================
+   撠?憿?憿舐內?銵汗??(Technology Case ID Badge)
+   ============================================================================== */
+.list-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
 }
 
-/* 查無結果空狀態 */
+.list-item-case-id {
+  font-family: 'Roboto', 'Noto Sans TC', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 1px 8px;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  letter-spacing: 0.3px;
+}
+
+.card3d-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.card3d-case-badge {
+  font-family: 'Roboto', 'Noto Sans TC', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--card3d-accent, #173a72);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2px 7px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  letter-spacing: 0.4px;
+}
+
 .empty-search-state {
   width: 100%;
   text-align: center;
